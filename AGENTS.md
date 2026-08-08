@@ -92,6 +92,16 @@ notes about the project written specifically for the talk.
 
 
 
+## Slides
+
+There is a contents slide near the start of the presentation. Please keep it up-to-date as we go.
+
+Slides are allowed to have animated or interactive content where it is appropriate. You will usually be asked to do this
+specifically if it is needed. Figure out the necessary coding details yourself, I'm not your mother.
+
+
+
+
 * * *
 
 
