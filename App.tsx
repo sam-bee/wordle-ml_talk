@@ -10,6 +10,7 @@ import { useSpeechRecognition, type FinalSpeechRecognitionResult } from './hooks
 import { useSpeechFollow } from './hooks/useSpeechFollow';
 import TitleSlide from './slides/TitleSlide';
 import ContentsSlide from './slides/ContentsSlide';
+import WordleOverviewSlide from './slides/WordleOverviewSlide';
 import PlaceholderSlide from './slides/PlaceholderSlide';
 import { isThemeName } from './theme';
 
@@ -32,6 +33,16 @@ export const slides: SlideDefinition[] = [
     content: <ContentsSlide />,
     notes: [],
     title: 'Contents',
+  },
+  {
+    content: <WordleOverviewSlide />,
+    notes: [
+      'For anyone who has not played: Wordle chooses a secret five-letter word, and you have six attempts to find it.',
+      'After every guess, each tile gives us information: green is the correct letter in the correct place, yellow is the correct letter in another place, and grey means the letter is absent.',
+      'In this example, PLANT gives us one correctly placed letter and one misplaced letter. SHAPE uses that information to narrow the answer further, and GRAPE solves it.',
+      'That repeated loop—choose a word, observe the feedback, narrow the possibilities—is the decision problem our model will learn.',
+    ],
+    title: 'Wordle in 60 seconds',
   },
   {
     content: <PlaceholderSlide />,
