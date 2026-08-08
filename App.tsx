@@ -9,6 +9,7 @@ import { getHelpShortcutSections, getSlideTransitionClass, isPresentationShortcu
 import { useSpeechRecognition, type FinalSpeechRecognitionResult } from './hooks/useSpeechRecognition';
 import { useSpeechFollow } from './hooks/useSpeechFollow';
 import TitleSlide from './slides/TitleSlide';
+import ContentsSlide from './slides/ContentsSlide';
 import PlaceholderSlide from './slides/PlaceholderSlide';
 import { isThemeName } from './theme';
 
@@ -26,6 +27,11 @@ export const slides: SlideDefinition[] = [
       cues: ['from Go to the GPU', 'integrating with CUDA'],
     },
     title: 'From Go to the GPU: Integrating with CUDA',
+  },
+  {
+    content: <ContentsSlide />,
+    notes: [],
+    title: 'Contents',
   },
   {
     content: <PlaceholderSlide />,
