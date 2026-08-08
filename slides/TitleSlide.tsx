@@ -39,7 +39,11 @@ const TitleSlide: React.FC = () => {
           </div>
           <div>
             <p className="text-2xl font-semibold text-text">Sam Burns</p>
-            <p className="mt-1 font-mono text-base text-muted">github.com/sam-bee</p>
+            <div className="mt-1 flex items-center gap-3 font-mono text-base text-muted">
+              <span>github.com/sam-bee</span>
+              <span aria-hidden="true" className="text-border">•</span>
+              <span>x.com/samb_tech</span>
+            </div>
           </div>
         </div>
       </div>
