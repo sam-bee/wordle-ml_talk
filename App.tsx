@@ -18,10 +18,14 @@ export const slides: SlideDefinition[] = [
     content: <TitleSlide />,
     notes: [
       'Hello, everyone.',
-      '[Welcome the audience and introduce the deck.]',
-      '[Set expectations for what this presentation will cover.]',
+      "I'm Sam Bee, and today we're going from Go to the GPU.",
+      '[Introduce yourself and briefly establish your experience with Go and this project.]',
+      'We will use a real Wordle-solving project to see how Go and CUDA can work together.',
     ],
-    title: 'Calliope Canvas',
+    speech: {
+      cues: ['from Go to the GPU', 'integrating with CUDA'],
+    },
+    title: 'From Go to the GPU: Integrating with CUDA',
   },
   {
     content: <PlaceholderSlide />,
