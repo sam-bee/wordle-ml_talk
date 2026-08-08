@@ -38,7 +38,7 @@ const TitleSlide: React.FC = () => {
             SB
           </div>
           <div>
-            <p className="text-2xl font-semibold text-text">Sam Bee</p>
+            <p className="text-2xl font-semibold text-text">Sam Burns</p>
             <p className="mt-1 font-mono text-base text-muted">github.com/sam-bee</p>
           </div>
         </div>

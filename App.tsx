@@ -18,7 +18,7 @@ export const slides: SlideDefinition[] = [
     content: <TitleSlide />,
     notes: [
       'Hello, everyone.',
-      "I'm Sam Bee, and today we're going from Go to the GPU.",
+      "I'm Sam Burns, and today we're going from Go to the GPU.",
       '[Introduce yourself and briefly establish your experience with Go and this project.]',
       'We will use a real Wordle-solving project to see how Go and CUDA can work together.',
     ],
