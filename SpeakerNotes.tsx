@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import ThemeSelector from './components/ThemeSelector';
 import ThemedButton from './components/ThemedButton';
 import { useTheme } from './components/ThemeProvider';
+import { getSlideStepCount } from './presentationBehavior';
 import { isThemeName, type ThemeName } from './theme';
 
 export const SPEAKER_NOTES_CHANNEL = 'calliope-canvas-speaker-notes';
@@ -12,6 +13,7 @@ export const SPEAKER_NOTES_QUERY_PARAM = 'speaker-notes';
 
 type SpeakerNotesStateMessage = {
     currentSlide: number;
+    currentStep: number;
     theme: ThemeName;
     type: 'speaker-notes-state';
 };
@@ -20,9 +22,9 @@ type SpeakerNotesRequestMessage = {
     type: 'speaker-notes-request-state';
 };
 
-type SpeakerNotesSetSlideMessage = {
-    currentSlide: number;
-    type: 'speaker-notes-set-slide';
+type SpeakerNotesNavigateMessage = {
+    direction: 'next' | 'previous';
+    type: 'speaker-notes-navigate';
 };
 
 type SpeakerNotesSetThemeMessage = {
@@ -33,7 +35,7 @@ type SpeakerNotesSetThemeMessage = {
 type SpeakerNotesMessage =
     | SpeakerNotesStateMessage
     | SpeakerNotesRequestMessage
-    | SpeakerNotesSetSlideMessage
+    | SpeakerNotesNavigateMessage
     | SpeakerNotesSetThemeMessage;
 
 export const isSpeakerNotesRoute = () => {
@@ -53,7 +55,7 @@ export const isSpeakerNotesMessage = (message: unknown): message is SpeakerNotes
     return (
         type === 'speaker-notes-state'
         || type === 'speaker-notes-request-state'
-        || type === 'speaker-notes-set-slide'
+        || type === 'speaker-notes-navigate'
         || type === 'speaker-notes-set-theme'
     );
 };
@@ -61,23 +63,25 @@ export const isSpeakerNotesMessage = (message: unknown): message is SpeakerNotes
 export const postSpeakerNotesState = (
     channel: BroadcastChannel | null,
     currentSlide: number,
+    currentStep: number,
     theme: ThemeName
 ) => {
     channel?.postMessage({
         currentSlide,
+        currentStep,
         theme,
         type: 'speaker-notes-state',
     } satisfies SpeakerNotesStateMessage);
 };
 
-export const postSpeakerNotesSlideChange = (
+export const postSpeakerNotesNavigation = (
     channel: BroadcastChannel | null,
-    currentSlide: number
+    direction: 'next' | 'previous'
 ) => {
     channel?.postMessage({
-        currentSlide,
-        type: 'speaker-notes-set-slide',
-    } satisfies SpeakerNotesSetSlideMessage);
+        direction,
+        type: 'speaker-notes-navigate',
+    } satisfies SpeakerNotesNavigateMessage);
 };
 
 export const postSpeakerNotesThemeChange = (
@@ -114,25 +118,23 @@ const renderSpeakerNote = (note: React.ReactNode) => {
 
 export const SpeakerNotesView: React.FC = () => {
     const [currentSlide, setCurrentSlide] = useState(0);
+    const [currentStep, setCurrentStep] = useState(0);
     const [isConnected, setIsConnected] = useState(false);
     const { setTheme } = useTheme();
     const speakerNotesChannelRef = useRef<BroadcastChannel | null>(null);
     const currentSlideDefinition = slides[currentSlide];
     const nextSlideDefinition = slides[currentSlide + 1];
-
-    const goToSlide = (slideIndex: number) => {
-        const nextSlide = clampSlideIndex(slideIndex);
-
-        setCurrentSlide(nextSlide);
-        postSpeakerNotesSlideChange(speakerNotesChannelRef.current, nextSlide);
-    };
+    const currentStepCount = getSlideStepCount(currentSlideDefinition.stepCount);
+    const hasNextStep = currentStep < currentStepCount - 1;
+    const canGoNext = hasNextStep || currentSlide < slides.length - 1;
+    const canGoPrev = currentStep > 0 || currentSlide > 0;
 
     const goToNext = () => {
-        goToSlide(currentSlide + 1);
+        postSpeakerNotesNavigation(speakerNotesChannelRef.current, 'next');
     };
 
     const goToPrev = () => {
-        goToSlide(currentSlide - 1);
+        postSpeakerNotesNavigation(speakerNotesChannelRef.current, 'previous');
     };
 
     const handleThemeChange = (theme: ThemeName) => {
@@ -153,6 +155,7 @@ export const SpeakerNotesView: React.FC = () => {
             }
 
             setCurrentSlide(clampSlideIndex(event.data.currentSlide));
+            setCurrentStep(event.data.currentStep);
             if (isThemeName(event.data.theme)) {
                 setTheme(event.data.theme);
             }
@@ -178,7 +181,7 @@ export const SpeakerNotesView: React.FC = () => {
                         <div className="flex items-center gap-3">
                             <ThemedButton
                                 onClick={goToPrev}
-                                disabled={currentSlide === 0}
+                                disabled={!canGoPrev}
                             >
                                 Previous
                             </ThemedButton>
@@ -187,7 +190,7 @@ export const SpeakerNotesView: React.FC = () => {
                             </span>
                             <ThemedButton
                                 onClick={goToNext}
-                                disabled={currentSlide === slides.length - 1}
+                                disabled={!canGoNext}
                                 variant="primary"
                             >
                                 Next
@@ -208,6 +211,11 @@ export const SpeakerNotesView: React.FC = () => {
                         <h1 className="mt-2 text-2xl font-semibold text-text">
                             {currentSlideDefinition.title}
                         </h1>
+                        {currentStepCount > 1 && (
+                            <p className="mt-2 font-mono text-sm text-muted">
+                                Reveal {currentStep + 1} / {currentStepCount}
+                            </p>
+                        )}
                     </div>
                 </header>
 
@@ -228,7 +236,9 @@ export const SpeakerNotesView: React.FC = () => {
                                 Next
                             </p>
                             <p className="mt-3 text-lg font-semibold text-text">
-                                {nextSlideDefinition ? nextSlideDefinition.title : 'End of deck'}
+                                {hasNextStep
+                                    ? `${currentSlideDefinition.title}: reveal ${currentStep + 2} of ${currentStepCount}`
+                                    : nextSlideDefinition?.title ?? 'End of deck'}
                             </p>
                         </div>
                     </aside>

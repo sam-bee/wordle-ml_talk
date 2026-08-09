@@ -3,6 +3,8 @@ import { NotesIcon } from './Icons';
 import ThemedButton from './ThemedButton';
 
 interface FooterProps {
+  canGoNext: boolean;
+  canGoPrev: boolean;
   canUndoAutoAdvance: boolean;
   currentSlide: number;
   isControlsHidden: boolean;
@@ -28,6 +30,8 @@ interface FooterProps {
 }
 
 const Footer: React.FC<FooterProps> = ({
+  canGoNext,
+  canGoPrev,
   canUndoAutoAdvance,
   currentSlide,
   goToNext,
@@ -56,7 +60,7 @@ const Footer: React.FC<FooterProps> = ({
           <div className={`flex flex-wrap items-center gap-2 transition-opacity duration-300 ${isControlsHidden ? 'opacity-0 pointer-events-none' : ''}`}>
             <ThemedButton
               onClick={goToPrev}
-              disabled={currentSlide === 0}
+              disabled={!canGoPrev}
             >
               Previous
             </ThemedButton>
@@ -65,7 +69,7 @@ const Footer: React.FC<FooterProps> = ({
             </span>
             <ThemedButton
               onClick={goToNext}
-              disabled={currentSlide === slideCount - 1}
+              disabled={!canGoNext}
               variant="primary"
             >
               Next

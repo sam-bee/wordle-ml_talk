@@ -5,7 +5,14 @@ import { ThemeProvider, useTheme } from './components/ThemeProvider';
 import type { SlideDefinition, VoiceAction } from './types';
 import { isSpeakerNotesRoute, SpeakerNotesView, SPEAKER_NOTES_QUERY_PARAM, SPEAKER_NOTES_CHANNEL, postSpeakerNotesState, isSpeakerNotesMessage } from './SpeakerNotes';
 import HelpOverlay from './components/HelpOverlay';
-import { getHelpShortcutSections, getSlideTransitionClass, isPresentationShortcutAllowed } from './presentationBehavior';
+import {
+  getHelpShortcutSections,
+  getNextPresentationPosition,
+  getPreviousPresentationPosition,
+  getSlideStepCount,
+  getSlideTransitionClass,
+  isPresentationShortcutAllowed,
+} from './presentationBehavior';
 import { useSpeechRecognition, type FinalSpeechRecognitionResult } from './hooks/useSpeechRecognition';
 import { useSpeechFollow } from './hooks/useSpeechFollow';
 import TitleSlide from './slides/TitleSlide';
@@ -46,14 +53,15 @@ export const slides: SlideDefinition[] = [
     title: 'Wordle in 60 seconds',
   },
   {
-    content: <WordleExampleSlide />,
+    content: step => <WordleExampleSlide visibleGuessCount={step + 1} />,
     notes: [
       'Here is one more game, with SPARE as the secret answer.',
-      'RAISE finds four of its letters. R, A, and S are present but misplaced; E is fixed at the end; and I is absent.',
-      'CHANT cannot possibly be the answer because it does not end in E. It is still a useful probe: it puts A in a new position and tests C, H, N, and T in one move.',
-      'With those letters ruled out, SPARE solves the game on the third attempt.',
+      '[First reveal] RAISE finds four of its letters. R, A, and S are present but misplaced; E is fixed at the end; and I is absent.',
+      '[Advance once] CHANT cannot possibly be the answer because it does not end in E. It is still a useful probe: it puts A in a new position and tests C, H, N, and T in one move.',
+      '[Advance again] With those letters ruled out, SPARE solves the game on the third attempt.',
       'This distinction matters later: a useful action and a possible solution are not always the same thing.',
     ],
+    stepCount: 3,
     title: 'Not every guess is an answer',
   },
   {
@@ -69,6 +77,8 @@ export const slides: SlideDefinition[] = [
   },
 ];
 
+const SLIDE_STEP_COUNTS = slides.map(slide => getSlideStepCount(slide.stepCount));
+
 const MIN_ZOOM_LEVEL = 0.8;
 const MAX_ZOOM_LEVEL = 1.4;
 const ZOOM_STEP = 0.1;
@@ -81,6 +91,7 @@ const clampZoomLevel = (zoomLevel: number) =>
 
 const DeckView: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [currentStep, setCurrentStep] = useState(0);
   const [slideDirection, setSlideDirection] = useState<1 | -1>(1);
   const [zoomLevel, setZoomLevel] = useState(1);
   const [animationsPaused, setAnimationsPaused] = useState(false);
@@ -89,19 +100,45 @@ const DeckView: React.FC = () => {
   const { setTheme, theme } = useTheme();
 
   const currentSlideRef = useRef(currentSlide);
+  const currentStepRef = useRef(currentStep);
   const themeRef = useRef(theme);
   const speakerNotesChannelRef = useRef<BroadcastChannel | null>(null);
   const speechFollowResultHandlerRef = useRef<(result: FinalSpeechRecognitionResult) => void>(() => undefined);
   const helpSections = getHelpShortcutSections();
 
+  const setPresentationPosition = (slideIndex: number, stepIndex: number) => {
+    currentSlideRef.current = slideIndex;
+    currentStepRef.current = stepIndex;
+    setCurrentSlide(slideIndex);
+    setCurrentStep(stepIndex);
+  };
+
   const goToNext = () => {
-    setSlideDirection(1);
-    setCurrentSlide(prev => Math.min(slides.length - 1, prev + 1));
+    const nextPosition = getNextPresentationPosition(
+      currentSlideRef.current,
+      currentStepRef.current,
+      SLIDE_STEP_COUNTS
+    );
+
+    if (nextPosition.slideIndex !== currentSlideRef.current) {
+      setSlideDirection(1);
+    }
+
+    setPresentationPosition(nextPosition.slideIndex, nextPosition.stepIndex);
   };
 
   const goToPrev = () => {
-    setSlideDirection(-1);
-    setCurrentSlide(prev => Math.max(0, prev - 1));
+    const previousPosition = getPreviousPresentationPosition(
+      currentSlideRef.current,
+      currentStepRef.current,
+      SLIDE_STEP_COUNTS
+    );
+
+    if (previousPosition.slideIndex !== currentSlideRef.current) {
+      setSlideDirection(-1);
+    }
+
+    setPresentationPosition(previousPosition.slideIndex, previousPosition.stepIndex);
   };
 
   const goToSlide = (nextSlide: number) => {
@@ -110,9 +147,11 @@ const DeckView: React.FC = () => {
 
     if (clampedSlide !== currentSlideValue) {
       setSlideDirection(clampedSlide > currentSlideValue ? 1 : -1);
+      const nextStep = clampedSlide < currentSlideValue
+        ? SLIDE_STEP_COUNTS[clampedSlide] - 1
+        : 0;
+      setPresentationPosition(clampedSlide, nextStep);
     }
-
-    setCurrentSlide(clampedSlide);
   };
 
   const closeHelp = () => {
@@ -162,7 +201,12 @@ const DeckView: React.FC = () => {
     speakerNotesWindow?.focus();
 
     window.setTimeout(() => {
-      postSpeakerNotesState(speakerNotesChannelRef.current, currentSlideRef.current, theme);
+      postSpeakerNotesState(
+        speakerNotesChannelRef.current,
+        currentSlideRef.current,
+        currentStepRef.current,
+        theme
+      );
     }, 100);
   };
 
@@ -180,12 +224,21 @@ const DeckView: React.FC = () => {
       }
 
       if (event.data.type === 'speaker-notes-request-state') {
-        postSpeakerNotesState(channel, currentSlideRef.current, themeRef.current);
+        postSpeakerNotesState(
+          channel,
+          currentSlideRef.current,
+          currentStepRef.current,
+          themeRef.current
+        );
         return;
       }
 
-      if (event.data.type === 'speaker-notes-set-slide') {
-        goToSlide(event.data.currentSlide);
+      if (event.data.type === 'speaker-notes-navigate') {
+        if (event.data.direction === 'next') {
+          goToNext();
+        } else {
+          goToPrev();
+        }
         return;
       }
 
@@ -194,7 +247,12 @@ const DeckView: React.FC = () => {
       }
     };
 
-    postSpeakerNotesState(channel, currentSlideRef.current, themeRef.current);
+    postSpeakerNotesState(
+      channel,
+      currentSlideRef.current,
+      currentStepRef.current,
+      themeRef.current
+    );
 
     return () => {
       channel.close();
@@ -207,9 +265,10 @@ const DeckView: React.FC = () => {
 
   useEffect(() => {
     currentSlideRef.current = currentSlide;
+    currentStepRef.current = currentStep;
     themeRef.current = theme;
-    postSpeakerNotesState(speakerNotesChannelRef.current, currentSlide, theme);
-  }, [currentSlide, theme]);
+    postSpeakerNotesState(speakerNotesChannelRef.current, currentSlide, currentStep, theme);
+  }, [currentSlide, currentStep, theme]);
 
   const commandHandlers: Record<VoiceAction, () => void> = {
     next: goToNext,
@@ -315,6 +374,14 @@ const DeckView: React.FC = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [animationsPaused, isHelpOpen, isVoiceEnabled, requestMicrophonePermission, setVoiceControlsEnabled, undoAutoAdvance]);
 
+  const currentSlideDefinition = slides[currentSlide];
+  const currentSlideContent = typeof currentSlideDefinition.content === 'function'
+    ? currentSlideDefinition.content(currentStep)
+    : currentSlideDefinition.content;
+  const currentSlideStepCount = SLIDE_STEP_COUNTS[currentSlide];
+  const canGoNext = currentSlide < slides.length - 1 || currentStep < currentSlideStepCount - 1;
+  const canGoPrev = currentSlide > 0 || currentStep > 0;
+
   return (
     <div className="min-h-screen w-full flex flex-col items-center justify-center p-4 bg-canvas font-sans text-text relative">
       <div className="progress-bar w-full" style={{ width: `${((currentSlide + 1) / slides.length) * 100}%` }}></div>
@@ -325,12 +392,14 @@ const DeckView: React.FC = () => {
         >
           <div className="slide-container w-full">
             <div key={currentSlide} className={getSlideTransitionClass(slideDirection)}>
-              {slides[currentSlide].content}
+              {currentSlideContent}
             </div>
           </div>
         </div>
       </main>
       <Footer
+        canGoNext={canGoNext}
+        canGoPrev={canGoPrev}
         currentSlide={currentSlide}
         goToNext={goToNext}
         goToPrev={goToPrev}

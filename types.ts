@@ -14,11 +14,12 @@ export interface DataPacket {
 }
 
 export interface SlideDefinition {
-  content: React.ReactNode;
+  content: React.ReactNode | ((step: number) => React.ReactNode);
   notes?: React.ReactNode[];
   speech?: {
     cues: string[];
   };
+  stepCount?: number;
   title?: string;
 }
 

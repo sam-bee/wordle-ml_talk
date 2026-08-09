@@ -2,6 +2,9 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import {
+  getNextPresentationPosition,
+  getPreviousPresentationPosition,
+  getSlideStepCount,
   getSlideTransitionClass,
   isPresentationShortcutAllowed,
   getHelpShortcutSections,
@@ -27,4 +30,40 @@ test('exposes keyboard and voice shortcut sections for the help modal', () => {
   assert.equal(sections.length, 2);
   assert.equal(sections[0].title, 'Keyboard shortcuts');
   assert.equal(sections[1].title, 'Voice commands');
+});
+
+test('normalizes missing or invalid slide step counts', () => {
+  assert.equal(getSlideStepCount(undefined), 1);
+  assert.equal(getSlideStepCount(0), 1);
+  assert.equal(getSlideStepCount(3), 3);
+});
+
+test('advances through slide steps before moving to the next slide', () => {
+  const stepCounts = [1, 3, 1];
+
+  assert.deepEqual(getNextPresentationPosition(1, 0, stepCounts), {
+    slideIndex: 1,
+    stepIndex: 1,
+  });
+  assert.deepEqual(getNextPresentationPosition(1, 1, stepCounts), {
+    slideIndex: 1,
+    stepIndex: 2,
+  });
+  assert.deepEqual(getNextPresentationPosition(1, 2, stepCounts), {
+    slideIndex: 2,
+    stepIndex: 0,
+  });
+});
+
+test('moves backward through slide steps and returns to the final previous step', () => {
+  const stepCounts = [1, 3, 1];
+
+  assert.deepEqual(getPreviousPresentationPosition(1, 2, stepCounts), {
+    slideIndex: 1,
+    stepIndex: 1,
+  });
+  assert.deepEqual(getPreviousPresentationPosition(2, 0, stepCounts), {
+    slideIndex: 1,
+    stepIndex: 2,
+  });
 });

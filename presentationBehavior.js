@@ -33,8 +33,8 @@ export const matchVoiceCommand = normalizedTranscripts =>
     .find(Boolean);
 
 const HELP_SHORTCUT_ITEMS = [
-  { shortcut: 'ArrowRight / ArrowDown', description: 'Next slide' },
-  { shortcut: 'ArrowLeft / ArrowUp', description: 'Previous slide' },
+  { shortcut: 'ArrowRight / ArrowDown', description: 'Next step or slide' },
+  { shortcut: 'ArrowLeft / ArrowUp', description: 'Previous step or slide' },
   { shortcut: 'Space', description: 'Pause or resume animations' },
   { shortcut: 'F', description: 'Toggle fullscreen' },
   { shortcut: 'V', description: 'Toggle voice recognition' },
@@ -76,3 +76,52 @@ export const getSlideTransitionClass = direction =>
   direction === 1
     ? 'slide-transition slide-transition-forward'
     : 'slide-transition slide-transition-backward';
+
+/**
+ * @param {number | undefined} stepCount
+ * @returns {number}
+ */
+export const getSlideStepCount = stepCount =>
+  Number.isInteger(stepCount) && stepCount > 0 ? stepCount : 1;
+
+/**
+ * @param {number} slideIndex
+ * @param {number} stepIndex
+ * @param {number[]} slideStepCounts
+ * @returns {{ slideIndex: number, stepIndex: number }}
+ */
+export const getNextPresentationPosition = (slideIndex, stepIndex, slideStepCounts) => {
+  const currentStepCount = getSlideStepCount(slideStepCounts[slideIndex]);
+
+  if (stepIndex < currentStepCount - 1) {
+    return { slideIndex, stepIndex: stepIndex + 1 };
+  }
+
+  if (slideIndex < slideStepCounts.length - 1) {
+    return { slideIndex: slideIndex + 1, stepIndex: 0 };
+  }
+
+  return { slideIndex, stepIndex };
+};
+
+/**
+ * @param {number} slideIndex
+ * @param {number} stepIndex
+ * @param {number[]} slideStepCounts
+ * @returns {{ slideIndex: number, stepIndex: number }}
+ */
+export const getPreviousPresentationPosition = (slideIndex, stepIndex, slideStepCounts) => {
+  if (stepIndex > 0) {
+    return { slideIndex, stepIndex: stepIndex - 1 };
+  }
+
+  if (slideIndex > 0) {
+    const previousSlideIndex = slideIndex - 1;
+    return {
+      slideIndex: previousSlideIndex,
+      stepIndex: getSlideStepCount(slideStepCounts[previousSlideIndex]) - 1,
+    };
+  }
+
+  return { slideIndex, stepIndex };
+};
