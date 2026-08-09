@@ -21,6 +21,9 @@ export default {
         surface: 'rgb(var(--color-surface) / <alpha-value>)',
         text: 'rgb(var(--color-text) / <alpha-value>)',
       },
+      fontSize: {
+        lg: ['1.6875rem', { lineHeight: '2.25rem' }],
+      },
       transitionDuration: {
         motion: 'var(--duration-motion)',
       },
