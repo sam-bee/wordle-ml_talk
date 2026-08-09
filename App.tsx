@@ -19,7 +19,6 @@ import TitleSlide from './slides/TitleSlide';
 import ContentsSlide from './slides/ContentsSlide';
 import WordleOverviewSlide from './slides/WordleOverviewSlide';
 import WordleExampleSlide from './slides/WordleExampleSlide';
-import PlaceholderSlide from './slides/PlaceholderSlide';
 import { isThemeName } from './theme';
 
 
@@ -63,17 +62,6 @@ export const slides: SlideDefinition[] = [
     ],
     stepCount: 3,
     title: 'Not every guess is an answer',
-  },
-  {
-    content: <PlaceholderSlide />,
-    notes: [
-      'Replace this placeholder with the next slide in your presentation.',
-      'Speaker notes can contain reminders, transitions, or extra context.',
-    ],
-    speech: {
-      cues: ['add your slide here', 'placeholder slide', 'next section'],
-    },
-    title: 'Add your slide here',
   },
 ];
 
