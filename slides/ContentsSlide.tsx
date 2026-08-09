@@ -11,7 +11,7 @@ const ContentsSlide: React.FC = () => {
           <p className="text-sm font-semibold uppercase tracking-[0.25em] text-muted">
             The puzzle
           </p>
-          <p className="mt-2 text-3xl font-semibold text-text">Wordle in 60 seconds</p>
+          <p className="mt-2 text-3xl font-semibold text-text">Wordle: rules and strategy</p>
         </div>
       </div>
     </div>

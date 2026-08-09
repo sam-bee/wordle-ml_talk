@@ -11,6 +11,7 @@ import { useSpeechFollow } from './hooks/useSpeechFollow';
 import TitleSlide from './slides/TitleSlide';
 import ContentsSlide from './slides/ContentsSlide';
 import WordleOverviewSlide from './slides/WordleOverviewSlide';
+import WordleExampleSlide from './slides/WordleExampleSlide';
 import PlaceholderSlide from './slides/PlaceholderSlide';
 import { isThemeName } from './theme';
 
@@ -43,6 +44,17 @@ export const slides: SlideDefinition[] = [
       'That repeated loop—choose a word, observe the feedback, narrow the possibilities—is the decision problem our model will learn.',
     ],
     title: 'Wordle in 60 seconds',
+  },
+  {
+    content: <WordleExampleSlide />,
+    notes: [
+      'Here is one more game, with SPARE as the secret answer.',
+      'RAISE finds four of its letters. R, A, and S are present but misplaced; E is fixed at the end; and I is absent.',
+      'CHANT cannot possibly be the answer because it does not end in E. It is still a useful probe: it puts A in a new position and tests C, H, N, and T in one move.',
+      'With those letters ruled out, SPARE solves the game on the third attempt.',
+      'This distinction matters later: a useful action and a possible solution are not always the same thing.',
+    ],
+    title: 'Not every guess is an answer',
   },
   {
     content: <PlaceholderSlide />,
