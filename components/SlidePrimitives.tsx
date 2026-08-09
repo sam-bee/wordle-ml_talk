@@ -63,11 +63,23 @@ export const SlideHeader: React.FC<SlideHeaderProps> = ({
 export interface PanelProps extends ClassNameProps {
   children: React.ReactNode;
   as?: 'div' | 'section' | 'article';
+  padding?: 'none' | 'compact' | 'default';
 }
 
-export const Panel: React.FC<PanelProps> = ({ as = 'div', children, className = '' }) => {
+export const Panel: React.FC<PanelProps> = ({
+  as = 'div',
+  children,
+  className = '',
+  padding = 'default',
+}) => {
   const Element = as;
-  return <Element className={`rounded-3xl border border-border bg-surface p-7 shadow-xl sm:p-9 ${className}`}>{children}</Element>;
+  const paddings = {
+    none: 'p-0',
+    compact: 'p-5',
+    default: 'p-7',
+  };
+
+  return <Element className={`rounded-3xl border border-border bg-surface shadow-xl ${paddings[padding]} ${className}`}>{children}</Element>;
 };
 
 export interface MetricCardProps extends ClassNameProps {
@@ -108,7 +120,11 @@ export interface RevealProps extends ClassNameProps {
 export const Reveal: React.FC<RevealProps> = ({ children, className = '', preserveLayout = true, visible }) => (
   <div
     aria-hidden={!visible}
-    className={`${preserveLayout ? 'invisible' : ''} transition-all duration-300 ${visible ? 'translate-y-0 opacity-100' : 'translate-y-3 opacity-0'} ${visible ? 'visible' : ''} ${className}`}
+    className={`transition-all duration-300 ${
+      visible
+        ? 'visible translate-y-0 opacity-100'
+        : `${preserveLayout ? 'invisible' : 'hidden'} translate-y-3 opacity-0`
+    } ${className}`}
   >
     {children}
   </div>
@@ -122,7 +138,6 @@ export interface CodeBlockProps extends ClassNameProps {
 export const CodeBlock: React.FC<CodeBlockProps> = ({ children, className = '', language }) => (
   <div className={`overflow-hidden rounded-2xl border border-border bg-elevated/70 shadow-inner ${className}`}>
     {language && <div className="border-b border-border px-5 py-2 text-sm font-semibold uppercase tracking-[0.2em] text-muted">{language}</div>}
-    <pre className="overflow-x-auto p-6 font-mono text-lg leading-relaxed text-text"><code>{children}</code></pre>
+    <pre className="overflow-x-auto p-6 font-mono text-xl leading-relaxed text-text"><code>{children}</code></pre>
   </div>
 );
-

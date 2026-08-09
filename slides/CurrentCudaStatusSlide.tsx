@@ -21,13 +21,13 @@ const CurrentCudaStatusSlide: React.FC = () => (
     />
 
     <div className="mt-8 grid flex-1 grid-cols-[1.2fr_0.8fr] items-center gap-9">
-      <Panel className="p-0">
+      <Panel padding="none">
         <div className="grid grid-cols-[1fr_auto] border-b border-border px-7 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-muted">
           <span>Boundary</span><span>Status</span>
         </div>
         <div className="divide-y divide-border">
           {STATUS.map((row) => (
-            <div key={row.label} className="grid grid-cols-[1fr_auto] items-center gap-5 px-7 py-4">
+            <div key={row.label} className="grid grid-cols-[1fr_auto] items-center gap-5 px-7 py-3">
               <div>
                 <p className="text-xl font-semibold text-text">{row.label}</p>
                 <p className="mt-1 text-base text-muted">{row.detail}</p>

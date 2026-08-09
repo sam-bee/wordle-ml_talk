@@ -17,10 +17,10 @@ const CandidateStatsSlide: React.FC = () => (
         </div>
         <p className="mt-5 text-lg leading-relaxed text-muted">The first 96 learned features become a mean over the candidates—not a sum that grows with the shortlist.</p>
       </Panel>
-      <div className="space-y-4">
-        <Panel className="p-5"><p className="font-mono text-xl font-bold text-text">130</p><p className="mt-1 text-lg text-muted">26 letters × 5 positions</p></Panel>
-        <Panel className="p-5"><p className="font-mono text-xl font-bold text-text">78</p><p className="mt-1 text-lg text-muted">26 letters × appears 1, 2, or 3 times</p></Panel>
-        <Panel className="p-5"><p className="font-mono text-xl font-bold text-text">+ 1</p><p className="mt-1 text-lg text-muted">normalized log count: log(n) / log(2309)</p></Panel>
+      <div className="space-y-3">
+        <Panel padding="compact"><p className="font-mono text-xl font-bold text-text">130</p><p className="mt-1 text-lg text-muted">26 letters × 5 positions</p></Panel>
+        <Panel padding="compact"><p className="font-mono text-xl font-bold text-text">78</p><p className="mt-1 text-lg text-muted">26 letters × appears 1, 2, or 3 times</p></Panel>
+        <Panel padding="compact"><p className="font-mono text-xl font-bold text-text">+ 1</p><p className="mt-1 text-lg text-muted">normalized log count: log(n) / log(2309)</p></Panel>
         <Callout tone="accent">The explicit count restores the magnitude that normalization intentionally removed.</Callout>
       </div>
     </div>
