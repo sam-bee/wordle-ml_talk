@@ -1,5 +1,5 @@
 import type { SlideDefinition } from './types';
-import { slides, clampSlideIndex } from './App';
+import { slides, clampSlideIndex } from './deck';
 import React, { useEffect, useRef, useState } from 'react';
 import ThemeSelector from './components/ThemeSelector';
 import ThemedButton from './components/ThemedButton';

@@ -2,7 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import Footer from './components/Footer';
 import { ThemeProvider, useTheme } from './components/ThemeProvider';
-import type { SlideDefinition, VoiceAction } from './types';
+import { slides, clampSlideIndex } from './deck';
+import type { VoiceAction } from './types';
 import { isSpeakerNotesRoute, SpeakerNotesView, SPEAKER_NOTES_QUERY_PARAM, SPEAKER_NOTES_CHANNEL, postSpeakerNotesState, isSpeakerNotesMessage } from './SpeakerNotes';
 import HelpOverlay from './components/HelpOverlay';
 import {
@@ -15,64 +16,13 @@ import {
 } from './presentationBehavior';
 import { useSpeechRecognition, type FinalSpeechRecognitionResult } from './hooks/useSpeechRecognition';
 import { useSpeechFollow } from './hooks/useSpeechFollow';
-import TitleSlide from './slides/TitleSlide';
-import ContentsSlide from './slides/ContentsSlide';
-import WordleOverviewSlide from './slides/WordleOverviewSlide';
-import WordleExampleSlide from './slides/WordleExampleSlide';
 import { isThemeName } from './theme';
-
-
-export const slides: SlideDefinition[] = [
-  {
-    content: <TitleSlide />,
-    notes: [
-      'Hello, everyone.',
-      "I'm Sam Burns, and today we're going from Go to the GPU.",
-      '[Introduce yourself and briefly establish your experience with Go and this project.]',
-      'We will use a real Wordle-solving project to see how Go and CUDA can work together.',
-    ],
-    speech: {
-      cues: ['from Go to the GPU', 'integrating with CUDA'],
-    },
-    title: 'From Go to the GPU: Integrating with CUDA',
-  },
-  {
-    content: <ContentsSlide />,
-    notes: [],
-    title: 'Contents',
-  },
-  {
-    content: <WordleOverviewSlide />,
-    notes: [
-      'For anyone who has not played: Wordle chooses a secret five-letter word, and you have six attempts to find it.',
-      'After every guess, each tile gives us information: green is the correct letter in the correct place, yellow is the correct letter in another place, and grey means the letter is absent.',
-      'In this example, PLANT gives us one correctly placed letter and one misplaced letter. SHAPE uses that information to narrow the answer further, and GRAPE solves it.',
-      'That repeated loop—choose a word, observe the feedback, narrow the possibilities—is the decision problem our model will learn.',
-    ],
-    title: 'Wordle in 60 seconds',
-  },
-  {
-    content: step => <WordleExampleSlide visibleGuessCount={step + 1} />,
-    notes: [
-      'Here is one more game, with SPARE as the secret answer.',
-      '[First reveal] RAISE leaves five possibilities: SCARE, SHARE, SNARE, SPARE, and STARE.',
-      '[Advance once] CHANT cannot possibly be the answer because it does not end in E. It is still a useful probe: it puts A in a new position and tests C, H, N, and T in one move.',
-      '[Advance again] With those letters ruled out, SPARE solves the game on the third attempt.',
-      'This distinction matters later: a useful action and a possible solution are not always the same thing.',
-    ],
-    stepCount: 3,
-    title: 'Not every guess is an answer',
-  },
-];
 
 const SLIDE_STEP_COUNTS = slides.map(slide => getSlideStepCount(slide.stepCount));
 
 const MIN_ZOOM_LEVEL = 0.8;
 const MAX_ZOOM_LEVEL = 1.4;
 const ZOOM_STEP = 0.1;
-
-export const clampSlideIndex = (slideIndex: number) =>
-  Math.min(slides.length - 1, Math.max(0, slideIndex));
 
 const clampZoomLevel = (zoomLevel: number) =>
   Number(Math.min(MAX_ZOOM_LEVEL, Math.max(MIN_ZOOM_LEVEL, zoomLevel)).toFixed(2));
