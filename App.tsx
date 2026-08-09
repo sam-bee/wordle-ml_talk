@@ -385,7 +385,7 @@ const DeckView: React.FC = () => {
   return (
     <div className="min-h-screen w-full flex flex-col items-center justify-center p-4 bg-canvas font-sans text-text relative">
       <div className="progress-bar w-full" style={{ width: `${((currentSlide + 1) / slides.length) * 100}%` }}></div>
-      <main className="relative z-0 w-full max-w-7xl flex-grow flex flex-col items-center justify-center">
+      <main className="relative z-0 flex w-full max-w-[120rem] flex-grow flex-col items-center justify-center">
         <div
           className={`presentation-stage w-full ${animationsPaused ? 'animations-paused' : ''}`}
           style={{ transform: `scale(${zoomLevel})` }}
