@@ -56,7 +56,7 @@ export const slides: SlideDefinition[] = [
     content: step => <WordleExampleSlide visibleGuessCount={step + 1} />,
     notes: [
       'Here is one more game, with SPARE as the secret answer.',
-      '[First reveal] RAISE finds four of its letters. R, A, and S are present but misplaced; E is fixed at the end; and I is absent.',
+      '[First reveal] RAISE leaves five possibilities: SCARE, SHARE, SNARE, SPARE, and STARE.',
       '[Advance once] CHANT cannot possibly be the answer because it does not end in E. It is still a useful probe: it puts A in a new position and tests C, H, N, and T in one move.',
       '[Advance again] With those letters ruled out, SPARE solves the game on the third attempt.',
       'This distinction matters later: a useful action and a possible solution are not always the same thing.',

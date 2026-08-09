@@ -55,7 +55,9 @@ const WordleExampleSlide: React.FC<WordleExampleSlideProps> = ({ visibleGuessCou
             <span className="font-mono text-lg font-bold text-primary">01</span>
             <div>
               <h3 className="text-2xl font-semibold text-text">RAISE finds four letters</h3>
-              <p className="mt-1 text-lg text-muted">Only the final E is in place.</p>
+              <p className="mt-1 text-lg leading-relaxed text-muted">
+                Five possibilities remain: SCARE, SHARE, SNARE, SPARE, and STARE.
+              </p>
             </div>
           </div>
 
