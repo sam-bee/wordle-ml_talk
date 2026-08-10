@@ -191,7 +191,7 @@ export const slides: SlideDefinition[] = [
     content: <CorpusSplitSlide />,
     notes: [
       'We split by hidden answer, not by generated row: 2,109 answers for training, 100 for validation while making choices, and 100 sealed solution IDs for one post-selection CUDA gameplay aggregate.',
-      'That sealed gameplay list is distinct from the WDIT record corpus. WDIT v3 release v0.1.0 freezes 52,726 training records, 1,600 mini records, and 2,500 records in each validation and final-test corpus; the 2,500 final WDIT records remain unopened.',
+      'That sealed gameplay list is distinct from the frozen record corpus. Generator release v0.1.0 contains 52,726 training records, 1,600 mini records, and 2,500 records in each validation and final-test corpus; the 2,500 final-test records remain unopened.',
       'There is one honest caveat: 190 of 2,445 unique encoded validation states also appear in training, with the same teacher label. The solution IDs remain disjoint, so this is state-distribution overlap, not solution-split leakage.',
       'Freezing the corpus separates data generation from training and makes every later result attributable.',
     ],
@@ -451,7 +451,7 @@ export const slides: SlideDefinition[] = [
       'Only after the model and implementation were selected did the claim-guarded evaluator score the 100 final solution IDs once through CUDA/cgo.',
       'It solved 97, failed three, averaged 3.75 guesses with failures counted as six, and made zero invalid selections.',
       'The sanitized artifact contains aggregate facts only: no answer words, trajectories, or failure list. No tuning followed.',
-      'The separate 2,500-record final WDIT corpus remained unopened. This is one bounded held-out aggregate, not a sweeping generalization claim.',
+      'The separate 2,500-record final-test corpus remained unopened. This is one bounded held-out aggregate, not a sweeping generalization claim.',
     ],
     title: 'One intentional held-out aggregate',
   },

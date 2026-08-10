@@ -20,7 +20,7 @@ const ImitationLearningSlide: React.FC = () => (
           <span className="rounded-xl bg-primary/15 px-4 py-3 font-mono text-2xl font-bold text-primary">4,739 scores</span>
         </div>
         <div className="mt-8 space-y-5 text-xl leading-relaxed text-text">
-          <p><strong>Target:</strong> the teacher’s top-ranked action in the frozen WDIT v3 corpus.</p>
+          <p><strong>Target:</strong> the teacher’s top-ranked action in the frozen training corpus.</p>
           <p><strong>Availability mask:</strong> hides only actions already guessed, so the model does not learn to repeat itself.</p>
           <p><strong>Candidate state:</strong> remains an input bonus—not a hard legality rule. Probe words can still be chosen.</p>
         </div>

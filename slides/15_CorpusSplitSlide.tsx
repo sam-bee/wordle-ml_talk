@@ -9,7 +9,7 @@ const CorpusSplitSlide: React.FC = () => (
     <SlideHeader
       kicker="The frozen experiment"
       title="Keep answers, records, and evidence in separate boxes"
-      subtitle="The split is by hidden solution; WDIT v3 then freezes the generated examples used by each training stage."
+      subtitle="The split is by hidden solution; a versioned corpus then freezes the examples used by each stage."
     />
     <div className="mt-5 grid flex-1 grid-cols-[1fr_1.2fr] gap-6">
       <Panel className="flex flex-col" padding="compact">
@@ -25,12 +25,12 @@ const CorpusSplitSlide: React.FC = () => (
         </div>
       </Panel>
       <Panel className="flex flex-col" padding="compact">
-        <p className="font-mono text-lg uppercase tracking-[0.18em] text-accent">WDIT v3 · v0.1.0</p>
+        <p className="font-mono text-lg uppercase tracking-[0.18em] text-accent">frozen corpus · v0.1.0</p>
         <div className="mt-4 grid grid-cols-2 gap-3">
           <MetricCard className={COMPACT_METRIC} padding="compact" label="train" value="52,726" detail="records" />
           <MetricCard className={COMPACT_METRIC} padding="compact" label="mini" value="1,600" detail="records" />
           <MetricCard className={COMPACT_METRIC} padding="compact" label="validation" value="2,500" detail="records" />
-          <MetricCard className={COMPACT_METRIC} padding="compact" label="final WDIT" value="2,500" detail="sealed records" />
+          <MetricCard className={COMPACT_METRIC} padding="compact" label="final-test" value="2,500" detail="sealed records" />
         </div>
         <p className="mt-4 text-lg leading-snug text-text"><strong>2,500 state/action records</strong> → remain unopened.</p>
       </Panel>
