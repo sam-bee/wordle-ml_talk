@@ -7,7 +7,7 @@ const DestinationPreviewSlide: React.FC = () => (
   <SlideFrame>
     <SlideHeader
       kicker="Where we are going"
-      title="A working application at the end of the route"
+      title="Objective: train a model to play Wordle"
       subtitle="This preview is the destination: a real CUDA-cgo backend solving a complete game, not a claim about how the training proof was produced."
     />
     <div className="mt-5 flex flex-1 items-center justify-center">
