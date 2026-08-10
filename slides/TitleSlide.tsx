@@ -1,5 +1,14 @@
 import React from 'react';
 
+import gocardlessSymbol from '../images/gocardless-symbol-primary.svg';
+import speakerPortrait from '../images/sam-burns-gophercon-uk.webp';
+
+const PROFILE_LINKS = [
+  { href: 'https://sam-burns.com', label: 'sam-burns.com' },
+  { href: 'https://github.com/sam-bee', label: 'github.com/sam-bee' },
+  { href: 'https://x.com/samb_tech', label: 'x.com/samb_tech' },
+];
+
 const TitleSlide: React.FC = () => {
   return (
     <div className="relative flex h-[70vh] items-center overflow-hidden rounded-[2rem] border border-border bg-surface px-16 py-14 shadow-2xl">
@@ -12,58 +21,67 @@ const TitleSlide: React.FC = () => {
         className="absolute -bottom-40 left-1/3 h-96 w-96 rounded-full bg-accent/20 blur-3xl"
       />
 
-      <div className="relative z-10 max-w-5xl">
-        <div className="mb-10 flex items-center gap-4" aria-hidden="true">
-          <span className="rounded-lg bg-primary px-4 py-3 font-mono text-xl font-bold text-slate-950">
-            Go
-          </span>
-          <span className="font-mono text-2xl text-muted">→</span>
-          <span className="rounded-lg border border-accent/50 bg-accent/15 px-4 py-3 font-mono text-xl font-bold text-text">
-            GPU
-          </span>
-        </div>
-
-        <p className="text-lg font-semibold uppercase tracking-[0.3em] text-primary">
-          From Go to the GPU
-        </p>
-        <h1 className="mt-5 text-7xl font-extrabold leading-[1.02] tracking-tight text-text">
-          Integrating with
-          <span className="block bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-            CUDA
-          </span>
-        </h1>
-
-        <div className="mt-12 flex items-center gap-5 border-t border-border pt-7">
-          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-elevated font-mono text-xl font-bold text-primary">
-            SB
+      <div className="relative z-10 grid w-full grid-cols-[minmax(0,1fr)_20rem] items-center gap-14">
+        <div className="min-w-0">
+          <div className="mb-10 flex items-center gap-4" aria-hidden="true">
+            <span className="rounded-lg bg-primary px-4 py-3 font-mono text-xl font-bold text-slate-950">
+              Go
+            </span>
+            <span className="font-mono text-2xl text-muted">→</span>
+            <span className="rounded-lg border border-accent/50 bg-accent/15 px-4 py-3 font-mono text-xl font-bold text-text">
+              GPU
+            </span>
           </div>
-          <div>
+
+          <p className="text-lg font-semibold uppercase tracking-[0.3em] text-primary">
+            From Go to the GPU
+          </p>
+          <h1 className="mt-5 text-7xl font-extrabold leading-[1.02] tracking-tight text-text">
+            Integrating with
+            <span className="block bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              CUDA
+            </span>
+          </h1>
+
+          <div className="mt-12 border-t border-border pt-7">
             <p className="text-2xl font-semibold text-text">Sam Burns</p>
-            <div className="mt-1 flex items-center gap-3 font-mono text-base text-muted">
-              <span>github.com/sam-bee</span>
-              <span aria-hidden="true" className="text-border">•</span>
-              <span>x.com/samb_tech</span>
+            <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-base text-muted">
+              {PROFILE_LINKS.map((link, index) => (
+                <React.Fragment key={link.href}>
+                  {index > 0 && <span aria-hidden="true" className="text-border">•</span>}
+                  <a
+                    className="transition-colors hover:text-primary focus-visible:text-primary focus-visible:outline-none"
+                    href={link.href}
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    {link.label}
+                  </a>
+                </React.Fragment>
+              ))}
             </div>
           </div>
         </div>
-      </div>
 
-      <div
-        aria-hidden="true"
-        className="absolute bottom-12 right-14 grid grid-cols-5 gap-2 opacity-60"
-      >
-        {['G', 'P', 'U', '▴', '▴'].map((character, index) => (
-          <span
-            className={`flex h-11 w-11 items-center justify-center rounded-md border font-mono text-lg font-bold ${
-              index < 3
-                ? 'border-primary/40 bg-primary/10 text-primary'
-                : 'border-border bg-elevated text-muted'
-            }`}
-            key={`${character}-${index}`}
-          >
-            {character}
-          </span>
-        ))}
+        <aside className="relative pb-8" aria-label="Speaker">
+          <div aria-hidden="true" className="absolute inset-4 rounded-[3rem] bg-primary/20 blur-2xl" />
+          <img
+            alt="Sam Burns"
+            className="relative aspect-square w-full rounded-[2.5rem] border border-border object-cover shadow-2xl"
+            src={speakerPortrait}
+          />
+          <div className="absolute -bottom-1 -left-6 flex items-center gap-4 rounded-2xl border border-border bg-surface/95 p-3 pr-5 shadow-xl backdrop-blur">
+            <img
+              alt="GoCardless logo"
+              className="h-16 w-16 shrink-0 rounded-full"
+              src={gocardlessSymbol}
+            />
+            <div>
+              <p className="font-mono text-xs font-semibold uppercase tracking-[0.18em] text-muted">Employer</p>
+              <p className="mt-1 text-xl font-bold text-text">GoCardless</p>
+            </div>
+          </div>
+        </aside>
       </div>
     </div>
   );
