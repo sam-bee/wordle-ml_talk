@@ -9,39 +9,41 @@ import WordleOverviewSlide from './slides/05_WordleOverviewSlide';
 import WordleExampleSlide from './slides/06_WordleExampleSlide';
 import OriginalDataSourcesSlide from './slides/07_OriginalDataSourcesSlide';
 import VocabularySlide from './slides/08_VocabularySlide';
-import CandidateShortlistSlide from './slides/09_CandidateShortlistSlide';
-import TeacherRuleSlide from './slides/10_TeacherRuleSlide';
-import TeacherCodeSlide from './slides/11_TeacherCodeSlide';
-import WorkerPoolSlide from './slides/12_WorkerPoolSlide';
-import SyntheticExampleSlide from './slides/13_SyntheticExampleSlide';
-import CorpusSplitSlide from './slides/14_CorpusSplitSlide';
-import ActDividerTrainingSlide from './slides/15_ActDividerSlide';
-import CandidateStatsSlide from './slides/16_CandidateStatsSlide';
-import ModelInputsSlide from './slides/17_ModelInputsSlide';
-import PolicyArchitectureSlide from './slides/18_PolicyArchitectureSlide';
-import PolicyOutputSlide from './slides/19_PolicyOutputSlide';
-import BackpropagationSlide from './slides/20_BackpropagationSlide';
-import ImitationLearningSlide from './slides/21_ImitationLearningSlide';
-import GoMLXTrainingSlide from './slides/22_GoMLXTrainingSlide';
-import ProofStagesSlide from './slides/23_ProofStagesSlide';
-import TensorBoardSlide from './slides/24_TensorBoardSlide';
-import TrainingResultsSlide from './slides/25_TrainingResultsSlide';
-import ActDividerInferenceSlide from './slides/26_ActDividerSlide';
-import PivotExportSlide from './slides/27_PivotExportSlide';
-import GpuPrimerSlide from './slides/28_GpuPrimerSlide';
-import ControlPlaneCudaSlide from './slides/29_ControlPlaneCudaSlide';
-import CgoCodeSlide from './slides/30_CgoCodeSlide';
-import CudaHandleSlide from './slides/31_CudaHandleSlide';
-import KernelSequenceSlide from './slides/32_KernelSequenceSlide';
-import LaunchShapeSlide from './slides/33_LaunchShapeSlide';
-import BlockReductionSlide from './slides/34_BlockReductionSlide';
-import MemoryJourneySlide from './slides/35_MemoryJourneySlide';
-import NsightSystemsSlide from './slides/36_NsightSystemsSlide';
-import NsightComputeSlide from './slides/37_NsightComputeSlide';
-import ParityBenchmarkSlide from './slides/38_ParityBenchmarkSlide';
-import FinalHeldOutSlide from './slides/39_FinalHeldOutSlide';
-import FinalApplicationSlide from './slides/40_FinalApplicationSlide';
-import ClosingSlide from './slides/41_ClosingSlide';
+import StrategyGoWordleSlide from './slides/09_StrategyGoWordleSlide';
+import WorstCaseFeedbackSlide from './slides/10_WorstCaseFeedbackSlide';
+import CandidateShortlistSlide from './slides/11_CandidateShortlistSlide';
+import TeacherRuleSlide from './slides/12_TeacherRuleSlide';
+import TeacherCodeSlide from './slides/13_TeacherCodeSlide';
+import WorkerPoolSlide from './slides/14_WorkerPoolSlide';
+import SyntheticExampleSlide from './slides/15_SyntheticExampleSlide';
+import CorpusSplitSlide from './slides/16_CorpusSplitSlide';
+import ActDividerTrainingSlide from './slides/17_ActDividerSlide';
+import CandidateStatsSlide from './slides/18_CandidateStatsSlide';
+import ModelInputsSlide from './slides/19_ModelInputsSlide';
+import PolicyArchitectureSlide from './slides/20_PolicyArchitectureSlide';
+import PolicyOutputSlide from './slides/21_PolicyOutputSlide';
+import BackpropagationSlide from './slides/22_BackpropagationSlide';
+import ImitationLearningSlide from './slides/23_ImitationLearningSlide';
+import GoMLXTrainingSlide from './slides/24_GoMLXTrainingSlide';
+import ProofStagesSlide from './slides/25_ProofStagesSlide';
+import TensorBoardSlide from './slides/26_TensorBoardSlide';
+import TrainingResultsSlide from './slides/27_TrainingResultsSlide';
+import ActDividerInferenceSlide from './slides/28_ActDividerSlide';
+import PivotExportSlide from './slides/29_PivotExportSlide';
+import GpuPrimerSlide from './slides/30_GpuPrimerSlide';
+import ControlPlaneCudaSlide from './slides/31_ControlPlaneCudaSlide';
+import CgoCodeSlide from './slides/32_CgoCodeSlide';
+import CudaHandleSlide from './slides/33_CudaHandleSlide';
+import KernelSequenceSlide from './slides/34_KernelSequenceSlide';
+import LaunchShapeSlide from './slides/35_LaunchShapeSlide';
+import BlockReductionSlide from './slides/36_BlockReductionSlide';
+import MemoryJourneySlide from './slides/37_MemoryJourneySlide';
+import NsightSystemsSlide from './slides/38_NsightSystemsSlide';
+import NsightComputeSlide from './slides/39_NsightComputeSlide';
+import ParityBenchmarkSlide from './slides/40_ParityBenchmarkSlide';
+import FinalHeldOutSlide from './slides/41_FinalHeldOutSlide';
+import FinalApplicationSlide from './slides/42_FinalApplicationSlide';
+import ClosingSlide from './slides/43_ClosingSlide';
 
 export const slides: SlideDefinition[] = [
   {
@@ -123,6 +125,26 @@ export const slides: SlideDefinition[] = [
       'One reproducibility lesson: the exact historical frequency cutoff was not retained, so the final lists and their stable IDs became the artifact of record.',
     ],
     title: 'Where the words came from',
+  },
+  {
+    content: <StrategyGoWordleSlide />,
+    notes: [
+      'Before the teacher loop, define the three terms we will use for the rest of the data story.',
+      'A shortlist is the remaining possible solution set. Feedback is the green, yellow, and grey tile pattern for a guess.',
+      'Worst-case feedback is the pattern whose bucket carries the largest share of the shortlist into the next state.',
+      'The teacher chooses actions by protecting against that largest carry-over.',
+    ],
+    title: 'Strategy for the Go Wordle player',
+  },
+  {
+    content: <WorstCaseFeedbackSlide />,
+    notes: [
+      'Reuse the five-word shortlist from the earlier RAISE example: SCARE, SHARE, SNARE, SPARE, and STARE.',
+      'For SCARE, the worst-case pattern is G-GGG. Four of the five possible solutions produce it, so eighty percent of the shortlist carries over.',
+      'For CHANT, the largest bucket is only one word, but five feedback patterns tie for that size. One of five carries over: twenty percent.',
+      'This is the teacher’s minimax intuition before we show the implementation: prefer the action with the smaller largest bucket.',
+    ],
+    title: 'Worst-case feedback chooses the probe',
   },
   {
     content: <CandidateShortlistSlide />,
