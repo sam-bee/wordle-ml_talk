@@ -4,6 +4,12 @@ You are to assist in creating the slideshow for a talk.
 
 
 
+## Tools
+
+Use the playwright-cli skill if you want to look at the website.
+
+
+
 ## Talk Overview
 
 This is a one-hour talk. The audience is to be a large group of Go developers. No prior knowledge of machine learning or
