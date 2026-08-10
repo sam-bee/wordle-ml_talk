@@ -20,8 +20,8 @@ const VocabularySlide: React.FC = () => (
           </div>
           <div className="border-t border-border pt-6">
             <p className="font-mono text-4xl font-bold text-text">12,947</p>
-            <p className="mt-2 text-xl font-semibold text-text">accepted guesses</p>
-            <p className="mt-1 text-lg leading-relaxed text-muted">The historic accepted list; this project evaluates the fixed policy vocabulary instead.</p>
+            <p className="mt-2 text-xl font-semibold text-text">legal guesses</p>
+            <p className="mt-1 text-lg leading-relaxed text-muted">Too large for our model's action space</p>
           </div>
         </div>
       </Panel>
@@ -35,13 +35,13 @@ const VocabularySlide: React.FC = () => (
           <span className="text-3xl text-muted">+</span>
           <p className="font-mono text-5xl font-bold text-accent">2,430</p>
         </div>
-        <p className="mt-3 text-xl font-semibold text-text">all solutions + additional probe words</p>
+        <p className="mt-3 text-xl font-semibold text-text">all solutions + additional common words</p>
         <p className="mt-3 text-lg leading-relaxed text-muted">
           The additions are selected from <strong className="text-text">SUBTLEX-US</strong> frequencies: American film subtitles, a 51-million-word corpus.
         </p>
         <div className="mt-auto rounded-2xl border border-primary/30 bg-primary/10 px-6 py-5">
           <p className="font-mono text-5xl font-bold text-primary">4,739</p>
-          <p className="mt-2 text-xl font-semibold text-text">stable output positions — one score, one word</p>
+          <p className="mt-2 text-xl font-semibold text-text">words in the action space</p>
         </div>
       </Panel>
     </div>

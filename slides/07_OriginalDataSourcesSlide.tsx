@@ -9,7 +9,7 @@ const OriginalDataSourcesSlide: React.FC = () => (
     <SlideHeader
       kicker="Original data sources"
       title="Two sources shape the action vocabulary"
-      subtitle="Before training, we had to decide which five-letter words the Go player could see."
+      subtitle="Establishing a vocabulary of 5-letter words."
     />
 
     <div className="mt-7 grid flex-1 grid-cols-[1fr_1.3fr] gap-7">
@@ -20,7 +20,7 @@ const OriginalDataSourcesSlide: React.FC = () => (
         </div>
         <h3 className="mt-6 text-3xl font-bold text-text">New York Times Wordle</h3>
         <p className="mt-2 text-lg leading-relaxed text-muted">
-          A browser-JavaScript snapshot supplied the historic Wordle lists that anchor the game vocabulary.
+          Allowed guesses and possible answers, taken from the NYT website
         </p>
         <div className="mt-6 grid grid-cols-2 gap-4">
           <div className="rounded-2xl border border-border bg-surface p-4">
@@ -29,12 +29,9 @@ const OriginalDataSourcesSlide: React.FC = () => (
           </div>
           <div className="rounded-2xl border border-border bg-surface p-4">
             <p className="font-mono text-3xl font-bold text-accent">12,947</p>
-            <p className="mt-1 text-base text-muted">historic accepted guesses</p>
+            <p className="mt-1 text-base text-muted">legal guesses</p>
           </div>
         </div>
-        <p className="mt-auto pt-5 text-base leading-relaxed text-muted">
-          The project’s fixed policy vocabulary keeps every solution and adds only selected probe words.
-        </p>
       </Panel>
 
       <Panel className="flex h-full flex-col p-6">
@@ -63,7 +60,7 @@ const OriginalDataSourcesSlide: React.FC = () => (
     </div>
 
     <Callout className="mt-6" tone="accent">
-      These are the original data sources—not training examples. The Go pipeline turns them into a reproducible, fixed action vocabulary.
+      Original vocabulary of 5-letter words
     </Callout>
   </SlideFrame>
 );
