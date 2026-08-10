@@ -73,7 +73,7 @@ export const slides: SlideDefinition[] = [
     title: 'Contents',
   },
   {
-    content: <ActDividerDataSlide active="data" number="01" title="Data" promise="Build a slow, deliberate expert in Go—then freeze its decisions as examples." />,
+    content: <ActDividerDataSlide active="data" number="01" title="Data" promise="Code a wordle player in Go, and use it to generate training data" />,
     notes: [
       'Act one is Data.',
       'On the full route, we are moving from the Go game engine through the teacher to a frozen corpus.',

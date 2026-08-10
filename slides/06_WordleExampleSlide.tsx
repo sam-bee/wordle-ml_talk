@@ -36,7 +36,7 @@ const WordleExampleSlide: React.FC<WordleExampleSlideProps> = ({ visibleGuessCou
           A worked game
         </p>
         <h2 className="mt-2 text-6xl font-bold tracking-tight text-text">
-          Not every guess is an answer
+          Probe guesses give more information
         </h2>
       </header>
 
@@ -69,7 +69,7 @@ const WordleExampleSlide: React.FC<WordleExampleSlideProps> = ({ visibleGuessCou
             <div>
               <h3 className="text-2xl font-semibold text-text">CHANT is a probe</h3>
               <p className="mt-1 text-lg leading-relaxed text-muted">
-                It cannot be the answer—but it tests four new letters.
+                Probe guess to test for C, H, N, T.
               </p>
             </div>
           </div>

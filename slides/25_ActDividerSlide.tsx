@@ -21,7 +21,7 @@ const ActDividerSlide: React.FC<ActDividerSlideProps> = ({ active, number, promi
   <SlideFrame className="justify-between">
     <div className="flex items-start justify-between gap-8">
       <p className="font-mono text-2xl font-bold tracking-[0.18em] text-primary">ACT {number}</p>
-      <p className="max-w-md text-right text-lg leading-relaxed text-muted">One linear route from a Wordle state to a running application.</p>
+      <p className="max-w-md text-right text-lg leading-relaxed text-muted">Training a model to play Wordle, with Go every step of the way</p>
     </div>
 
     <div className="my-auto max-w-6xl">
