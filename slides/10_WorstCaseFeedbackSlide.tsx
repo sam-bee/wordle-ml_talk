@@ -1,8 +1,14 @@
 import React from 'react';
 
+import WordleGuessGrid, { type WordleGuess } from '../components/WordleGuessGrid';
 import { Callout, Panel, SlideFrame, SlideHeader } from '../components/SlidePrimitives';
 
 const SHORTLIST = ['SCARE', 'SHARE', 'SNARE', 'SPARE', 'STARE'];
+
+const FIRST_GUESS: WordleGuess = {
+  letters: 'RAISE',
+  states: ['present', 'present', 'absent', 'present', 'correct'],
+};
 
 const WorstCaseFeedbackSlide: React.FC = () => (
   <SlideFrame>
@@ -15,8 +21,10 @@ const WorstCaseFeedbackSlide: React.FC = () => (
     <div className="mt-7 grid flex-1 grid-cols-[0.78fr_1.22fr] items-center gap-8">
       <Panel className="flex h-full flex-col p-7">
         <p className="text-base font-semibold uppercase tracking-[0.2em] text-primary">Current shortlist</p>
-        <p className="mt-3 text-xl text-muted">after the first guess: <span className="font-mono text-text">RAISE</span></p>
-        <div className="mt-7 grid grid-cols-1 gap-3">
+        <div className="mt-5">
+          <WordleGuessGrid guesses={[FIRST_GUESS]} />
+        </div>
+        <div className="mt-6 grid grid-cols-1 gap-3">
           {SHORTLIST.map(word => (
             <div key={word} className="rounded-2xl border border-border bg-elevated/60 px-5 py-3 font-mono text-2xl font-bold tracking-[0.12em] text-text">
               {word}
