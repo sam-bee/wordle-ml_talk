@@ -5,7 +5,7 @@ import { Panel, SlideFrame, SlideHeader } from '../components/SlidePrimitives';
 const VocabularySlide: React.FC = () => (
   <SlideFrame>
     <SlideHeader
-      kicker="Choose the words the model can name"
+      kicker="Choose the words the model can play"
       title="The game’s dictionary is not the model’s action space"
       subtitle="A Wordle answer and a useful information-gathering guess are different things."
     />
