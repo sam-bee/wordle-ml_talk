@@ -5,21 +5,21 @@ import { Panel, SlideFrame, SlideHeader } from '../components/SlidePrimitives';
 const TERMS = [
   {
     number: '01',
-    term: 'shortlist',
+    term: 'Shortlist',
     definition: 'the remaining possible solutions at a point in the game',
     tone: 'border-primary/40 bg-primary/10',
     accent: 'text-primary',
   },
   {
     number: '02',
-    term: 'feedback',
+    term: 'Feedback',
     definition: 'the green, yellow, and grey tiles returned by a guess',
     tone: 'border-accent/40 bg-accent/10',
     accent: 'text-accent',
   },
   {
     number: '03',
-    term: 'worst-case feedback',
+    term: 'Worst-case feedback',
     definition: 'the feedback pattern that leaves the largest carry-over shortlist',
     tone: 'border-danger/40 bg-danger/10',
     accent: 'text-danger',
@@ -30,7 +30,7 @@ const StrategyGoWordleSlide: React.FC = () => (
   <SlideFrame>
     <SlideHeader
       kicker="The teacher’s vocabulary"
-      title="Strategy for the Go Wordle player"
+      title="Strategy for the Go Wordle Player"
       subtitle="Three terms are enough to describe how the slow teacher chooses a useful next guess."
     />
 

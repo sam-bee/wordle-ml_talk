@@ -11,39 +11,38 @@ import OriginalDataSourcesSlide from './slides/07_OriginalDataSourcesSlide';
 import VocabularySlide from './slides/08_VocabularySlide';
 import StrategyGoWordleSlide from './slides/09_StrategyGoWordleSlide';
 import WorstCaseFeedbackSlide from './slides/10_WorstCaseFeedbackSlide';
-import CandidateShortlistSlide from './slides/11_CandidateShortlistSlide';
-import TeacherRuleSlide from './slides/12_TeacherRuleSlide';
-import TeacherCodeSlide from './slides/13_TeacherCodeSlide';
-import WorkerPoolSlide from './slides/14_WorkerPoolSlide';
-import SyntheticExampleSlide from './slides/15_SyntheticExampleSlide';
-import CorpusSplitSlide from './slides/16_CorpusSplitSlide';
-import ActDividerTrainingSlide from './slides/17_ActDividerSlide';
-import CandidateStatsSlide from './slides/18_CandidateStatsSlide';
-import ModelInputsSlide from './slides/19_ModelInputsSlide';
-import PolicyArchitectureSlide from './slides/20_PolicyArchitectureSlide';
-import PolicyOutputSlide from './slides/21_PolicyOutputSlide';
-import BackpropagationSlide from './slides/22_BackpropagationSlide';
-import ImitationLearningSlide from './slides/23_ImitationLearningSlide';
-import GoMLXTrainingSlide from './slides/24_GoMLXTrainingSlide';
-import ProofStagesSlide from './slides/25_ProofStagesSlide';
-import TensorBoardSlide from './slides/26_TensorBoardSlide';
-import TrainingResultsSlide from './slides/27_TrainingResultsSlide';
-import ActDividerInferenceSlide from './slides/28_ActDividerSlide';
-import PivotExportSlide from './slides/29_PivotExportSlide';
-import GpuPrimerSlide from './slides/30_GpuPrimerSlide';
-import ControlPlaneCudaSlide from './slides/31_ControlPlaneCudaSlide';
-import CgoCodeSlide from './slides/32_CgoCodeSlide';
-import CudaHandleSlide from './slides/33_CudaHandleSlide';
-import KernelSequenceSlide from './slides/34_KernelSequenceSlide';
-import LaunchShapeSlide from './slides/35_LaunchShapeSlide';
-import BlockReductionSlide from './slides/36_BlockReductionSlide';
-import MemoryJourneySlide from './slides/37_MemoryJourneySlide';
-import NsightSystemsSlide from './slides/38_NsightSystemsSlide';
-import NsightComputeSlide from './slides/39_NsightComputeSlide';
-import ParityBenchmarkSlide from './slides/40_ParityBenchmarkSlide';
-import FinalHeldOutSlide from './slides/41_FinalHeldOutSlide';
-import FinalApplicationSlide from './slides/42_FinalApplicationSlide';
-import ClosingSlide from './slides/43_ClosingSlide';
+import ScoreGuessPseudocodeSlide from './slides/11_ScoreGuessPseudocodeSlide';
+import ChooseGuessPseudocodeSlide from './slides/12_ChooseGuessPseudocodeSlide';
+import WorkerPoolSlide from './slides/13_WorkerPoolSlide';
+import SyntheticExampleSlide from './slides/14_SyntheticExampleSlide';
+import CorpusSplitSlide from './slides/15_CorpusSplitSlide';
+import ActDividerTrainingSlide from './slides/16_ActDividerSlide';
+import CandidateStatsSlide from './slides/17_CandidateStatsSlide';
+import ModelInputsSlide from './slides/18_ModelInputsSlide';
+import PolicyArchitectureSlide from './slides/19_PolicyArchitectureSlide';
+import PolicyOutputSlide from './slides/20_PolicyOutputSlide';
+import BackpropagationSlide from './slides/21_BackpropagationSlide';
+import ImitationLearningSlide from './slides/22_ImitationLearningSlide';
+import GoMLXTrainingSlide from './slides/23_GoMLXTrainingSlide';
+import ProofStagesSlide from './slides/24_ProofStagesSlide';
+import TensorBoardSlide from './slides/25_TensorBoardSlide';
+import TrainingResultsSlide from './slides/26_TrainingResultsSlide';
+import ActDividerInferenceSlide from './slides/27_ActDividerSlide';
+import PivotExportSlide from './slides/28_PivotExportSlide';
+import GpuPrimerSlide from './slides/29_GpuPrimerSlide';
+import ControlPlaneCudaSlide from './slides/30_ControlPlaneCudaSlide';
+import CgoCodeSlide from './slides/31_CgoCodeSlide';
+import CudaHandleSlide from './slides/32_CudaHandleSlide';
+import KernelSequenceSlide from './slides/33_KernelSequenceSlide';
+import LaunchShapeSlide from './slides/34_LaunchShapeSlide';
+import BlockReductionSlide from './slides/35_BlockReductionSlide';
+import MemoryJourneySlide from './slides/36_MemoryJourneySlide';
+import NsightSystemsSlide from './slides/37_NsightSystemsSlide';
+import NsightComputeSlide from './slides/38_NsightComputeSlide';
+import ParityBenchmarkSlide from './slides/39_ParityBenchmarkSlide';
+import FinalHeldOutSlide from './slides/40_FinalHeldOutSlide';
+import FinalApplicationSlide from './slides/41_FinalApplicationSlide';
+import ClosingSlide from './slides/42_ClosingSlide';
 
 export const slides: SlideDefinition[] = [
   {
@@ -134,7 +133,7 @@ export const slides: SlideDefinition[] = [
       'Worst-case feedback is the pattern whose bucket carries the largest share of the shortlist into the next state.',
       'The teacher chooses actions by protecting against that largest carry-over.',
     ],
-    title: 'Strategy for the Go Wordle player',
+    title: 'Strategy for the Go Wordle Player',
   },
   {
     content: <WorstCaseFeedbackSlide />,
@@ -145,35 +144,28 @@ export const slides: SlideDefinition[] = [
       'CHANT produces five tied feedback buckets of one answer each. Even in its worst case, only one of five possibilities—twenty percent—carries over.',
       'CHANT is the better guess because its worst-case carry-over is lower: one remaining possibility, not four.',
     ],
-    title: 'Worst-case feedback chooses the probe',
+    title: 'Minimise the worst-case carry-over',
   },
   {
-    content: <CandidateShortlistSlide />,
+    content: <ScoreGuessPseudocodeSlide />,
     notes: [
-      'The board is for humans. The program carries the shortlist: every solution consistent with all feedback so far.',
-      'After a guess, the authoritative Go engine computes feedback and filters that list. The same candidate IDs later become a compact 289-byte bitset.',
-      'The teacher, the dataset encoder, training evaluation, and live play all begin from this same state definition.',
+      'Here is the whole inner loop in Go-shaped pseudocode. Take one proposed guess and imagine that each word in the shortlist is the hidden answer.',
+      'Each possible answer produces one feedback pattern. Answers that produce the same pattern enter the same bucket, because that is exactly the shortlist we would carry into the next turn if we received that clue.',
+      'The score is the largest bucket: the least helpful feedback that can validly happen. SCARE has buckets of four and one, so its worst case is four.',
+      'CHANT produces five different feedback patterns, each with one answer. Five patterns tie, but the worst-case size is still only one.',
     ],
-    title: 'The shortlist is the state',
+    title: 'Score a guess by its largest feedback bucket',
   },
   {
-    content: <TeacherRuleSlide />,
+    content: <ChooseGuessPseudocodeSlide />,
     notes: [
-      'The teacher evaluates every unused action against the current shortlist.',
-      'A proposed guess partitions the remaining solutions by the feedback we would receive. Five tiles with three states give at most 243 feedback buckets.',
-      'We score the guess by its largest bucket—the most candidates that could remain in the worst case—and prefer the smallest such worst case.',
-      'Ties prefer an action that might itself be the answer, then the stable lower action ID. This is deterministic minimax-shaped search, and probe words remain eligible.',
+      'Now put that scoring function inside one outer loop. Evaluate every unused action and retain the action with the smallest worst-case shortlist.',
+      'The loop searches unused actions, not just the shortlist. That distinction is why CHANT remains eligible even though it cannot be the answer.',
+      'This is a one-step minimax-shaped rule: minimise the maximum next-turn shortlist. It is not a recursive search over the rest of the game, and the answer is not an adversary; we simply plan for the least helpful valid clue.',
+      'The production teacher retains the top sixteen actions. Exact ties prefer an action that is still a possible answer, then the lower stable word ID.',
+      'At this point we have built a deliberately slow expert in Go: given a Wordle state, we know exactly what it will choose and why.',
     ],
-    title: 'Choose the safest worst case',
-  },
-  {
-    content: <TeacherCodeSlide />,
-    notes: [
-      'This is the real inner loop from the Go teacher.',
-      'The feedback matrix has already precomputed the pattern for every action-and-solution pair. For each unused guess, the loop buckets the current shortlist and remembers the largest bucket.',
-      'The production function continues by calculating the reduction score and inserting the action into a stable top sixteen. The slide deliberately shows only the part needed to explain the rule.',
-    ],
-    title: 'The teacher is a Go loop',
+    title: 'Choose the action with the smallest worst case',
   },
   {
     content: step => <WorkerPoolSlide step={step} />,
