@@ -86,10 +86,11 @@ export interface MetricCardProps extends ClassNameProps {
   label: React.ReactNode;
   value: React.ReactNode;
   detail?: React.ReactNode;
+  padding?: PanelProps['padding'];
 }
 
-export const MetricCard: React.FC<MetricCardProps> = ({ className = '', detail, label, value }) => (
-  <Panel className={`flex min-h-36 flex-col justify-between ${className}`}>
+export const MetricCard: React.FC<MetricCardProps> = ({ className = '', detail, label, padding, value }) => (
+  <Panel className={`flex min-h-36 flex-col justify-between ${className}`} padding={padding}>
     <p className="text-base font-semibold uppercase tracking-[0.2em] text-muted">{label}</p>
     <p className="mt-4 text-4xl font-extrabold tracking-tight text-primary sm:text-5xl">{value}</p>
     {detail && <p className="mt-2 text-xl leading-relaxed text-muted">{detail}</p>}

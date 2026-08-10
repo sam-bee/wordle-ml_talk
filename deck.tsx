@@ -1,37 +1,37 @@
 import React from 'react';
 
 import type { SlideDefinition } from './types';
-import AblationResultsSlide from './slides/AblationResultsSlide';
-import CandidateBonusSlide from './slides/CandidateBonusSlide';
+import BlockReductionSlide from './slides/BlockReductionSlide';
 import CandidateStatsSlide from './slides/CandidateStatsSlide';
-import ClosingSlide from './slides/ClosingSlide';
+import CgoCodeSlide from './slides/CgoCodeSlide';
 import ContentsSlide from './slides/ContentsSlide';
-import CudaSmokeSlide from './slides/CudaSmokeSlide';
-import CurrentCudaStatusSlide from './slides/CurrentCudaStatusSlide';
-import DataProvenanceSlide from './slides/DataProvenanceSlide';
-import EvidencePipelineSlide from './slides/EvidencePipelineSlide';
-import FourInputsSlide from './slides/FourInputsSlide';
-import FrozenCorpusSlide from './slides/FrozenCorpusSlide';
-import GameResultsSlide from './slides/GameResultsSlide';
-import GoMLXBridgeSlide from './slides/GoMLXBridgeSlide';
-import HostDeviceRolesSlide from './slides/HostDeviceRolesSlide';
+import ControlPlaneCudaSlide from './slides/ControlPlaneCudaSlide';
+import CorpusSplitSlide from './slides/CorpusSplitSlide';
+import CudaHandleSlide from './slides/CudaHandleSlide';
+import DestinationPreviewSlide from './slides/DestinationPreviewSlide';
+import FinalApplicationSlide from './slides/FinalApplicationSlide';
+import FinalHeldOutSlide from './slides/FinalHeldOutSlide';
+import GoMLXTrainingSlide from './slides/GoMLXTrainingSlide';
 import ImitationLearningSlide from './slides/ImitationLearningSlide';
-import LearningProgressSlide from './slides/LearningProgressSlide';
-import LessonsAndRoadmapSlide from './slides/LessonsAndRoadmapSlide';
-import LiveDemoSlide from './slides/LiveDemoSlide';
-import ModelTaskSlide from './slides/ModelTaskSlide';
-import ParameterCountSlide from './slides/ParameterCountSlide';
+import KernelSequenceSlide from './slides/KernelSequenceSlide';
+import LaunchShapeSlide from './slides/LaunchShapeSlide';
+import MemoryJourneySlide from './slides/MemoryJourneySlide';
+import ModelInputsSlide from './slides/ModelInputsSlide';
+import NsightComputeSlide from './slides/NsightComputeSlide';
+import NsightSystemsSlide from './slides/NsightSystemsSlide';
+import ParityBenchmarkSlide from './slides/ParityBenchmarkSlide';
+import PivotExportSlide from './slides/PivotExportSlide';
 import PolicyArchitectureSlide from './slides/PolicyArchitectureSlide';
-import ProjectMapSlide from './slides/ProjectMapSlide';
+import PolicyOutputSlide from './slides/PolicyOutputSlide';
+import ProjectJourneySlide from './slides/ProjectJourneySlide';
 import ProofStagesSlide from './slides/ProofStagesSlide';
-import ReproEnvironmentSlide from './slides/ReproEnvironmentSlide';
-import ServingFlowSlide from './slides/ServingFlowSlide';
-import ServingGatesSlide from './slides/ServingGatesSlide';
-import SharedEncoderSlide from './slides/SharedEncoderSlide';
-import SolutionSplitSlide from './slides/SolutionSplitSlide';
+import SyntheticExampleSlide from './slides/SyntheticExampleSlide';
+import TeacherCodeSlide from './slides/TeacherCodeSlide';
+import TeacherRuleSlide from './slides/TeacherRuleSlide';
 import TitleSlide from './slides/TitleSlide';
-import ValidationLimitsSlide from './slides/ValidationLimitsSlide';
+import TrainingResultsSlide from './slides/TrainingResultsSlide';
 import VocabularySlide from './slides/VocabularySlide';
+import WorkerPoolSlide from './slides/WorkerPoolSlide';
 import WordleExampleSlide from './slides/WordleExampleSlide';
 import WordleOverviewSlide from './slides/WordleOverviewSlide';
 
@@ -39,10 +39,10 @@ export const slides: SlideDefinition[] = [
   {
     content: <TitleSlide />,
     notes: [
-      'Hello, everyone.',
-      "I'm Sam Burns, and today we're going from Go to the GPU.",
-      'We will use a real Wordle-solving project to connect familiar Go engineering with a learned policy executing on CUDA.',
-      '[Set expectations: this is a progress report grounded in the implementation and proof artifacts that exist today.]',
+      'Hello, everyone. I am Sam Burns.',
+      'This is the story of a Go program that teaches a compact model to play Wordle, trains it on a GPU, and then runs the fixed forward pass through hand-written CUDA behind cgo.',
+      'The important distinction up front: the successful training path used GoMLX, XLA, and CUDA. The later hand-written CUDA work replaces inference only.',
+      '[The target running time is 55 minutes, leaving five minutes for questions.]',
     ],
     speech: { cues: ['from Go to the GPU', 'integrating with CUDA'] },
     title: 'From Go to the GPU: Integrating with CUDA',
@@ -50,8 +50,9 @@ export const slides: SlideDefinition[] = [
   {
     content: <ContentsSlide />,
     notes: [
-      'We will start with the puzzle, turn it into data and a policy model, prove that model learns, and finish at the live Go-to-GPU serving boundary.',
-      '[This structure builds the machine-learning ideas gradually; no ML background is assumed.]',
+      'There is one linear route through the talk: Wordle, a Go teacher, synthetic examples, a compact model, GoMLX training, an explicit cgo/CUDA inference path, and finally the application.',
+      'Go will own the rules, data, orchestration, validation, selection, and serving. The GPU will own the dense numerical work.',
+      'By the end, we will follow one real inference request across the language and device boundary.',
     ],
     title: 'Contents',
   },
@@ -59,310 +60,313 @@ export const slides: SlideDefinition[] = [
     content: <WordleOverviewSlide />,
     notes: [
       'For anyone who has not played: Wordle chooses a secret five-letter word, and you have six attempts to find it.',
-      'After every guess, green means the correct letter in the correct place, yellow means the letter belongs elsewhere, and grey means it is absent.',
-      'PLANT gives one correctly placed letter and one misplaced letter. SHAPE uses that information, and GRAPE solves the example.',
-      'The loop—choose, observe, narrow—is the decision problem our model must learn.',
+      'Green means the right letter in the right place, yellow means the letter belongs elsewhere, and grey means it is absent.',
+      'Every feedback pattern narrows the remaining candidate solutions. That choose, observe, narrow loop is the decision problem.',
     ],
     title: 'Wordle in 60 seconds',
   },
   {
     content: step => <WordleExampleSlide visibleGuessCount={step + 1} />,
     notes: [
-      'Here is one more game, with SPARE as the secret answer.',
-      '[First reveal] RAISE leaves five possibilities: SCARE, SHARE, SNARE, SPARE, and STARE.',
-      '[Advance once] CHANT cannot be the answer because it does not end in E, but it tests four new letters and puts A in a new position.',
-      '[Advance again] SPARE solves the game on the third attempt.',
-      'This distinction drives the architecture: a useful action and a possible solution are not always the same thing.',
+      'Here is the idea that shapes the rest of the project.',
+      '[First reveal] RAISE leaves five possible answers: SCARE, SHARE, SNARE, SPARE, and STARE.',
+      '[Advance once] CHANT cannot be the answer, but it probes four fresh letters and places A somewhere new.',
+      '[Advance again] SPARE solves the game.',
+      'A useful next action is not always a possible answer. The model must be able to score both.',
     ],
     stepCount: 3,
     title: 'Not every guess is an answer',
   },
   {
-    content: <ModelTaskSlide />,
+    content: <DestinationPreviewSlide />,
     notes: [
-      'Translate Wordle into three ML words: state is what we know, action is a complete next guess, and a logit is one raw learned score.',
-      'The model does not predict letters one at a time. It emits one score for every word in a fixed 4,739-action vocabulary.',
-      'Go then applies availability rules and chooses the highest-scoring unused action.',
+      'This checked-in browser capture is where the story ends: ADEPT solved in three guesses through the direct CUDA/cgo backend on an RTX 5070 Ti.',
+      'It is a demo of the finished application, not training evidence and not a claim that the model was trained in hand-written CUDA.',
+      'Now we will build every part of the path behind this screen.',
     ],
-    title: 'Turn a board state into one useful next guess',
+    title: 'A working CUDA/cgo Wordle application',
   },
   {
-    content: <ProjectMapSlide />,
+    content: <ProjectJourneySlide />,
     notes: [
-      'The project is split into ordinary Go responsibilities: an authoritative game engine, a synthetic-data generator, the policy/training module, and a web visualizer.',
-      'Go owns the loop and the sources of truth. The model is a component inside that system, not the whole application.',
-      'This separation lets us test game rules, generated records, model inputs, and gameplay independently.',
+      'Keep this map in mind; we will return to it at the end.',
+      'The Go game engine is authoritative for feedback and the candidate shortlist. The Go teacher turns that state into ranked actions and the generator turns those decisions into examples.',
+      'GoMLX builds and trains the policy graph on CUDA. Later, the exported fixed model is served through one explicit cgo boundary.',
+      'The project is still a Go system. The GPU is a deliberately narrow numerical component.',
     ],
-    title: 'Go is the conductor',
+    title: 'Go is the control plane',
   },
   {
     content: <VocabularySlide />,
     notes: [
-      'The Wordle snapshot has 2,309 possible answers and 12,947 accepted guesses.',
-      'The first model deliberately scores a smaller fixed action set: every answer plus 2,430 additional words, for 4,739 actions.',
-      'All answers remain selectable, while probe guesses like CHANT can also receive a score.',
-      'A stable word at each output index makes checkpoints and datasets interpretable.',
+      'The Wordle snapshot contains 2,309 possible solutions and 12,947 accepted guesses.',
+      'The policy uses a fixed 4,739-action vocabulary: every solution plus 2,430 additional words selected using SUBTLEX-US frequencies from 51 million words of American film subtitles.',
+      'That choice admits probes while keeping every real answer selectable. It also imports the corpus biases, and the exact historical frequency cutoff was not recorded.',
+      'Stable IDs make datasets, checkpoints, exported tensors, and returned logits refer to the same words.',
     ],
-    title: 'An answer and a useful guess are different things',
+    title: 'Answers and useful guesses are different sets',
   },
   {
-    content: <DataProvenanceSlide />,
+    content: <TeacherRuleSlide />,
     notes: [
-      'The answer and accepted-guess lists came from Wordle browser code.',
-      'Extra action words were selected using SUBTLEX-US frequencies derived from 51 million words of American film subtitles.',
-      'That favours spoken vocabulary but imports names, slang, and corpus bias.',
-      'The exact historic frequency cutoff was not recorded. That missing decision is now an explicit reproducibility lesson.',
+      'The teacher evaluates every unused action against the current shortlist.',
+      'For a candidate guess, it groups the remaining solutions by their complete five-tile feedback pattern. There are three states per tile, so 3 to the fifth power gives 243 patterns.',
+      'The largest bucket is the worst case. The teacher prefers the guess with the smallest worst-case bucket.',
+      'Equal worst cases prefer a word that could still be the answer, then the lower canonical action ID. This remains deterministic while allowing probe guesses.',
     ],
-    title: 'The model inherits the dictionary’s decisions',
+    title: 'Choose the guess with the safest worst case',
   },
   {
-    content: <SolutionSplitSlide />,
+    content: <TeacherCodeSlide />,
     notes: [
-      'We split by hidden answer: 2,109 solutions for training, 100 for validation, and 100 held for one final test.',
-      'If we split generated rows instead, many states derived from the same hidden answer could appear on both sides.',
-      'There is a caveat: 190 of 2,445 unique validation states also appear in training because different answers can lead to the same encoded state. Their teacher labels agree.',
-      'That is state-distribution overlap, not solution-ID leakage. The final-test solutions remain sealed.',
+      'This is the actual core loop from the synthetic-data repository.',
+      'The feedback matrix has already calculated the pattern for every action and possible solution, so ranking reuses one row instead of recomputing Wordle rules.',
+      'For each unused guess, the loop counts the shortlist into feedback buckets and remembers the largest count.',
+      'The following code converts that value into the reduction ratio and inserts the action into the deterministic top 16.',
     ],
-    title: 'Split by secret solution, not by generated state',
+    title: 'The Go teacher loop',
   },
   {
-    content: <FrozenCorpusSlide />,
+    content: step => <WorkerPoolSlide step={step} />,
     notes: [
-      'Training consumes WDIT v3 release v0.1.0 as a frozen offline corpus.',
-      'It contains 52,726 training records, 1,600 mini records, and 2,500 records in each validation and final-test split.',
-      'The teacher ranking is already in those records; it is not doing expensive search inside the training hot path.',
-      'Freezing examples makes runs comparable and keeps the sealed final test out of ordinary inspection and training.',
+      '[First reveal] A jobs channel supplies hidden solution IDs.',
+      '[Advance once] A fixed worker pool generates all states for different solutions in parallel. The shared feedback matrix and teacher are immutable after construction.',
+      '[Advance again] Results are collected and sorted before writing. Each solution derives its random stream from the fixed seed and its solution ID, so changing worker count does not change the histories.',
+      'This is Go concurrency accelerating corpus construction; it is not parallel model inference.',
     ],
-    title: 'Freeze the examples before optimising',
+    stepCount: 3,
+    title: 'Parallel generation, deterministic artifacts',
   },
   {
-    content: <ReproEnvironmentSlide />,
+    content: <SyntheticExampleSlide />,
     notes: [
-      'The same containerized environment is part of the experiment, not just deployment packaging.',
-      'Compose exposes exactly one UUID-selected approved RTX 5070 Ti or RTX 5050, including the Laptop GPU variant.',
-      'The smoke check rejects every other visible device and requires compute capability 12.0.',
-      'This prevents a demo from silently running on a different card or backend.',
+      'One generated example represents an incomplete, internally consistent game state.',
+      'It stores the history, a 289-byte bitset of remaining solution IDs, and the teacher top 16 with reduction ratios and worst-case sizes.',
+      'The generator keeps states from normal teacher trajectories, then fills each depth bucket with random valid histories for the same hidden answer.',
+      'The teacher can deliberate expensively once. Training later reads a frozen target without running search in its hot path.',
     ],
-    title: 'Reproducibility starts with the device',
+    title: 'A state becomes a labelled example',
   },
   {
-    content: <CudaSmokeSlide />,
+    content: <CorpusSplitSlide />,
     notes: [
-      'Before debugging a neural network, prove the smallest CUDA path possible.',
-      'Allocate three floats on the device, copy 19 and 23 from the host, launch one thread, copy 42 back, and verify it.',
-      'The triple-chevron syntax describes the launch configuration: one block and one thread.',
-      'The kernel compiles specifically for sm_120. Every arrow on this slide is a real boundary we may later profile.',
+      'Split by hidden solution, not by generated row: 2,109 answers for training, 100 for validation, and 100 held for the final check.',
+      'WDIT v3 release v0.1.0 freezes 52,726 training records, 1,600 mini records, and 2,500 records in each validation and final-test corpus.',
+      'One caveat is retained honestly: 190 of 2,445 unique encoded validation states also occur in training, with agreeing teacher labels. That is state-distribution overlap, not solution-ID leakage.',
+      'The separate 2,500-record final WDIT corpus remains unopened throughout the project described here.',
     ],
-    title: 'A CUDA kernel, end to end',
+    title: 'Freeze the corpus and split by hidden answer',
   },
   {
-    content: <GoMLXBridgeSlide />,
+    content: <ModelInputsSlide />,
     notes: [
-      'The second smoke test stays in Go: describe Euclidean distance as a graph and evaluate the distance from [1,2] to [4,6].',
-      'GoMLX builds the symbolic graph; XLA and PJRT compile and dispatch it to the CUDA backend; the answer is 5.',
-      'This is the bridge used by the current policy proof. It gives real CUDA execution without a hand-written policy kernel.',
+      'One shared Go encoder consumes the 289-byte LSB-first candidate bitset and a turn from zero through five.',
+      'It emits the 2,309-value candidate mask, 209 candidate statistics, the integer turn, and the 4,739-value remaining-action mask.',
+      'That final mask identifies actions which are still possible solutions. It is a learned feature, not the availability or legality mask.',
+      'The same package expands generated records and live board states, preventing representation drift between training and serving.',
     ],
-    title: 'Go describes the graph; CUDA runs it',
-  },
-  {
-    content: <CurrentCudaStatusSlide />,
-    notes: [
-      'This is the implementation status today.',
-      'The Go orchestration, raw CUDA smoke test, and GoMLX/XLA policy training and inference on CUDA are implemented.',
-      'The policy itself is not yet handwritten CUDA, and there is no policy cgo bridge or custom training kernel.',
-      'Those are future steps to take only where profiling justifies the extra boundary and maintenance cost.',
-    ],
-    title: 'What works today—and what is next',
-  },
-  {
-    content: <SharedEncoderSlide />,
-    notes: [
-      'The host-side boundary is intentionally tiny: a 289-byte LSB-first bitset of remaining solution IDs plus a turn from zero through five.',
-      'One Go package expands that representation for both generated training records and live play.',
-      'It rejects empty candidate sets and non-zero padding bits instead of passing malformed state into the model.',
-      'Five fixed word lists and normalized SHA-256 hashes make every ID verifiable across repositories and runs.',
-    ],
-    title: 'One board state, one encoder',
-  },
-  {
-    content: <FourInputsSlide />,
-    notes: [
-      'The shared encoder emits four model-facing values.',
-      'CandidateMask identifies compatible answers; CandidateStats summarizes their letter patterns; Turn distinguishes early and late play; RemainingActionMask marks actions that are still possible answers.',
-      'That final mask is a feature for a learned bonus. It is not a legality mask.',
-      'A tensor here just means a typed, shaped block of numbers with a stable contract.',
-    ],
-    title: 'Four inputs, one decision',
+    title: 'One compact state becomes four tensors',
   },
   {
     content: <CandidateStatsSlide />,
     notes: [
-      'The 2,309-value candidate mask is divided by its row sum before projection.',
-      'That makes each of the first 96 learned features a mean over remaining words rather than a sum that scales with shortlist size.',
-      'The 209 explicit statistics preserve 130 position frequencies, 78 letter-multiplicity frequencies, and one normalized log candidate count.',
-      'Normalization removes magnitude on purpose, so candidate count is added back explicitly.',
+      'The candidate mask is divided by its row sum before projection, so its 96 learned outputs become a mean over remaining words.',
+      'The 209 explicit statistics contain 130 positional frequencies, 78 letter-multiplicity frequencies, and one normalized log candidate count.',
+      'The explicit count restores the magnitude that normalization intentionally removed.',
     ],
     title: 'Mean shape, plus the missing size',
   },
   {
     content: step => <PolicyArchitectureSlide step={step} />,
     notes: [
-      '[First reveal] Project the candidate mask to 96 values, the 209 statistics to 48, and the six possible turns to a 16-value embedding.',
-      '[Advance once] Concatenate 96 + 48 + 16 into a width-160 state, then pass it through one two-layer residual block.',
-      '[Advance again] Produce 4,739 ordinary action logits and one scalar beta for the candidate bonus.',
-      'This is deliberately compact: enough structure to learn useful interactions without turning the talk into a catalogue of layers.',
+      '[First reveal] Project the candidate mask to 96 features, the statistics to 48, and the turn through a 16-value embedding.',
+      '[Advance once] Concatenate them into a width-160 state, then run one two-layer residual block with an identity skip.',
+      '[Advance again] Produce 4,739 base action logits plus one scalar candidate bonus.',
+      'This is deliberately small: no attention, dropout, normalization, value head, or giant language model.',
     ],
     stepCount: 3,
-    title: 'A small network with a Wordle-shaped output',
+    title: 'A compact Wordle policy',
   },
   {
-    content: <CandidateBonusSlide />,
+    content: <PolicyOutputSlide />,
     notes: [
-      'Every action receives an ordinary base logit.',
-      'The model also learns one beta value for the current state and adds it only to actions that remain possible answers.',
-      'A probe like CHANT has a zero remaining-action mask, but it keeps its base logit and stays playable.',
-      'Legality and repeated-guess handling live in a separate availability mask outside this feature.',
+      'Each action keeps an ordinary base logit. The network also learns one beta for the current state and adds it only where the action remains a candidate solution.',
+      'A probe like CHANT receives no candidate bonus but keeps its base score and remains playable.',
+      'The exact architecture has 1,046,596 FP32 trainable parameters, occupying 4,186,384 bytes, or about 3.99 MiB.',
+      'The 4,739-wide output layer contains most of the weights, so the action vocabulary is part of the architecture.',
     ],
-    title: 'CHANT can still be a great action',
-  },
-  {
-    content: <ParameterCountSlide />,
-    notes: [
-      'With 2,309 solutions and 4,739 actions, the exact count is 1,046,596 FP32 trainable parameters.',
-      'That is just under four MiB of weight storage.',
-      'Most weights sit in the 4,739-wide output layer, so the vocabulary is an architectural decision—not merely a data file.',
-    ],
-    title: 'The vocabulary is part of the architecture',
+    title: '4,739 scores and one learned nudge',
   },
   {
     content: <ImitationLearningSlide />,
     notes: [
-      'This first proof uses imitation learning: frozen records say which action the teacher ranked first for each state.',
-      'The shared encoder produces the four inputs, and a separate availability mask removes only guesses already used in that game.',
-      'Masked sparse cross-entropy adjusts FP32 weights with Adam; global gradient norm is clipped at 5; the deterministic seed is 20260808.',
-      'This is supervised copying of a teacher, not reinforcement learning and not search in the hot training loop.',
+      'Training is supervised imitation, not reinforcement learning.',
+      'The frozen teacher top-one action is the loss target. The stored top 16 is used for agreement metrics, not as sixteen simultaneous targets.',
+      'A separate availability mask turns only already-used actions into negative infinity before selection and loss. It must not be confused with the candidate-bonus input.',
+      'Adam updates FP32 weights; global gradient norm is clipped at five; the deterministic seed is 20260808.',
     ],
     title: 'Teach the policy one good guess at a time',
   },
   {
+    content: <GoMLXTrainingSlide />,
+    notes: [
+      'This is real code from the policy graph: concatenate the branches, run the residual trunk, then produce base logits and beta.',
+      'GoMLX lets Go describe the graph. The trainer adds masked cross-entropy and backpropagation, and XLA/PJRT compiles the graph for the CUDA backend.',
+      'This was the route that produced the successful checkpoint. The hand-written CUDA code we will see later implements only the fixed forward pass.',
+    ],
+    title: 'Go builds the graph; XLA runs it on CUDA',
+  },
+  {
     content: <ProofStagesSlide />,
     notes: [
-      'The proof climbs three fixed stages.',
-      'Overfit asks whether 400 updates can memorize one batch. Mini exercises a 1,000-update small corpus and must stop normally at update 500, then resume the same run.',
-      'Full performs 2,000 updates with batch size 256. The learning rates, batch sizes, seed, and cadence are fixed before the run.',
-      'These deliberately boring gates make failures diagnosable and reruns comparable.',
+      'The proof climbs a fixed ladder: overfit one batch for 400 updates, exercise a 1,000-update mini corpus with a required stop and resume at 500, then run the 2,000-update full stage.',
+      'Validation and checkpointing happen every 100 updates, while TensorBoard telemetry is written every 10.',
+      'Each run retains immutable configuration, initial, latest, and best checkpoints, logs, events, and evaluation artifacts.',
+      'These deliberately boring gates make the result reproducible and failures diagnosable.',
     ],
-    title: 'A ladder of deliberately boring experiments',
+    title: 'A ladder of fixed experiments',
   },
   {
-    content: <EvidencePipelineSlide />,
+    content: <TrainingResultsSlide />,
     notes: [
-      'Each run saves an initial checkpoint at update zero, latest for resume, and best for the lowest validation loss.',
-      'Validation and checkpointing happen every 100 updates; training telemetry is emitted every 10.',
-      'Runs carry immutable config and metadata, state, logs, metrics, events, and checkpoints.',
-      'The report command consumes the three run IDs, re-verifies TensorBoard events and game tags, and writes the checked-in report without rerunning training.',
+      'Lead with gameplay: on the same 100 validation solutions, the proof moved from 4 solved games to 97, and mean guesses fell from 5.86 to 3.65.',
+      'Validation loss fell from 8.3005 to 3.1633 and teacher top-one agreement rose from 0.0056 to 0.5008.',
+      'The fixed 10,000-update production continuation selected update 2,200. Its validation metrics improved slightly, but it still solved 97 games and mean guesses rose to 3.68.',
+      'A better proxy metric did not produce a better gameplay success rate. These are still validation-only results.',
     ],
-    title: 'The run leaves a trail, not just a number',
+    title: 'The model learned to play',
   },
   {
-    content: <LearningProgressSlide />,
+    content: <PivotExportSlide />,
     notes: [
-      'Loss measures how surprised the model is by the teacher action; lower is better. Top-1 asks how often the highest score matches the teacher.',
-      'The one-batch stage reaches 98.9 percent training top-1 but only 6.3 percent validation top-1, and validation loss gets worse. That is memorization doing exactly what the gate was designed to expose.',
-      'Mini finds some signal. The best full checkpoint reaches validation loss 3.1633 and top-1 about 0.501.',
-      'The result is a bounded proof that the workflow and model learn from this corpus.',
+      'At this point the model works. Training and inference are now separate engineering problems.',
+      'The offline exporter is allowed to understand GoMLX checkpoints. The direct serving binary is not.',
+      'The selected export is seed-replication-20260809-132505Z, best update 2,600: one manifest, a 4,186,384-byte FP32 weight payload, and golden vectors and games.',
+      'Dense matrices are transposed once into documented output-major rows, then dimensions, vocabulary hashes, finite values, payload size, and SHA-256 are validated.',
     ],
-    title: 'Memorising is easy; ranking unseen states is harder',
+    title: 'Train with GoMLX; serve a portable model',
   },
   {
-    content: <GameResultsSlide />,
+    content: <ControlPlaneCudaSlide />,
     notes: [
-      'Metrics against a teacher are useful, but the policy must also play complete games.',
-      'On the same fixed 100 validation solutions, the independently reloaded initial checkpoint solves 4 games with a mean of 5.86 guesses.',
-      'The best checkpoint solves 97 with a mean of 3.65 guesses.',
-      'This same-population comparison is distinct from the small run-zero baseline row in the report. It still uses validation—not the sealed final test.',
+      'One Go process owns HTTP, the authoritative Wordle engine, vocabulary identity, state encoding, action availability, tie-breaking, and progression.',
+      'A dedicated goroutine is locked to one OS thread and serializes requests to one native model handle.',
+      'CUDA receives the four model tensors and returns 4,739 raw logits. It does not receive the availability mask and does not know Wordle rules.',
+      'Go applies duplicate suppression and deterministic legal selection after the numerical call returns.',
     ],
-    title: 'The same 100 games, before and after',
+    title: 'Go control plane, CUDA numerical data plane',
   },
   {
-    content: <AblationResultsSlide />,
+    content: <CgoCodeSlide />,
     notes: [
-      'An ablation reloads the same best checkpoint and removes or fixes one source of information.',
-      'Removing candidate state collapses top-1 from 0.501 to 0.003. Removing the candidate bonus drops it to 0.042.',
-      'Fixing turn is less catastrophic but still worsens loss and top-k agreement.',
-      'These results show component sensitivity on this validation set; they are not independent generalization experiments.',
+      'The left crop is the real cgo preamble linking the CUDA-built library and runtime. The right crop is the one call that crosses the boundary.',
+      'All four input slices and the output slice are flat and fixed in shape. Runtime KeepAlive makes their Go lifetime explicit.',
+      'C never retains a Go pointer. The native call is synchronous and returns only after the device-to-host logits copy and stream synchronization.',
+      'One call for the whole model avoids repeated language crossings and keeps stream ordering and profiling coherent.',
     ],
-    title: 'Remove one ingredient—and watch the policy stumble',
+    title: 'The whole forward pass crosses cgo once',
   },
   {
-    content: <ValidationLimitsSlide />,
+    content: <CudaHandleSlide />,
     notes: [
-      'The caveats are part of the result.',
-      'Validation guided choices, so it cannot make the final generalization claim. The final-test split remains unopened by default tools.',
-      'The state-overlap audit records 190 of 2,445 unique validation states in training with agreeing teacher labels, while solution IDs remain disjoint.',
-      'We have not shown a human comparison, an optimal-solver comparison, or a GPU speedup. The current claim is narrower and defensible.',
+      'cgo speaks a plain C ABI even though the implementation behind it is CUDA C++.',
+      'The opaque handle owns one stream, one contiguous device allocation for every weight, persistent input and activation buffers, residual scratch, beta, logits, and error metadata.',
+      'Creation allocates and uploads. Inference reuses those allocations. Destruction frees them on the same locked worker thread.',
+      'There is no cudaMalloc, cudaFree, stream creation, or stream destruction in the inference hot path.',
     ],
-    title: 'A passing validation proof has boundaries',
+    title: 'The opaque handle owns the GPU state',
   },
   {
-    content: <HostDeviceRolesSlide />,
+    content: <KernelSequenceSlide />,
     notes: [
-      'Now return to the engineering boundary.',
-      'Go owns HTTP, validation, model identity, Wordle rules, state encoding, action availability, deterministic selection, and evaluation.',
-      'The GPU executes the GoMLX forward and training graphs: dense tensor math in, logits or gradients out.',
-      'The GPU never becomes the authority on legal play. That keeps the boundary narrow and testable.',
+      'The fixed GoMLX graph becomes seven readable CUDA kernels in one stream.',
+      'The host has already checked that the candidate set is non-empty and passes its reciprocal, avoiding an eighth normalization kernel.',
+      'There is no softmax because Go only needs an ordering of raw logits. There is no CUDA argmax or legality rule.',
+      'The final launch has one block for every action. That one kernel is enough to explain CUDA execution vocabulary.',
     ],
-    title: 'Go owns the game. CUDA owns the dense math.',
+    title: 'The neural network became seven kernels',
   },
   {
-    content: <ServingFlowSlide />,
+    content: <LaunchShapeSlide />,
     notes: [
-      'The browser makes one same-origin request through the unprivileged Go web service to the private inference service.',
-      'The Go host advances the authoritative game, encodes each state, and makes up to six small policy forward calls through GoMLX on CUDA.',
-      'Go checks the logits, applies availability, selects the next action, and computes feedback and shortlist transitions.',
-      'The completed trajectory returns as JSON. The browser animates it locally; there is no GPU connection or streaming socket in the browser.',
+      'The real final launch is policy_logits_with_bonus with 4,739 blocks and 128 threads in each block.',
+      'A thread is one logical execution lane, not a goroutine. Thirty-two lanes form a warp, and 128 threads form four warps in the block.',
+      'Each block computes one action logit, so the complete grid contains 606,592 logical thread positions.',
+      'They are not all physically resident at once. The GPU schedules blocks in waves across its finite streaming multiprocessors.',
     ],
-    title: 'One click, one complete trajectory',
+    title: 'A kernel launch has a shape',
   },
   {
-    content: <ServingGatesSlide />,
+    content: <BlockReductionSlide />,
     notes: [
-      'Serving accepts one immutable passed full-run best checkpoint.',
-      'Startup rechecks data hashes, effective config, backend identity, checkpoint step, best-validation state, and exact materialized parameter count.',
-      'It warms one validation game, then serializes requests because the GoMLX session and Store are not concurrency-safe.',
-      'Only the 100 validation solutions are exposed, and every response carries run, checkpoint, update, training commit, and split identity.',
+      'Within one block, threads take strided portions of the 160-value dot product and accumulate partial sums in registers.',
+      'Each warp reduces its 32 partials using shuffle instructions. Four warp leaders then place four subtotals in block shared memory.',
+      'The first warp reduces those four values; one lane adds the bias and candidate bonus, then writes the action logit.',
+      'Shared memory belongs to one block. Blocks cannot use it to share their subtotals with one another.',
     ],
-    title: 'Serving starts with evidence, not optimism',
+    title: 'One block cooperates to calculate one score',
   },
   {
-    content: <LiveDemoSlide />,
+    content: <MemoryJourneySlide />,
     notes: [
-      '[Before the talk, set WORDLEML_INFERENCE_RUN_ID=proof-full-20260808 and run make monitoring in the machine-learning repository.]',
-      'Open http://127.0.0.1:8082 and choose one of the fixed validation solutions.',
-      '[Run the game. Point out each accepted guess, feedback pattern, and the remaining-shortlist transition.]',
-      'The request is attributable to the immutable best checkpoint, while the browser only receives the completed JSON trajectory.',
-      '[If the live demo is unavailable, use this slide to narrate the same request path and continue.]',
+      'Go owns the four logical inputs, but turn travels as a scalar kernel argument, so each inference performs three host-to-device copies.',
+      'Weights, inputs, activations, residual scratch, beta, and logits live in device global memory. Hardware caches repeated reads where useful.',
+      'One thread keeps its running accumulator in registers; four warp subtotals use the small block-shared allocation.',
+      'One logits buffer returns to Go through a device-to-host copy. CUDA local memory would mean spills into device memory, not a fast local stack.',
     ],
-    title: 'Let’s play a complete game',
+    title: 'GPU memory has scope',
   },
   {
-    content: <LessonsAndRoadmapSlide />,
+    content: <NsightSystemsSlide />,
     notes: [
-      'The most useful lessons are systems lessons: share the representation, freeze IDs and hashes, separate masks by meaning, and keep the final test sealed.',
-      'Validate the smallest raw CUDA path before debugging a large graph, and make checkpoints and telemetry part of the feature rather than an afterthought.',
-      'Next, profile the real host/device path and move selected work behind handwritten CUDA and cgo only where evidence justifies it.',
-      'Broader evaluation and an explicit final-test release policy also remain ahead.',
+      'Nsight Systems is the wide-angle lens: CPU thread, CUDA API calls, copies, launches, and synchronization over time.',
+      'This slide-native timeline is explicitly reconstructed from the captured report; it is not a fabricated GUI screenshot.',
+      'The report contains 41 complete inference ranges: one cold call, 20 warm-ups, and 20 measured calls. Every named kernel appears 41 times.',
+      'Across the whole capture there are 124 host-to-device copies: one weight upload plus three per inference, and 41 device-to-host logits copies.',
     ],
-    title: 'Make the boundary boring—and the evidence strong',
+    title: 'Nsight Systems: the whole request',
   },
   {
-    content: <ClosingSlide />,
+    content: <NsightComputeSlide />,
     notes: [
-      'Go can own the system around a learned model: orchestration, state, safety, evidence, and serving.',
-      'The GPU can own the dense math behind a narrow, verifiable interface.',
-      'Thank you. Questions?',
+      'Nsight Compute is the microscope: detailed measurements for one kernel.',
+      'For policy_logits_with_bonus it reports the expected 4,739 by 128 launch, 11.36 microseconds, 40 registers per thread, and no local or shared-memory spills.',
+      'It measured 16 bytes static plus 1.02 KiB driver shared memory per block, 69.89 percent achieved occupancy, 270.81 GB per second memory throughput, and 30.83 percent DRAM throughput.',
+      'Occupancy is a constraint and diagnostic, not a score where 100 percent automatically means fast. This is one observed kernel, not a universal performance claim.',
     ],
-    title: 'Questions',
+    title: 'Nsight Compute: inside one kernel',
+  },
+  {
+    content: <ParityBenchmarkSlide />,
+    notes: [
+      'Correctness comes before speed. Thirty-two golden positions agree on top one, top five, and the selected action.',
+      'Across 151,648 compared logits, the maximum absolute GoMLX-to-CUDA error is 7.62939453125e-06, with no tolerance failure or documented near tie.',
+      'All 100 validation-game trajectories match exactly for this exported checkpoint; both paths solve 98 with a 3.66 mean.',
+      'The batch-one CUDA call measured 421,870 nanoseconds cold. Across 200 warm calls the mean was 94,945 ns, p50 94,010 ns, and p95 111,400 ns.',
+      'There is no comparable GoMLX timing here, so there is no speedup claim. The achievement is explicit ownership, visibility, and parity.',
+    ],
+    title: 'The CUDA path agrees with the reference',
+  },
+  {
+    content: <FinalHeldOutSlide />,
+    notes: [
+      'Only after checkpoint and implementation selection did the claim-guarded evaluator score the 100 held-out solution IDs once through CUDA/cgo.',
+      'It solved 97, failed three, averaged 3.75 guesses with failures counted as six, and made zero invalid selections.',
+      'The sanitized artifact contains only aggregate facts—no words, guesses, trajectories, or failed-solution list.',
+      'No tuning followed. The distinct 2,500-record final WDIT corpus remains unopened, so do not overstate this as a broad generalization result.',
+    ],
+    title: 'One intentional held-out aggregate',
+  },
+  {
+    content: <FinalApplicationSlide />,
+    notes: [
+      'Return to the application from the opening preview.',
+      'The direct demo is one Go process at port 8083. The browser shows the cuda-cgo backend, selected model, checkpoint, update, and device identity.',
+      'The serving binary imports no GoMLX, PJRT, or XLA. Go remains responsible for the game and action choice; the native side runs only the fixed numerical forward pass.',
+      'The three lessons are: Go is excellent for the surrounding system; GoMLX was the fastest route to proving the model and backpropagation; cgo and CUDA made the interesting numerical boundary explicit.',
+      '[A user-chosen browser game is a demo, not validation or final-test evidence.]',
+    ],
+    title: 'Back to the application',
   },
 ];
 
