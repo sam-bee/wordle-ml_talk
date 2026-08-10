@@ -139,10 +139,11 @@ export const slides: SlideDefinition[] = [
   {
     content: <WorstCaseFeedbackSlide />,
     notes: [
-      'Reuse the five-word shortlist from the earlier RAISE example: SCARE, SHARE, SNARE, SPARE, and STARE.',
-      'For SCARE, the worst-case pattern is G-GGG. Four of the five possible solutions produce it, so eighty percent of the shortlist carries over.',
-      'For CHANT, the largest bucket is only one word, but five feedback patterns tie for that size. One of five carries over: twenty percent.',
-      'This is the teacher’s minimax intuition before we show the implementation: prefer the action with the smaller largest bucket.',
+      'Start with the RAISE feedback and the five-word shortlist: SCARE, SHARE, SNARE, SPARE, and STARE.',
+      'For each candidate guess, the teacher groups those five possible solutions by the feedback pattern they would return. Each group is a feedback bucket.',
+      'SCARE has a bad worst case: G-GGG is shared by four answers, so four of five possibilities—eighty percent—carry into the next turn.',
+      'CHANT produces five tied feedback buckets of one answer each. Even in its worst case, only one of five possibilities—twenty percent—carries over.',
+      'CHANT is the better guess because its worst-case carry-over is lower: one remaining possibility, not four.',
     ],
     title: 'Worst-case feedback chooses the probe',
   },
