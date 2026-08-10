@@ -1,18 +1,18 @@
 import React from 'react';
 
-import { Callout, CodeBlock, Panel, SlideFrame, SlideHeader } from '../components/SlidePrimitives';
+import { CodeBlock, Panel, SlideFrame, SlideHeader } from '../components/SlidePrimitives';
 
 const GoMLXTrainingSlide: React.FC = () => (
   <SlideFrame>
     <SlideHeader
       kicker="Training boundary"
-      title="Go builds the graph; XLA runs it on CUDA"
-      subtitle="The successful training path used GoMLX—not the later handwritten CUDA inference backend."
+      title="Training was GoMLX → XLA → CUDA"
+      subtitle="The successful model was trained through GoMLX and compiled for the GPU; the hand-written CUDA path comes later and runs inference only."
     />
-    <div className="mt-8 grid flex-1 grid-cols-[1.05fr_0.95fr] gap-8">
-      <Panel className="flex flex-col" padding="compact">
-        <p className="text-base font-semibold uppercase tracking-[0.2em] text-muted">wordleml/policy/model.go:114–121</p>
-        <CodeBlock className="[&_pre]:p-4 [&_pre]:text-sm [&_pre]:leading-snug" language="GoMLX / Go">
+    <div className="mt-6 flex flex-1 flex-col gap-5">
+      <Panel padding="compact">
+        <p className="text-base font-semibold uppercase tracking-[0.2em] text-muted">Exact GoMLX source excerpt · wordleml/policy/model.go:114–121</p>
+        <CodeBlock className="mt-3 [&_pre]:p-4 [&_pre]:text-base [&_pre]:leading-[1.2]" language="GoMLX / Go">
 {`h := graph.Concatenate([]*graph.Node{candidateFeatures, statsFeatures, turnFeatures}, -1)
 r := activation.Relu(layers.DenseWithBias(scope.In("residual_in"), h, trunkSize))
 r = layers.DenseWithBias(scope.In("residual_out"), r, trunkSize)
@@ -23,15 +23,22 @@ beta = layers.DenseWithBias(scope.In("candidate_bonus"), h, 1)
 return graph.Add(baseLogits, graph.Mul(beta, remainingActionMask)), beta`}
         </CodeBlock>
       </Panel>
-      <Panel className="flex flex-col justify-between">
-        <div className="space-y-4 text-xl text-text">
-          <div className="flex items-center gap-4"><span className="rounded-xl bg-primary/15 px-4 py-3 font-mono text-primary">Go</span><span className="text-muted">→</span><span>define model + objective</span></div>
-          <div className="flex items-center gap-4"><span className="rounded-xl bg-accent/15 px-4 py-3 font-mono text-accent">XLA / PJRT</span><span className="text-muted">→</span><span>compile graph for GPU</span></div>
-          <div className="flex items-center gap-4"><span className="rounded-xl bg-primary/15 px-4 py-3 font-mono text-primary">CUDA</span><span className="text-muted">→</span><span>execute training numerics</span></div>
-        </div>
-        <p className="mt-6 text-lg leading-relaxed text-muted">The trainer adds loss and backpropagation; XLA/PJRT compiles the graph for CUDA.</p>
-        <Callout className="mt-5 py-3" tone="warning">Handwritten CUDA/cgo comes later: it ports inference, not training.</Callout>
-      </Panel>
+      <div className="grid grid-cols-[1fr_auto_1fr_auto_1fr] items-stretch gap-4">
+        <Panel className="border-primary/40 bg-primary/10" padding="compact">
+          <p className="font-mono text-xl font-bold text-primary">GoMLX</p>
+          <p className="mt-2 text-lg leading-snug text-text">model, loss, autodiff, optimiser</p>
+        </Panel>
+        <span className="self-center text-3xl text-muted" aria-hidden="true">→</span>
+        <Panel className="border-accent/40 bg-accent/10" padding="compact">
+          <p className="font-mono text-xl font-bold text-accent">XLA / PJRT</p>
+          <p className="mt-2 text-lg leading-snug text-text">compile the training graph</p>
+        </Panel>
+        <span className="self-center text-3xl text-muted" aria-hidden="true">→</span>
+        <Panel className="border-primary/40 bg-primary/10" padding="compact">
+          <p className="font-mono text-xl font-bold text-primary">CUDA GPU</p>
+          <p className="mt-2 text-lg leading-snug text-text">execute the compiled numerical work</p>
+        </Panel>
+      </div>
     </div>
   </SlideFrame>
 );

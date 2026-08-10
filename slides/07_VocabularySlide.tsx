@@ -1,20 +1,50 @@
 import React from 'react';
 
-import { Callout, MetricCard, SlideFrame, SlideHeader } from '../components/SlidePrimitives';
+import { Panel, SlideFrame, SlideHeader } from '../components/SlidePrimitives';
 
 const VocabularySlide: React.FC = () => (
   <SlideFrame>
     <SlideHeader
-      kicker="The action space"
-      title="An answer and a useful guess are different things"
-      subtitle="The model has a stable word at every output index, so its scores are concrete and inspectable."
+      kicker="Choose the words the model can name"
+      title="The game’s dictionary is not the model’s action space"
+      subtitle="A Wordle answer and a useful information-gathering guess are different things."
     />
-    <div className="mt-12 grid flex-1 grid-cols-3 gap-6">
-      <MetricCard label="possible solutions" value="2,309" detail="Words the game may have chosen." />
-      <MetricCard label="legal guesses" value="12,947" detail="The larger Wordle dictionary." />
-      <MetricCard label="fixed actions" value="4,739" detail="2,309 solutions + 2,430 additional words." />
+    <div className="mt-8 grid flex-1 grid-cols-[1fr_auto_1.12fr] items-center gap-5">
+      <Panel className="flex h-full flex-col p-7">
+        <p className="text-base font-semibold uppercase tracking-[0.2em] text-muted">NYT browser JavaScript snapshot</p>
+        <div className="mt-7 space-y-6">
+          <div>
+            <p className="font-mono text-5xl font-bold text-primary">2,309</p>
+            <p className="mt-2 text-xl font-semibold text-text">possible solutions</p>
+            <p className="mt-1 text-lg leading-relaxed text-muted">Every one must remain a possible model action.</p>
+          </div>
+          <div className="border-t border-border pt-6">
+            <p className="font-mono text-4xl font-bold text-text">12,947</p>
+            <p className="mt-2 text-xl font-semibold text-text">accepted guesses</p>
+            <p className="mt-1 text-lg leading-relaxed text-muted">The historic accepted list; this project evaluates the fixed policy vocabulary instead.</p>
+          </div>
+        </div>
+      </Panel>
+
+      <div className="text-5xl text-primary" aria-hidden="true">→</div>
+
+      <Panel className="flex h-full flex-col border-accent/40 bg-accent/5 p-7">
+        <p className="text-base font-semibold uppercase tracking-[0.2em] text-accent">fixed policy vocabulary</p>
+        <div className="mt-7 flex items-baseline gap-4">
+          <p className="font-mono text-5xl font-bold text-primary">2,309</p>
+          <span className="text-3xl text-muted">+</span>
+          <p className="font-mono text-5xl font-bold text-accent">2,430</p>
+        </div>
+        <p className="mt-3 text-xl font-semibold text-text">all solutions + additional probe words</p>
+        <p className="mt-3 text-lg leading-relaxed text-muted">
+          The additions are selected from <strong className="text-text">SUBTLEX-US</strong> frequencies: American film subtitles, a 51-million-word corpus.
+        </p>
+        <div className="mt-auto rounded-2xl border border-primary/30 bg-primary/10 px-6 py-5">
+          <p className="font-mono text-5xl font-bold text-primary">4,739</p>
+          <p className="mt-2 text-xl font-semibold text-text">stable output positions — one score, one word</p>
+        </div>
+      </Panel>
     </div>
-    <Callout tone="accent" className="mt-8">A probe can be an excellent action even when it cannot be the answer. Word IDs stay fixed across data, training, and play.</Callout>
   </SlideFrame>
 );
 

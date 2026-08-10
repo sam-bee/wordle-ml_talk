@@ -4,12 +4,32 @@ import { Panel, SlideFrame, SlideHeader } from '@/components/SlidePrimitives';
 const MemoryJourneySlide: React.FC = () => (
   <SlideFrame>
     <SlideHeader kicker="Memory journey" title="Copy the state in. Keep the model resident. Copy logits out." subtitle="Batch-one inference makes transfer and launch costs visible." />
-    <div className="mt-9 grid grid-cols-5 items-center gap-3">
-      <Panel className="border-primary/40"><p className="text-lg font-bold text-primary">Host Go</p><p className="mt-3 text-lg leading-relaxed text-text">candidate mask<br />candidate stats<br />turn + action mask</p></Panel><span className="text-3xl text-muted">→</span>
-      <Panel><p className="text-lg font-bold text-accent">3 HtoD copies</p><p className="mt-3 text-lg leading-relaxed text-text">persistent input buffers<br />no per-call device allocation</p></Panel><span className="text-3xl text-muted">→</span>
-      <Panel className="border-accent/40"><p className="text-lg font-bold text-accent">Device</p><p className="mt-3 text-lg leading-relaxed text-text">weights in global memory<br />registers + block shared memory<br />seven kernels, one stream</p></Panel>
+    <div className="mt-8 grid flex-1 grid-cols-[1.05fr_auto_1fr_auto_1.18fr_auto_0.9fr_auto_1fr] items-center gap-3">
+      <Panel className="border-primary/40" padding="compact">
+        <p className="text-lg font-bold text-primary">Host Go</p>
+        <p className="mt-3 text-lg leading-snug text-text">candidate mask<br />candidate stats<br />turn + action mask</p>
+      </Panel>
+      <span className="text-3xl text-muted" aria-hidden="true">→</span>
+      <Panel padding="compact">
+        <p className="text-lg font-bold text-accent">3 HtoD</p>
+        <p className="mt-3 text-lg leading-snug text-text">copy into persistent input buffers</p>
+      </Panel>
+      <span className="text-3xl text-muted" aria-hidden="true">→</span>
+      <Panel className="border-accent/40" padding="compact">
+        <p className="text-lg font-bold text-accent">Device</p>
+        <p className="mt-3 text-lg leading-snug text-text">resident weights<br />registers + shared memory<br />seven kernels, one stream</p>
+      </Panel>
+      <span className="text-3xl text-muted" aria-hidden="true">→</span>
+      <Panel className="border-primary/40 text-center" padding="compact">
+        <p className="text-lg font-bold text-primary">1 DtoH</p>
+        <p className="mt-3 text-lg leading-snug text-text">4,739 raw logits</p>
+      </Panel>
+      <span className="text-3xl text-muted" aria-hidden="true">→</span>
+      <Panel className="bg-primary/5" padding="compact">
+        <p className="text-lg font-bold text-text">Host Go</p>
+        <p className="mt-3 text-lg leading-snug text-text">legality mask<br />Wordle rules<br />choose action</p>
+      </Panel>
     </div>
-    <div className="my-8 flex items-center justify-center gap-5"><span className="text-xl text-muted">→</span><Panel className="w-72 border-primary/40 text-center"><p className="text-lg font-bold text-primary">1 DtoH copy</p><p className="mt-2 text-lg text-text">4,739 raw logits</p></Panel><span className="text-xl text-muted">→</span><p className="text-xl font-semibold text-text">Go legality + Wordle rules</p></div>
   </SlideFrame>
 );
 

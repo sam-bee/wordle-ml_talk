@@ -3,32 +3,32 @@ import React from 'react';
 import { Panel, SlideFrame, SlideHeader } from '../components/SlidePrimitives';
 
 const STAGES = [
-  { name: 'overfit', updates: '400', batch: '128', rate: '0.001', note: 'Can it memorise one batch?' },
-  { name: 'mini', updates: '1,000', batch: '128', rate: '0.0003', note: 'Stop at 500, then resume.' },
-  { name: 'full', updates: '2,000', batch: '256', rate: '0.0003', note: 'The bounded proof run.' },
+  { name: 'one-batch overfit', updates: '400', batch: '128', rate: '0.001', result: 'training top-1 0.989', note: 'Can optimisation deliberately memorise one batch?' },
+  { name: 'mini stop / resume', updates: '1,000', batch: '128', rate: '0.0003', result: 'stopped at 500, then resumed', note: 'Can the run preserve all of its state and keep going?' },
+  { name: 'full proof', updates: '2,000', batch: '256', rate: '0.0003', result: '97 / 100 · 3.65 guesses', note: 'Does the fixed validation population show a real playing policy?' },
 ];
 
 const ProofStagesSlide: React.FC = () => (
   <SlideFrame>
-    <SlideHeader kicker="Training stages" title="A ladder of deliberately boring experiments" subtitle="Each stage has a fixed recipe, so a green result means the same thing next time." />
-    <div className="mt-9 grid flex-1 grid-cols-3 gap-6">
+    <SlideHeader kicker="Training stages" title="A proof ladder: small failures first" subtitle="Each fixed stage rules out one more mundane way the training pipeline could be lying to us." />
+    <div className="mt-6 grid flex-1 grid-cols-3 gap-6">
       {STAGES.map((stage, index) => (
-        <Panel key={stage.name} className="flex flex-col">
+        <Panel key={stage.name} className="flex flex-col" padding="compact">
           <div className="flex items-center justify-between">
             <span className="font-mono text-xl font-bold text-primary">0{index + 1}</span>
             <span className="rounded-full border border-border px-3 py-1 text-sm font-semibold uppercase tracking-[0.18em] text-muted">fixed</span>
           </div>
-          <h3 className="mt-7 text-4xl font-bold text-text">{stage.name}</h3>
-          <div className="mt-7 space-y-4 border-t border-border pt-5 text-xl text-text">
+          <h3 className="mt-4 text-3xl font-bold leading-tight text-text">{stage.name}</h3>
+          <div className="mt-4 space-y-2 border-t border-border pt-4 text-lg text-text">
             <p><span className="text-muted">updates</span> <strong>{stage.updates}</strong></p>
             <p><span className="text-muted">batch</span> <strong>{stage.batch}</strong></p>
             <p><span className="text-muted">learning rate</span> <strong className="font-mono">{stage.rate}</strong></p>
           </div>
-          <p className="mt-auto border-t border-border pt-6 text-lg leading-relaxed text-muted">{stage.note}</p>
+          <p className="mt-4 rounded-xl border border-primary/30 bg-primary/10 px-4 py-3 font-mono text-base font-semibold text-primary">{stage.result}</p>
+          <p className="mt-4 border-t border-border pt-4 text-lg leading-snug text-muted">{stage.note}</p>
         </Panel>
       ))}
     </div>
-    <p className="mt-6 text-lg text-muted">The mini run’s required stop/resume boundary is part of the proof—not an optional demo flourish.</p>
   </SlideFrame>
 );
 

@@ -5,38 +5,39 @@ import { Callout, Panel, SlideFrame, SlideHeader } from '../components/SlidePrim
 const SyntheticExampleSlide: React.FC = () => (
   <SlideFrame>
     <SlideHeader
-      kicker="One synthetic example"
-      title="A game state becomes a labelled row"
-      subtitle="The slow teacher reasons now; training can reuse its answer later."
+      kicker="Turning search into supervision"
+      title="One incomplete game state becomes a teacher target"
+      subtitle="The slow Go solver deliberates offline. Training later sees the state and learns to prefer its next move."
     />
-    <div className="mt-7 grid flex-1 grid-cols-[1fr_0.95fr] items-center gap-8">
-      <Panel className="p-7">
-        <div className="flex items-center justify-between gap-4">
-          <p className="text-base font-semibold uppercase tracking-[0.2em] text-muted">state</p>
-          <span className="rounded-full bg-primary/15 px-4 py-1 font-mono text-sm text-primary">turn 1</span>
+    <div className="mt-8 grid flex-1 grid-cols-[1fr_auto_1fr_auto_0.92fr] items-center gap-4">
+      <Panel className="h-full p-7">
+        <p className="text-base font-semibold uppercase tracking-[0.2em] text-muted">state</p>
+        <p className="mt-5 font-mono text-2xl font-bold text-text">turn = 1</p>
+        <div className="mt-5 rounded-2xl border border-border bg-elevated/60 p-4">
+          <p className="font-mono text-lg text-text">RAISE → 🟨 🟨 ⬛ 🟨 🟩</p>
         </div>
-        <div className="mt-5 flex items-center gap-3 font-mono text-2xl font-bold tracking-[0.16em] text-text">
-          <span className="rounded-xl border border-border bg-elevated px-4 py-3">RAISE</span>
-          <span className="text-primary">→</span>
-          <span className="rounded-xl border border-accent/40 bg-accent/10 px-4 py-3 text-accent">feedback</span>
-        </div>
-        <div className="mt-6 rounded-2xl border border-border bg-elevated p-5">
-          <p className="text-base font-semibold uppercase tracking-[0.16em] text-muted">remaining answers</p>
-          <p className="mt-3 font-mono text-xl text-text">SCARE · SHARE · SNARE · SPARE · STARE</p>
-          <p className="mt-3 text-lg text-muted">candidate count: 5 · encoded as a 289-byte shortlist bitset</p>
-        </div>
+        <p className="mt-6 text-lg font-semibold text-text">remaining answers: 5</p>
+        <p className="mt-2 text-lg leading-relaxed text-muted">SCARE · SHARE · SNARE · SPARE · STARE</p>
       </Panel>
-      <div className="space-y-4">
-        <Panel className="p-6">
-          <p className="text-base font-semibold uppercase tracking-[0.16em] text-muted">teacher label</p>
-          <p className="mt-3 text-lg leading-relaxed text-text">Rank every unused action and store its top 16 action IDs, reduction ratios, and worst-case sizes.</p>
-          <div className="mt-4 flex flex-wrap gap-2 font-mono text-sm text-primary">
-            {['action 1', 'action 2', 'action 3', '…', 'action 16'].map(label => <span key={label} className="rounded-lg border border-primary/30 bg-primary/10 px-3 py-2">{label}</span>)}
-          </div>
-        </Panel>
-        <Callout tone="accent">Teacher trajectory states come first; random valid histories fill each depth bucket. The slow search cost is paid once, offline.</Callout>
-      </div>
+
+      <span className="text-4xl text-primary" aria-hidden="true">→</span>
+
+      <Panel className="flex h-full flex-col justify-center border-primary/40 bg-primary/5 p-7">
+        <p className="text-base font-semibold uppercase tracking-[0.2em] text-primary">offline Go teacher</p>
+        <p className="mt-5 text-3xl font-bold leading-tight text-text">Search every unused action</p>
+        <p className="mt-4 text-lg leading-relaxed text-muted">Score each word by the worst feedback bucket it can leave behind.</p>
+        <p className="mt-6 font-mono text-xl text-primary">state → ranked next actions</p>
+      </Panel>
+
+      <span className="text-4xl text-primary" aria-hidden="true">→</span>
+
+      <Panel className="flex h-full flex-col justify-center border-accent/40 bg-accent/10 p-7">
+        <p className="text-base font-semibold uppercase tracking-[0.2em] text-accent">training target</p>
+        <p className="mt-5 text-3xl font-bold leading-tight text-text">Teacher’s preferred next action</p>
+        <p className="mt-4 text-lg leading-relaxed text-muted">The top choice is the supervised label. The remaining ranked choices help us inspect agreement later.</p>
+      </Panel>
     </div>
+    <Callout tone="accent" className="mt-6 text-center">Generate incomplete states at several depths; pay search once, then train on the frozen examples many times.</Callout>
   </SlideFrame>
 );
 

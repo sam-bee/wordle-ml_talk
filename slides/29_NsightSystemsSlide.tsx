@@ -1,30 +1,40 @@
 import React from 'react';
-import { Panel, SlideFrame, SlideHeader } from '../components/SlidePrimitives';
+
+import { Callout, Panel, SlideFrame, SlideHeader } from '../components/SlidePrimitives';
 
 const NsightSystemsSlide: React.FC = () => (
   <SlideFrame>
-    <SlideHeader kicker="Profiling · Systems" title="The wide-angle trace shows the shape of a request" subtitle="Reconstructed from the captured report: 41 inferences, each with three input copies, seven kernels, one output copy, and a synchronization." />
-    <Panel className="mt-8 flex-1">
-      <div className="flex items-center justify-between text-base font-semibold uppercase tracking-[0.2em] text-muted">
-        <span>Nsight Systems-style timeline</span><span>41 inferences · all kernels 41×</span>
-      </div>
-      <div className="mt-7 space-y-5">
-        <div className="grid grid-cols-[10rem_1fr] items-center gap-5">
-          <span className="font-mono text-xl text-primary">Host</span>
-          <div className="flex h-14 gap-2 rounded-xl bg-elevated p-2">
-            <span className="flex-[1] rounded-lg bg-primary/70 px-4 py-3 text-center font-mono text-lg text-canvas">3× H→D</span>
-            <span className="flex-[7] rounded-lg bg-accent/70 px-4 py-3 text-center font-mono text-lg text-text">7 CUDA kernels × 41</span>
-            <span className="flex-[1] rounded-lg bg-primary/70 px-4 py-3 text-center font-mono text-lg text-canvas">D→H</span>
-            <span className="flex-[1] rounded-lg border border-border px-4 py-3 text-center font-mono text-lg text-text">sync</span>
-          </div>
+    <SlideHeader
+      kicker="Profiling · Systems"
+      title="Nsight Systems is the wide-angle timeline"
+      subtitle="It connects one Go request to the copies, kernels, and synchronization it causes on the GPU."
+    />
+
+    <div className="mt-8 grid flex-1 grid-cols-[1.38fr_0.62fr] gap-8">
+      <section className="flex min-h-0 flex-col justify-center rounded-3xl border-2 border-dashed border-primary/50 bg-primary/5 px-10 py-8 text-center">
+        <p className="font-mono text-base font-semibold uppercase tracking-[0.24em] text-primary">Manual screenshot placeholder</p>
+        <h3 className="mt-4 text-3xl font-bold text-text">Capture one post-warm-up <code className="font-mono text-primary">wordle_infer</code> range</h3>
+        <p className="mx-auto mt-4 max-w-3xl text-xl leading-relaxed text-muted">Use a real Nsight Systems GUI capture. Do not replace this with a recreated timeline or a synthetic profiler UI.</p>
+        <div className="mt-8 border-t border-dashed border-primary/30 pt-6 text-left">
+          <p className="text-base font-semibold uppercase tracking-[0.18em] text-muted">Keep visible in the real capture</p>
+          <p className="mt-3 text-xl leading-relaxed text-text"><span className="font-mono text-primary">wordle-gpu</span> host lane and NVTX range · 3 HtoD copies · seven named kernels · 1 DtoH copy · final synchronization</p>
         </div>
-        <div className="grid grid-cols-[10rem_1fr] gap-5 text-muted">
-          <span className="font-mono text-xl text-accent">Repeat</span>
-          <div className="grid grid-cols-5 gap-2 text-center font-mono text-lg"><span className="rounded-lg border border-border py-3">01</span><span className="rounded-lg border border-border py-3">02</span><span className="rounded-lg border border-border py-3">…</span><span className="rounded-lg border border-border py-3">40</span><span className="rounded-lg border border-accent/50 bg-accent/10 py-3 text-accent">41</span></div>
-        </div>
-      </div>
-      <div className="mt-10 grid grid-cols-3 gap-5 text-center"><div className="rounded-2xl border border-primary/30 bg-primary/10 p-5"><p className="text-4xl font-extrabold text-primary">3 in · 1 out</p><p className="mt-2 text-lg text-muted">memory copies per inference</p></div><div className="rounded-2xl border border-accent/30 bg-accent/10 p-5"><p className="text-4xl font-extrabold text-accent">7</p><p className="mt-2 text-lg text-muted">kernels per inference</p></div><div className="rounded-2xl border border-border bg-elevated/60 p-5"><p className="text-4xl font-extrabold text-text">41</p><p className="mt-2 text-lg text-muted">inference repeats</p></div></div>
-    </Panel>
+      </section>
+
+      <section className="flex flex-col justify-center gap-5">
+        <Panel className="border-accent/40 bg-accent/10">
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent">The question it answers</p>
+          <p className="mt-3 text-2xl font-bold leading-snug text-text">What happens, in what order, during one request?</p>
+        </Panel>
+        <Panel>
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-muted">Read left to right</p>
+          <p className="mt-3 text-xl leading-relaxed text-text">Go enters cgo → inputs cross to the device → seven kernels run in stream order → logits return → Go resumes.</p>
+        </Panel>
+        <Callout tone="warning" className="text-lg">
+          A timeline is evidence about ordering, overlap, gaps, and waits—not a speed comparison by itself.
+        </Callout>
+      </section>
+    </div>
   </SlideFrame>
 );
 

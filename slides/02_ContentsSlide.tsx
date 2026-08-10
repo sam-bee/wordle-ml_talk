@@ -1,40 +1,58 @@
 import React from 'react';
 
-import { Callout, Panel, SlideFrame, SlideHeader } from '../components/SlidePrimitives';
+import { Panel, SlideFrame, SlideHeader } from '../components/SlidePrimitives';
 
-const STAGES = [
-  ['01', 'Wordle', 'A state, a guess, and feedback'],
-  ['02', 'Go teacher', 'Search for a useful next action'],
-  ['03', 'Synthetic data', 'Turn the teacher into examples'],
-  ['04', 'Model', 'A compact policy over whole words'],
-  ['05', 'GoMLX training', 'Backpropagation on the GPU'],
-  ['06', 'cgo / CUDA', 'Make the inference boundary explicit'],
-  ['07', 'Application', 'Return to a working Go web app'],
+const CHAPTERS = [
+  {
+    number: '01',
+    title: 'Data',
+    route: ['Wordle state', 'Go teacher', 'Synthetic examples'],
+    detail: 'Make a slow, deliberate solver explain its next move.',
+  },
+  {
+    number: '02',
+    title: 'Training',
+    route: ['Compact policy', 'Backpropagation', 'GoMLX on CUDA'],
+    detail: 'Turn those examples into a model that can choose a word.',
+  },
+  {
+    number: '03',
+    title: 'Inference',
+    route: ['Export weights', 'cgo + CUDA', 'Profile and serve'],
+    detail: 'Peel back the framework and follow one real GPU request.',
+  },
 ] as const;
 
-const ContentsSlide: React.FC = () => {
-  return (
-    <SlideFrame>
-      <SlideHeader
-        kicker="One engineering journey"
-        title="Contents"
-        subtitle="Start with a word game; finish with an attributable GPU-backed service."
-      />
-      <div className="mt-10 flex flex-1 items-stretch gap-3">
-        {STAGES.map(([number, title, detail], index) => (
-          <React.Fragment key={number}>
-            <Panel className="flex min-w-0 flex-1 flex-col p-5 sm:p-6">
-              <p className="font-mono text-lg font-bold text-primary">{number}</p>
-              <h3 className="mt-5 text-2xl font-bold leading-tight text-text">{title}</h3>
-              <p className="mt-3 text-lg leading-relaxed text-muted">{detail}</p>
-            </Panel>
-            {index < STAGES.length - 1 && <div className="flex items-center justify-center text-3xl text-primary" aria-hidden="true">→</div>}
-          </React.Fragment>
-        ))}
-      </div>
-      <Callout className="mt-7 text-center">One route through the talk: <strong>teach → compress → train → cross the boundary → serve.</strong></Callout>
-    </SlideFrame>
-  );
-};
+const ContentsSlide: React.FC = () => (
+  <SlideFrame>
+    <SlideHeader
+      kicker="One linear route"
+      title="Contents"
+      subtitle="We will build one system from a Wordle decision to a CUDA-backed Go application."
+    />
+    <div className="mt-9 grid flex-1 grid-cols-3 gap-5">
+      {CHAPTERS.map(chapter => (
+        <Panel key={chapter.number} className="flex min-w-0 flex-col border-primary/30 bg-primary/5 p-7">
+          <div className="flex items-start justify-between gap-4">
+            <p className="font-mono text-xl font-bold text-primary">{chapter.number}</p>
+            <p className="text-lg font-semibold text-muted">chapter</p>
+          </div>
+          <h3 className="mt-7 text-4xl font-bold tracking-tight text-text">{chapter.title}</h3>
+          <p className="mt-4 text-lg leading-relaxed text-muted">{chapter.detail}</p>
+          <ol className="mt-auto space-y-3 pt-8">
+            {chapter.route.map((stage, index) => (
+              <li key={stage} className="flex items-center gap-3 text-lg text-text">
+                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-primary/40 font-mono text-sm font-bold text-primary">
+                  {index + 1}
+                </span>
+                <span>{stage}</span>
+              </li>
+            ))}
+          </ol>
+        </Panel>
+      ))}
+    </div>
+  </SlideFrame>
+);
 
 export default ContentsSlide;

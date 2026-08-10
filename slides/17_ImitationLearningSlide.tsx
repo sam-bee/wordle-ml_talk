@@ -11,7 +11,7 @@ const ImitationLearningSlide: React.FC = () => (
     />
 
     <div className="mt-8 grid flex-1 grid-cols-[1.1fr_0.9fr] gap-8">
-      <Panel className="flex flex-col justify-between">
+      <Panel className="flex flex-col">
         <div className="flex items-center gap-4">
           <span className="rounded-xl bg-primary/15 px-4 py-3 font-mono text-2xl font-bold text-primary">state</span>
           <span className="text-3xl text-muted">→</span>

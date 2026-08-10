@@ -11,7 +11,7 @@ const CudaHandleSlide: React.FC = () => (
     />
 
     <div className="mt-8 grid flex-1 grid-cols-[0.9fr_1.1fr] items-center gap-9">
-      <CodeBlock className="[&_pre]:p-5 [&_pre]:text-base [&_pre]:leading-snug" language="wordle_cuda.h">
+      <CodeBlock className="[&_pre]:p-5 [&_pre]:text-lg [&_pre]:leading-snug" language="wordle_cuda.h">
         {`typedef struct wordle_cuda_model
     wordle_cuda_model;
 
@@ -27,8 +27,8 @@ int wordle_cuda_model_infer(
         <div className="grid grid-cols-3 items-center gap-4 text-center">
           <Panel className="border-primary/40 bg-primary/10">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">Create</p>
-            <p className="mt-3 text-xl font-bold text-text">cudaMalloc</p>
-            <p className="mt-1 text-base text-muted">weights + buffers + stream</p>
+            <p className="mt-3 text-xl font-bold text-text">cudaStreamCreate</p>
+            <p className="mt-1 text-base text-muted">then cudaMalloc weights + buffers</p>
           </Panel>
           <span className="text-4xl text-primary">→</span>
           <Panel className="border-accent/40 bg-accent/10">
