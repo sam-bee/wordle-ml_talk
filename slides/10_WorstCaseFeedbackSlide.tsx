@@ -10,6 +10,16 @@ const FIRST_GUESS: WordleGuess = {
   states: ['present', 'present', 'absent', 'present', 'correct'],
 };
 
+interface DiagonalArrowProps {
+  className: string;
+}
+
+const DiagonalArrow: React.FC<DiagonalArrowProps> = ({ className }) => (
+  <svg aria-hidden="true" className={`h-14 w-14 ${className}`} fill="none" viewBox="0 0 64 64">
+    <path d="M10 10 54 54M30 54h24V30" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="4" />
+  </svg>
+);
+
 const WorstCaseFeedbackSlide: React.FC = () => (
   <SlideFrame>
     <SlideHeader
@@ -38,20 +48,20 @@ const WorstCaseFeedbackSlide: React.FC = () => (
 
       <div className="space-y-5">
         <div className="grid grid-cols-[auto_1fr_1.35fr] items-center gap-4">
-          <span className="text-5xl text-primary" aria-hidden="true">↘</span>
+          <DiagonalArrow className="text-primary" />
           <Panel className="border-primary/40 bg-primary/10 p-5">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">candidate guess</p>
             <p className="mt-3 font-mono text-4xl font-bold tracking-tight text-text">SCARE</p>
           </Panel>
           <Panel className="p-5">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-muted">worst-case feedback</p>
-            <p className="mt-3 font-mono text-3xl font-bold tracking-[0.12em] text-text"><span className="text-primary">G</span><span className="text-muted">-</span><span className="text-primary">GGG</span></p>
+            <p className="mt-3 font-mono text-3xl font-bold tracking-[0.12em] text-text"><span className="text-emerald-400">G</span><span className="text-zinc-500">-</span><span className="text-emerald-400">GGG</span></p>
             <p className="mt-2 text-lg leading-relaxed text-muted">4 of 5 carry over → <strong className="text-primary">80%</strong></p>
           </Panel>
         </div>
 
         <div className="grid grid-cols-[auto_1fr_1.35fr] items-center gap-4">
-          <span className="text-5xl text-accent" aria-hidden="true">↘</span>
+          <DiagonalArrow className="text-accent" />
           <Panel className="border-accent/40 bg-accent/10 p-5">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent">candidate guess</p>
             <p className="mt-3 font-mono text-4xl font-bold tracking-tight text-text">CHANT</p>
