@@ -8,7 +8,7 @@ const DestinationPreviewSlide: React.FC = () => (
     <SlideHeader
       kicker="Where we are going"
       title="Objective: train a model to play Wordle"
-      subtitle="This preview is the destination: a real CUDA-cgo backend solving a complete game, not a claim about how the training proof was produced."
+      subtitle="This preview is the destination: a real CUDA-cgo backend solving a complete Wordle game."
     />
     <div className="mt-5 flex flex-1 items-center justify-center">
       <figure className="w-full max-w-6xl overflow-hidden rounded-3xl border border-border bg-surface shadow-2xl">
@@ -28,7 +28,7 @@ const DestinationPreviewSlide: React.FC = () => (
         </div>
         <figcaption className="flex items-center justify-between gap-6 border-t border-border px-7 py-3 text-xl text-muted">
           <span><strong className="text-text">Live replay:</strong> ADEPT solved in 3</span>
-          <span className="font-mono text-accent">real backend status</span>
+          <span className="font-mono text-accent">realtime inference</span>
         </figcaption>
       </figure>
     </div>

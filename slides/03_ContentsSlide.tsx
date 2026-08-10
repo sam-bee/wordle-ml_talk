@@ -6,19 +6,19 @@ const CHAPTERS = [
   {
     number: '01',
     title: 'Data',
-    route: ['Wordle state', 'Go teacher', 'Synthetic examples'],
-    detail: 'Make a slow, deliberate solver explain its next move.',
+    route: ['Get wordlists', 'Build Wordle player in Go', 'Generate data for training model'],
+    detail: 'Build a Go programme to play Wordle and generate examples.',
   },
   {
     number: '02',
     title: 'Training',
-    route: ['Compact policy', 'Backpropagation', 'GoMLX on CUDA'],
+    route: ['Neural net', 'Backpropagation', 'Use GoMLX library'],
     detail: 'Turn those examples into a model that can choose a word.',
   },
   {
     number: '03',
     title: 'Inference',
-    route: ['Export weights', 'cgo + CUDA', 'Profile and serve'],
+    route: ['Export weights', 'Run inference in CUDA', 'Go service → Cgo → CUDA'],
     detail: 'Peel back the framework and follow one real GPU request.',
   },
 ] as const;

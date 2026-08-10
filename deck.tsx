@@ -4,44 +4,43 @@ import type { SlideDefinition } from './types';
 import TitleSlide from './slides/01_TitleSlide';
 import DestinationPreviewSlide from './slides/02_DestinationPreviewSlide';
 import ContentsSlide from './slides/03_ContentsSlide';
-import ProjectJourneySlide from './slides/04_ProjectJourneySlide';
-import ActDividerDataSlide from './slides/05_ActDividerSlide';
-import WordleOverviewSlide from './slides/06_WordleOverviewSlide';
-import WordleExampleSlide from './slides/07_WordleExampleSlide';
-import VocabularySlide from './slides/08_VocabularySlide';
-import CandidateShortlistSlide from './slides/09_CandidateShortlistSlide';
-import CandidateStatsSlide from './slides/10_CandidateStatsSlide';
-import TeacherRuleSlide from './slides/11_TeacherRuleSlide';
-import TeacherCodeSlide from './slides/12_TeacherCodeSlide';
-import WorkerPoolSlide from './slides/13_WorkerPoolSlide';
-import SyntheticExampleSlide from './slides/14_SyntheticExampleSlide';
-import CorpusSplitSlide from './slides/15_CorpusSplitSlide';
-import ActDividerTrainingSlide from './slides/16_ActDividerSlide';
-import ModelInputsSlide from './slides/17_ModelInputsSlide';
-import PolicyArchitectureSlide from './slides/18_PolicyArchitectureSlide';
-import PolicyOutputSlide from './slides/19_PolicyOutputSlide';
-import BackpropagationSlide from './slides/20_BackpropagationSlide';
-import ImitationLearningSlide from './slides/21_ImitationLearningSlide';
-import GoMLXTrainingSlide from './slides/22_GoMLXTrainingSlide';
-import ProofStagesSlide from './slides/23_ProofStagesSlide';
-import TensorBoardSlide from './slides/24_TensorBoardSlide';
-import TrainingResultsSlide from './slides/25_TrainingResultsSlide';
-import ActDividerInferenceSlide from './slides/26_ActDividerSlide';
-import PivotExportSlide from './slides/27_PivotExportSlide';
-import GpuPrimerSlide from './slides/28_GpuPrimerSlide';
-import ControlPlaneCudaSlide from './slides/29_ControlPlaneCudaSlide';
-import CgoCodeSlide from './slides/30_CgoCodeSlide';
-import CudaHandleSlide from './slides/31_CudaHandleSlide';
-import KernelSequenceSlide from './slides/32_KernelSequenceSlide';
-import LaunchShapeSlide from './slides/33_LaunchShapeSlide';
-import BlockReductionSlide from './slides/34_BlockReductionSlide';
-import MemoryJourneySlide from './slides/35_MemoryJourneySlide';
-import NsightSystemsSlide from './slides/36_NsightSystemsSlide';
-import NsightComputeSlide from './slides/37_NsightComputeSlide';
-import ParityBenchmarkSlide from './slides/38_ParityBenchmarkSlide';
-import FinalHeldOutSlide from './slides/39_FinalHeldOutSlide';
-import FinalApplicationSlide from './slides/40_FinalApplicationSlide';
-import ClosingSlide from './slides/41_ClosingSlide';
+import ActDividerDataSlide from './slides/04_ActDividerSlide';
+import WordleOverviewSlide from './slides/05_WordleOverviewSlide';
+import WordleExampleSlide from './slides/06_WordleExampleSlide';
+import VocabularySlide from './slides/07_VocabularySlide';
+import CandidateShortlistSlide from './slides/08_CandidateShortlistSlide';
+import CandidateStatsSlide from './slides/09_CandidateStatsSlide';
+import TeacherRuleSlide from './slides/10_TeacherRuleSlide';
+import TeacherCodeSlide from './slides/11_TeacherCodeSlide';
+import WorkerPoolSlide from './slides/12_WorkerPoolSlide';
+import SyntheticExampleSlide from './slides/13_SyntheticExampleSlide';
+import CorpusSplitSlide from './slides/14_CorpusSplitSlide';
+import ActDividerTrainingSlide from './slides/15_ActDividerSlide';
+import ModelInputsSlide from './slides/16_ModelInputsSlide';
+import PolicyArchitectureSlide from './slides/17_PolicyArchitectureSlide';
+import PolicyOutputSlide from './slides/18_PolicyOutputSlide';
+import BackpropagationSlide from './slides/19_BackpropagationSlide';
+import ImitationLearningSlide from './slides/20_ImitationLearningSlide';
+import GoMLXTrainingSlide from './slides/21_GoMLXTrainingSlide';
+import ProofStagesSlide from './slides/22_ProofStagesSlide';
+import TensorBoardSlide from './slides/23_TensorBoardSlide';
+import TrainingResultsSlide from './slides/24_TrainingResultsSlide';
+import ActDividerInferenceSlide from './slides/25_ActDividerSlide';
+import PivotExportSlide from './slides/26_PivotExportSlide';
+import GpuPrimerSlide from './slides/27_GpuPrimerSlide';
+import ControlPlaneCudaSlide from './slides/28_ControlPlaneCudaSlide';
+import CgoCodeSlide from './slides/29_CgoCodeSlide';
+import CudaHandleSlide from './slides/30_CudaHandleSlide';
+import KernelSequenceSlide from './slides/31_KernelSequenceSlide';
+import LaunchShapeSlide from './slides/32_LaunchShapeSlide';
+import BlockReductionSlide from './slides/33_BlockReductionSlide';
+import MemoryJourneySlide from './slides/34_MemoryJourneySlide';
+import NsightSystemsSlide from './slides/35_NsightSystemsSlide';
+import NsightComputeSlide from './slides/36_NsightComputeSlide';
+import ParityBenchmarkSlide from './slides/37_ParityBenchmarkSlide';
+import FinalHeldOutSlide from './slides/38_FinalHeldOutSlide';
+import FinalApplicationSlide from './slides/39_FinalApplicationSlide';
+import ClosingSlide from './slides/40_ClosingSlide';
 
 export const slides: SlideDefinition[] = [
   {
@@ -72,16 +71,6 @@ export const slides: SlideDefinition[] = [
       'The route is linear: Wordle, teacher, examples, policy, GPU inference, application. The act dividers are our “you are here” checkpoints.',
     ],
     title: 'Contents',
-  },
-  {
-    content: <ProjectJourneySlide />,
-    notes: [
-      'Here is the whole system before we zoom in.',
-      'Go owns the game engine, teacher, generated corpus, orchestration, validation, and web application. GoMLX describes and trains the model on the GPU. The chosen checkpoint is exported, then a separate direct Go service can serve it through cgo and hand-written CUDA.',
-      'The theme is division of labour: Go is the control plane; the GPU is the numerical data plane.',
-      'The three act dividers will mark our position along this same route.',
-    ],
-    title: 'The whole route',
   },
   {
     content: <ActDividerDataSlide active="data" number="01" title="Data" promise="Build a slow, deliberate expert in Go—then freeze its decisions as examples." />,
