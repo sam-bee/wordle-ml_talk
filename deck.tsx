@@ -10,36 +10,38 @@ import WordleOverviewSlide from './slides/06_WordleOverviewSlide';
 import WordleExampleSlide from './slides/07_WordleExampleSlide';
 import VocabularySlide from './slides/08_VocabularySlide';
 import CandidateShortlistSlide from './slides/09_CandidateShortlistSlide';
-import TeacherRuleSlide from './slides/10_TeacherRuleSlide';
-import TeacherCodeSlide from './slides/11_TeacherCodeSlide';
-import WorkerPoolSlide from './slides/12_WorkerPoolSlide';
-import SyntheticExampleSlide from './slides/13_SyntheticExampleSlide';
-import CorpusSplitSlide from './slides/14_CorpusSplitSlide';
-import ActDividerTrainingSlide from './slides/15_ActDividerSlide';
-import ModelInputsSlide from './slides/16_ModelInputsSlide';
-import PolicyArchitectureSlide from './slides/17_PolicyArchitectureSlide';
-import PolicyOutputSlide from './slides/18_PolicyOutputSlide';
-import BackpropagationSlide from './slides/19_BackpropagationSlide';
-import ImitationLearningSlide from './slides/20_ImitationLearningSlide';
-import GoMLXTrainingSlide from './slides/21_GoMLXTrainingSlide';
-import ProofStagesSlide from './slides/22_ProofStagesSlide';
-import TensorBoardSlide from './slides/23_TensorBoardSlide';
-import TrainingResultsSlide from './slides/24_TrainingResultsSlide';
-import ActDividerInferenceSlide from './slides/25_ActDividerSlide';
-import PivotExportSlide from './slides/26_PivotExportSlide';
-import GpuPrimerSlide from './slides/27_GpuPrimerSlide';
-import ControlPlaneCudaSlide from './slides/28_ControlPlaneCudaSlide';
-import CgoCodeSlide from './slides/29_CgoCodeSlide';
-import CudaHandleSlide from './slides/30_CudaHandleSlide';
-import KernelSequenceSlide from './slides/31_KernelSequenceSlide';
-import BlockReductionSlide from './slides/32_BlockReductionSlide';
-import MemoryJourneySlide from './slides/33_MemoryJourneySlide';
-import NsightSystemsSlide from './slides/34_NsightSystemsSlide';
-import NsightComputeSlide from './slides/35_NsightComputeSlide';
-import ParityBenchmarkSlide from './slides/36_ParityBenchmarkSlide';
-import FinalHeldOutSlide from './slides/37_FinalHeldOutSlide';
-import FinalApplicationSlide from './slides/38_FinalApplicationSlide';
-import ClosingSlide from './slides/39_ClosingSlide';
+import CandidateStatsSlide from './slides/10_CandidateStatsSlide';
+import TeacherRuleSlide from './slides/11_TeacherRuleSlide';
+import TeacherCodeSlide from './slides/12_TeacherCodeSlide';
+import WorkerPoolSlide from './slides/13_WorkerPoolSlide';
+import SyntheticExampleSlide from './slides/14_SyntheticExampleSlide';
+import CorpusSplitSlide from './slides/15_CorpusSplitSlide';
+import ActDividerTrainingSlide from './slides/16_ActDividerSlide';
+import ModelInputsSlide from './slides/17_ModelInputsSlide';
+import PolicyArchitectureSlide from './slides/18_PolicyArchitectureSlide';
+import PolicyOutputSlide from './slides/19_PolicyOutputSlide';
+import BackpropagationSlide from './slides/20_BackpropagationSlide';
+import ImitationLearningSlide from './slides/21_ImitationLearningSlide';
+import GoMLXTrainingSlide from './slides/22_GoMLXTrainingSlide';
+import ProofStagesSlide from './slides/23_ProofStagesSlide';
+import TensorBoardSlide from './slides/24_TensorBoardSlide';
+import TrainingResultsSlide from './slides/25_TrainingResultsSlide';
+import ActDividerInferenceSlide from './slides/26_ActDividerSlide';
+import PivotExportSlide from './slides/27_PivotExportSlide';
+import GpuPrimerSlide from './slides/28_GpuPrimerSlide';
+import ControlPlaneCudaSlide from './slides/29_ControlPlaneCudaSlide';
+import CgoCodeSlide from './slides/30_CgoCodeSlide';
+import CudaHandleSlide from './slides/31_CudaHandleSlide';
+import KernelSequenceSlide from './slides/32_KernelSequenceSlide';
+import LaunchShapeSlide from './slides/33_LaunchShapeSlide';
+import BlockReductionSlide from './slides/34_BlockReductionSlide';
+import MemoryJourneySlide from './slides/35_MemoryJourneySlide';
+import NsightSystemsSlide from './slides/36_NsightSystemsSlide';
+import NsightComputeSlide from './slides/37_NsightComputeSlide';
+import ParityBenchmarkSlide from './slides/38_ParityBenchmarkSlide';
+import FinalHeldOutSlide from './slides/39_FinalHeldOutSlide';
+import FinalApplicationSlide from './slides/40_FinalApplicationSlide';
+import ClosingSlide from './slides/41_ClosingSlide';
 
 export const slides: SlideDefinition[] = [
   {
@@ -130,6 +132,15 @@ export const slides: SlideDefinition[] = [
       'The teacher, the dataset encoder, training evaluation, and live play all begin from this same state definition.',
     ],
     title: 'The shortlist is the state',
+  },
+  {
+    content: <CandidateStatsSlide />,
+    notes: [
+      'The candidate bitset is a useful identity signal, but a raw sum would mostly tell the model how many words remain.',
+      'The encoder therefore projects a normalized mean over the candidate words, then adds explicit letter-position and multiplicity statistics.',
+      'The final normalized log count restores the shortlist magnitude that normalization deliberately removed.',
+    ],
+    title: 'Candidate statistics make the shortlist learnable',
   },
   {
     content: <TeacherRuleSlide />,
@@ -358,6 +369,16 @@ export const slides: SlideDefinition[] = [
       'Readable kernel names are not cosmetic: they make the profiler timeline explain itself.',
     ],
     title: 'The neural network becomes seven kernels',
+  },
+  {
+    content: <LaunchShapeSlide />,
+    notes: [
+      'The final policy kernel launches one block for each of the 4,739 possible actions.',
+      'Each 128-thread block cooperatively computes one raw logit, including the reduction over the 160-wide hidden state.',
+      'The logical grid contains 606,592 thread positions, but the GPU schedules those blocks in waves across its streaming multiprocessors.',
+      'This is a launch-shape explanation, not a claim that all of those threads run simultaneously.',
+    ],
+    title: 'Launch shape: one block per action',
   },
   {
     content: <BlockReductionSlide />,
