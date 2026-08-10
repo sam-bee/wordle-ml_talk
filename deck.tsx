@@ -10,13 +10,13 @@ import WordleExampleSlide from './slides/06_WordleExampleSlide';
 import OriginalDataSourcesSlide from './slides/07_OriginalDataSourcesSlide';
 import VocabularySlide from './slides/08_VocabularySlide';
 import CandidateShortlistSlide from './slides/09_CandidateShortlistSlide';
-import CandidateStatsSlide from './slides/10_CandidateStatsSlide';
-import TeacherRuleSlide from './slides/11_TeacherRuleSlide';
-import TeacherCodeSlide from './slides/12_TeacherCodeSlide';
-import WorkerPoolSlide from './slides/13_WorkerPoolSlide';
-import SyntheticExampleSlide from './slides/14_SyntheticExampleSlide';
-import CorpusSplitSlide from './slides/15_CorpusSplitSlide';
-import ActDividerTrainingSlide from './slides/16_ActDividerSlide';
+import TeacherRuleSlide from './slides/10_TeacherRuleSlide';
+import TeacherCodeSlide from './slides/11_TeacherCodeSlide';
+import WorkerPoolSlide from './slides/12_WorkerPoolSlide';
+import SyntheticExampleSlide from './slides/13_SyntheticExampleSlide';
+import CorpusSplitSlide from './slides/14_CorpusSplitSlide';
+import ActDividerTrainingSlide from './slides/15_ActDividerSlide';
+import CandidateStatsSlide from './slides/16_CandidateStatsSlide';
 import ModelInputsSlide from './slides/17_ModelInputsSlide';
 import PolicyArchitectureSlide from './slides/18_PolicyArchitectureSlide';
 import PolicyOutputSlide from './slides/19_PolicyOutputSlide';
@@ -134,15 +134,6 @@ export const slides: SlideDefinition[] = [
     title: 'The shortlist is the state',
   },
   {
-    content: <CandidateStatsSlide />,
-    notes: [
-      'The candidate bitset is a useful identity signal, but a raw sum would mostly tell the model how many words remain.',
-      'The encoder therefore projects a normalized mean over the candidate words, then adds explicit letter-position and multiplicity statistics.',
-      'The final normalized log count restores the shortlist magnitude that normalization deliberately removed.',
-    ],
-    title: 'Candidate statistics make the shortlist learnable',
-  },
-  {
     content: <TeacherRuleSlide />,
     notes: [
       'The teacher evaluates every unused action against the current shortlist.',
@@ -201,6 +192,16 @@ export const slides: SlideDefinition[] = [
     ],
     speech: { cues: ['training', 'compact policy'] },
     title: 'Training',
+  },
+  {
+    content: <CandidateStatsSlide />,
+    notes: [
+      'Now that the corpus is frozen, this slide introduces the candidate statistics the model will consume.',
+      'The candidate bitset is a useful identity signal, but a raw sum would mostly tell the model how many words remain.',
+      'The encoder therefore projects a normalized mean over the candidate words, then adds explicit letter-position and multiplicity statistics.',
+      'The final normalized log count restores the shortlist magnitude that normalization deliberately removed.',
+    ],
+    title: 'Candidate statistics make the shortlist learnable',
   },
   {
     content: <ModelInputsSlide />,
