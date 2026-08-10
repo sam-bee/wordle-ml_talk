@@ -1,0 +1,251 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 640" role="img" aria-labelledby="title description">
+  <title id="title">Wordle policy model architecture</title>
+  <desc id="description">Three input branches feed a concatenated 160-value representation, a two-layer dense residual trunk, a policy head, and a candidate bonus which combine into 4,739 logits.</desc>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8" />
+    </marker>
+    <marker id="skip-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#fb7185" />
+    </marker>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#020617" flood-opacity="0.32" />
+    </filter>
+  </defs>
+
+  <style>
+    .box { fill: #1e293b; stroke: #475569; stroke-width: 2; filter: url(#shadow); }
+    .box-blue { stroke: #38bdf8; }
+    .box-purple { stroke: #a855f7; }
+    .box-rose { stroke: #fb7185; }
+    .box-green { stroke: #34d399; }
+    .label { fill: #f1f5f9; font: 700 22px Inter, ui-sans-serif, system-ui, sans-serif; text-anchor: middle; }
+    .small-label { fill: #f1f5f9; font: 650 17px Inter, ui-sans-serif, system-ui, sans-serif; text-anchor: middle; }
+    .dimension { fill: #94a3b8; font: 600 16px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; text-anchor: middle; }
+    .symbol { fill: #f1f5f9; font: 700 20px Inter, ui-sans-serif, system-ui, sans-serif; text-anchor: middle; dominant-baseline: central; }
+    .connection { fill: none; stroke: #94a3b8; stroke-width: 2; stroke-linecap: round; marker-end: url(#arrow); }
+    .connection-soft { fill: none; stroke: #64748b; stroke-width: 1.5; stroke-linecap: round; marker-end: url(#arrow); opacity: 0.85; }
+    .skip { fill: none; stroke: #fb7185; stroke-width: 2.5; stroke-linecap: round; marker-end: url(#skip-arrow); }
+    .neuron { fill: #0f172a; stroke-width: 3; }
+    .blue { stroke: #38bdf8; }
+    .purple { stroke: #a855f7; }
+    .rose { stroke: #fb7185; }
+    .green { stroke: #34d399; }
+    .neutral { stroke: #cbd5e1; }
+    .dot { fill: #64748b; }
+  </style>
+
+  <!-- Candidate projection -->
+  <rect class="box box-blue" x="20" y="20" width="280" height="180" rx="20" />
+  <text class="small-label" x="160" y="52">Candidate projection + ReLU</text>
+  <text class="dimension" x="75" y="82">2,309</text>
+  <text class="dimension" x="245" y="82">96</text>
+  <g>
+    <path class="connection-soft" d="M 86 104 L 232 104" />
+    <path class="connection-soft" d="M 86 104 L 232 140" />
+    <path class="connection-soft" d="M 86 140 L 232 104" />
+    <path class="connection-soft" d="M 86 140 L 232 176" />
+    <path class="connection-soft" d="M 86 176 L 232 140" />
+    <path class="connection-soft" d="M 86 176 L 232 176" />
+    <circle class="neuron blue" cx="75" cy="104" r="10" />
+    <circle class="neuron blue" cx="75" cy="140" r="10" />
+    <circle class="neuron blue" cx="75" cy="176" r="10" />
+    <circle class="neuron blue" cx="245" cy="104" r="10" />
+    <circle class="neuron blue" cx="245" cy="140" r="10" />
+    <circle class="neuron blue" cx="245" cy="176" r="10" />
+  </g>
+
+  <!-- Statistics projection -->
+  <rect class="box box-purple" x="20" y="230" width="280" height="180" rx="20" />
+  <text class="small-label" x="160" y="262">Statistics projection + ReLU</text>
+  <text class="dimension" x="75" y="292">209</text>
+  <text class="dimension" x="245" y="292">48</text>
+  <g>
+    <path class="connection-soft" d="M 86 314 L 232 314" />
+    <path class="connection-soft" d="M 86 314 L 232 350" />
+    <path class="connection-soft" d="M 86 350 L 232 314" />
+    <path class="connection-soft" d="M 86 350 L 232 386" />
+    <path class="connection-soft" d="M 86 386 L 232 350" />
+    <path class="connection-soft" d="M 86 386 L 232 386" />
+    <circle class="neuron purple" cx="75" cy="314" r="10" />
+    <circle class="neuron purple" cx="75" cy="350" r="10" />
+    <circle class="neuron purple" cx="75" cy="386" r="10" />
+    <circle class="neuron purple" cx="245" cy="314" r="10" />
+    <circle class="neuron purple" cx="245" cy="350" r="10" />
+    <circle class="neuron purple" cx="245" cy="386" r="10" />
+  </g>
+
+  <!-- Turn embedding -->
+  <rect class="box box-rose" x="20" y="440" width="280" height="180" rx="20" />
+  <text class="label" x="160" y="472">Turn embedding</text>
+  <text class="dimension" x="75" y="502">0–5</text>
+  <text class="dimension" x="245" y="502">16</text>
+  <g>
+    <path class="connection-soft" d="M 88 555 L 232 520" />
+    <path class="connection-soft" d="M 88 555 L 232 555" />
+    <path class="connection-soft" d="M 88 555 L 232 590" />
+    <circle class="neuron rose" cx="75" cy="555" r="13" />
+    <text class="symbol" x="75" y="555">t</text>
+    <circle class="neuron rose" cx="245" cy="520" r="10" />
+    <circle class="neuron rose" cx="245" cy="555" r="10" />
+    <circle class="neuron rose" cx="245" cy="590" r="10" />
+  </g>
+
+  <!-- Concatenation -->
+  <rect class="box" x="350" y="90" width="170" height="460" rx="20" />
+  <text class="label" x="435" y="126">Concatenate</text>
+  <text class="dimension" x="435" y="151">96 + 48 + 16</text>
+  <g>
+    <circle class="neuron blue" cx="435" cy="205" r="10" />
+    <circle class="neuron blue" cx="435" cy="240" r="10" />
+    <circle class="neuron blue" cx="435" cy="275" r="10" />
+    <circle class="neuron purple" cx="435" cy="335" r="10" />
+    <circle class="neuron purple" cx="435" cy="370" r="10" />
+    <circle class="neuron purple" cx="435" cy="405" r="10" />
+    <circle class="neuron rose" cx="435" cy="465" r="10" />
+    <circle class="neuron rose" cx="435" cy="500" r="10" />
+    <circle class="dot" cx="435" cy="306" r="3" />
+    <circle class="dot" cx="435" cy="316" r="3" />
+    <circle class="dot" cx="435" cy="436" r="3" />
+    <circle class="dot" cx="435" cy="446" r="3" />
+  </g>
+  <text class="dimension" x="435" y="531">160</text>
+
+  <!-- Branches into concatenation -->
+  <path class="connection" d="M 258 104 C 318 104, 326 205, 423 205" />
+  <path class="connection" d="M 258 140 C 320 140, 326 240, 423 240" />
+  <path class="connection" d="M 258 176 C 322 176, 330 275, 423 275" />
+  <path class="connection" d="M 258 314 C 325 314, 335 335, 423 335" />
+  <path class="connection" d="M 258 350 C 325 350, 335 370, 423 370" />
+  <path class="connection" d="M 258 386 C 325 386, 335 405, 423 405" />
+  <path class="connection" d="M 258 520 C 325 520, 335 465, 423 465" />
+  <path class="connection" d="M 258 555 C 325 555, 335 500, 423 500" />
+
+  <!-- Dense residual trunk -->
+  <rect class="box box-rose" x="570" y="70" width="500" height="500" rx="24" />
+  <text class="label" x="820" y="108">Dense residual trunk</text>
+  <text class="dimension" x="820" y="133">160 → 160 → 160</text>
+  <text class="small-label" x="625" y="158">input</text>
+  <text class="small-label" x="755" y="158">Dense + ReLU</text>
+  <text class="small-label" x="885" y="158">Dense</text>
+  <text class="small-label" x="1010" y="158">+ ReLU</text>
+
+  <!-- Concatenation into trunk -->
+  <path class="connection" d="M 447 205 C 520 205, 535 225, 612 225" />
+  <path class="connection" d="M 447 335 C 515 335, 540 320, 612 320" />
+  <path class="connection" d="M 447 500 C 515 500, 540 415, 612 415" />
+
+  <!-- Trunk dense connections -->
+  <g>
+    <path class="connection-soft" d="M 638 225 L 742 225" />
+    <path class="connection-soft" d="M 638 225 L 742 320" />
+    <path class="connection-soft" d="M 638 320 L 742 225" />
+    <path class="connection-soft" d="M 638 320 L 742 415" />
+    <path class="connection-soft" d="M 638 415 L 742 320" />
+    <path class="connection-soft" d="M 638 415 L 742 415" />
+
+    <path class="connection-soft" d="M 768 225 L 872 225" />
+    <path class="connection-soft" d="M 768 225 L 872 320" />
+    <path class="connection-soft" d="M 768 320 L 872 225" />
+    <path class="connection-soft" d="M 768 320 L 872 415" />
+    <path class="connection-soft" d="M 768 415 L 872 320" />
+    <path class="connection-soft" d="M 768 415 L 872 415" />
+
+    <path class="connection-soft" d="M 898 225 L 997 225" />
+    <path class="connection-soft" d="M 898 320 L 997 320" />
+    <path class="connection-soft" d="M 898 415 L 997 415" />
+
+    <circle class="neuron neutral" cx="625" cy="225" r="12" />
+    <circle class="neuron neutral" cx="625" cy="320" r="12" />
+    <circle class="neuron neutral" cx="625" cy="415" r="12" />
+    <circle class="neuron rose" cx="755" cy="225" r="12" />
+    <circle class="neuron rose" cx="755" cy="320" r="12" />
+    <circle class="neuron rose" cx="755" cy="415" r="12" />
+    <circle class="neuron rose" cx="885" cy="225" r="12" />
+    <circle class="neuron rose" cx="885" cy="320" r="12" />
+    <circle class="neuron rose" cx="885" cy="415" r="12" />
+    <circle class="neuron neutral" cx="1010" cy="225" r="12" />
+    <circle class="neuron neutral" cx="1010" cy="320" r="12" />
+    <circle class="neuron neutral" cx="1010" cy="415" r="12" />
+  </g>
+
+  <!-- Residual skip -->
+  <path class="skip" d="M 625 432 C 625 535, 950 535, 1004 429" />
+  <text class="small-label" x="815" y="526" fill="#fb7185">skip connection</text>
+
+  <!-- Heads -->
+  <rect class="box box-green" x="1120" y="30" width="280" height="320" rx="22" />
+  <text class="label" x="1260" y="67">Policy head</text>
+  <text class="dimension" x="1260" y="94">160 → 4,739</text>
+  <g>
+    <path class="connection-soft" d="M 1175 140 L 1332 125" />
+    <path class="connection-soft" d="M 1175 140 L 1332 190" />
+    <path class="connection-soft" d="M 1175 190 L 1332 125" />
+    <path class="connection-soft" d="M 1175 190 L 1332 255" />
+    <path class="connection-soft" d="M 1175 240 L 1332 190" />
+    <path class="connection-soft" d="M 1175 240 L 1332 305" />
+    <circle class="neuron green" cx="1162" cy="140" r="11" />
+    <circle class="neuron green" cx="1162" cy="190" r="11" />
+    <circle class="neuron green" cx="1162" cy="240" r="11" />
+    <circle class="neuron green" cx="1345" cy="125" r="10" />
+    <circle class="neuron green" cx="1345" cy="190" r="10" />
+    <circle class="dot" cx="1345" cy="217" r="3" />
+    <circle class="dot" cx="1345" cy="228" r="3" />
+    <circle class="neuron green" cx="1345" cy="255" r="10" />
+    <circle class="neuron green" cx="1345" cy="305" r="10" />
+  </g>
+
+  <rect class="box box-purple" x="1120" y="390" width="280" height="190" rx="22" />
+  <text class="label" x="1260" y="427">Candidate bonus</text>
+  <text class="dimension" x="1260" y="454">160 → 1</text>
+  <g>
+    <path class="connection-soft" d="M 1175 490 L 1322 510" />
+    <path class="connection-soft" d="M 1175 530 L 1322 510" />
+    <path class="connection-soft" d="M 1175 550 L 1322 510" />
+    <circle class="neuron purple" cx="1162" cy="490" r="10" />
+    <circle class="neuron purple" cx="1162" cy="530" r="10" />
+    <circle class="neuron purple" cx="1162" cy="550" r="10" />
+    <circle class="neuron purple" cx="1340" cy="510" r="18" />
+    <text class="symbol" x="1340" y="510">β</text>
+  </g>
+
+  <!-- Trunk fan-out -->
+  <path class="connection" d="M 1022 225 C 1070 225, 1080 140, 1149 140" />
+  <path class="connection" d="M 1022 320 C 1075 320, 1085 190, 1149 190" />
+  <path class="connection" d="M 1022 415 C 1075 415, 1085 240, 1149 240" />
+  <path class="connection" d="M 1022 320 C 1078 320, 1085 490, 1149 490" />
+  <path class="connection" d="M 1022 415 C 1078 415, 1085 530, 1149 530" />
+
+  <!-- Candidate-mask multiplication and final addition -->
+  <rect class="box box-blue" x="1320" y="520" width="210" height="100" rx="18" />
+  <text class="dimension" x="1425" y="554">Remaining action mask</text>
+  <text class="dimension" x="1425" y="584">4,739</text>
+
+  <circle class="neuron purple" cx="1475" cy="450" r="23" />
+  <text class="symbol" x="1475" y="450">×</text>
+  <circle class="neuron green" cx="1475" cy="255" r="23" />
+  <text class="symbol" x="1475" y="255">+</text>
+
+  <path class="connection" d="M 1357 190 C 1415 190, 1415 255, 1450 255" />
+  <path class="connection" d="M 1359 510 C 1415 510, 1415 450, 1450 450" />
+  <path class="connection" d="M 1425 520 L 1462 471" />
+  <path class="connection" d="M 1475 426 L 1475 280" />
+
+  <!-- Final logits -->
+  <rect class="box box-green" x="1540" y="115" width="240" height="285" rx="22" />
+  <text class="label" x="1660" y="153">Logits</text>
+  <text class="dimension" x="1660" y="179">4,739</text>
+  <path class="connection" d="M 1499 255 L 1602 255" />
+  <g>
+    <circle class="neuron green" cx="1620" cy="215" r="11" />
+    <circle class="neuron green" cx="1660" cy="215" r="11" />
+    <circle class="neuron green" cx="1700" cy="215" r="11" />
+    <circle class="dot" cx="1660" cy="256" r="3" />
+    <circle class="dot" cx="1660" cy="268" r="3" />
+    <circle class="dot" cx="1660" cy="280" r="3" />
+    <circle class="neuron green" cx="1620" cy="325" r="11" />
+    <circle class="neuron green" cx="1660" cy="325" r="11" />
+    <circle class="neuron green" cx="1700" cy="325" r="11" />
+  </g>
+</svg>

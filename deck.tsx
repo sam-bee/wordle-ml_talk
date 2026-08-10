@@ -230,14 +230,13 @@ export const slides: SlideDefinition[] = [
     title: 'One compact state becomes four tensors',
   },
   {
-    content: step => <PolicyArchitectureSlide step={step} />,
+    content: <PolicyArchitectureSlide />,
     notes: [
-      '[First reveal] Project candidate identity to 96 features, candidate statistics to 48, and the turn to a learned 16-value embedding.',
-      '[Advance once] Concatenate 96, 48, and 16 into a width-160 state. Pass it through one two-layer residual block, whose skip connection lets the trunk retain the original state features.',
-      '[Advance again] Produce 4,739 base scores and one scalar candidate bonus.',
+      'Project candidate identity to 96 features, candidate statistics to 48, and the turn to a learned 16-value embedding.',
+      'Concatenate 96, 48, and 16 into a width-160 state. Pass it through one two-layer residual block, whose skip connection lets the trunk retain the original state features.',
+      'Produce 4,739 base scores and one scalar candidate bonus, then add that bonus only to actions which remain possible solutions.',
       'This is about a million parameters—no attention, no transformer, no giant language model. The whole architecture fits on one slide and later becomes seven CUDA kernels.',
     ],
-    stepCount: 3,
     title: 'A compact Wordle policy',
   },
   {
