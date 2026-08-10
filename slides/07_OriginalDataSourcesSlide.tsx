@@ -12,33 +12,9 @@ const OriginalDataSourcesSlide: React.FC = () => (
       subtitle="Before training, we had to decide which five-letter words the Go player could see."
     />
 
-    <div className="mt-7 grid flex-1 grid-cols-[1.3fr_1fr] gap-7">
-      <Panel className="flex h-full flex-col p-6">
-        <div className="flex items-start justify-between gap-5">
-          <div>
-            <p className="text-base font-semibold uppercase tracking-[0.2em] text-primary">Original source 01</p>
-            <h3 className="mt-2 text-3xl font-bold text-text">SUBTLEX-US</h3>
-            <p className="mt-1 text-lg text-muted">Word frequency for American English</p>
-          </div>
-          <span className="rounded-full border border-primary/30 bg-primary/10 px-4 py-2 font-mono text-sm text-primary">51M-word corpus</span>
-        </div>
-        <figure className="mt-5 overflow-hidden rounded-2xl border border-border bg-white">
-          <img
-            className="block h-auto w-full"
-            src={subtlexusScreenshot}
-            alt="SUBTLEXus word frequency American English page from Ghent University"
-          />
-          <figcaption className="border-t border-slate-200 px-4 py-2 text-sm text-slate-600">
-            Ghent University · Department of Experimental Psychology
-          </figcaption>
-        </figure>
-        <p className="mt-auto pt-4 text-lg leading-relaxed text-muted">
-          Used to rank spoken-language probe words: <strong className="text-text">2,430 additions</strong> beyond the answer list.
-        </p>
-      </Panel>
-
+    <div className="mt-7 grid flex-1 grid-cols-[1fr_1.3fr] gap-7">
       <Panel className="flex h-full flex-col border-accent/40 bg-accent/5 p-6">
-        <p className="text-base font-semibold uppercase tracking-[0.2em] text-accent">Original source 02</p>
+        <p className="text-base font-semibold uppercase tracking-[0.2em] text-accent">Original source 1</p>
         <div className="mt-5 flex h-20 items-center rounded-2xl border border-border bg-white px-6">
           <img className="h-auto w-full max-w-[22rem]" src={nytimesWordmark} alt="The New York Times wordmark" />
         </div>
@@ -58,6 +34,30 @@ const OriginalDataSourcesSlide: React.FC = () => (
         </div>
         <p className="mt-auto pt-5 text-base leading-relaxed text-muted">
           The project’s fixed policy vocabulary keeps every solution and adds only selected probe words.
+        </p>
+      </Panel>
+
+      <Panel className="flex h-full flex-col p-6">
+        <div className="flex items-start justify-between gap-5">
+          <div>
+            <p className="text-base font-semibold uppercase tracking-[0.2em] text-primary">Original source 2</p>
+            <h3 className="mt-2 text-3xl font-bold text-text">SUBTLEX-US</h3>
+            <p className="mt-1 text-lg text-muted">Word frequency for American English</p>
+          </div>
+          <span className="rounded-full border border-primary/30 bg-primary/10 px-4 py-2 font-mono text-sm text-primary">51M-word corpus</span>
+        </div>
+        <figure className="mt-5 overflow-hidden rounded-2xl border border-border bg-white">
+          <img
+            className="block h-auto w-full"
+            src={subtlexusScreenshot}
+            alt="SUBTLEXus word frequency American English page from Ghent University"
+          />
+          <figcaption className="border-t border-slate-200 px-4 py-2 text-sm text-slate-600">
+            Ghent University · Department of Experimental Psychology
+          </figcaption>
+        </figure>
+        <p className="mt-auto pt-4 text-lg leading-relaxed text-muted">
+          Used to rank spoken-language probe words: <strong className="text-text">2,430 additions</strong> beyond the answer list.
         </p>
       </Panel>
     </div>
