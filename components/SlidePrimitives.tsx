@@ -139,6 +139,6 @@ export interface CodeBlockProps extends ClassNameProps {
 export const CodeBlock: React.FC<CodeBlockProps> = ({ children, className = '', language }) => (
   <div className={`overflow-hidden rounded-2xl border border-border bg-elevated/70 shadow-inner ${className}`}>
     {language && <div className="border-b border-border px-5 py-2 text-sm font-semibold uppercase tracking-[0.2em] text-muted">{language}</div>}
-    <pre className="overflow-x-auto p-6 font-mono text-xl leading-relaxed text-text"><code>{children}</code></pre>
+    <pre className="overflow-x-auto p-6 font-mono text-2xl leading-relaxed text-text"><code>{children}</code></pre>
   </div>
 );

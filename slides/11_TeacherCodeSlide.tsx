@@ -11,8 +11,8 @@ const TeacherCodeSlide: React.FC = () => (
     />
     <div className="mt-5 grid flex-1 grid-cols-[1.22fr_0.78fr] items-center gap-7">
       <div className="min-w-0">
-        <p className="mb-3 font-mono text-lg font-semibold text-primary">dataset/teacher.go · RankExcluding</p>
-        <CodeBlock className="[&_pre]:p-4 [&_pre]:text-base [&_pre]:leading-[1.2]" language="Go">
+        <p className="mb-3 font-mono text-xl font-semibold text-primary">dataset/teacher.go · RankExcluding</p>
+        <CodeBlock className="[&_pre]:p-4 [&_pre]:text-2xl [&_pre]:leading-[1.2]" language="Go">
 {`for guessID := range t.vocab.Guesses {
     if used[uint16(guessID)] {
         continue

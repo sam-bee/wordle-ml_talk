@@ -15,7 +15,7 @@ const CandidateShortlistSlide: React.FC = () => (
           <p className="text-base font-semibold uppercase tracking-[0.2em] text-muted">game.State</p>
           <span className="rounded-full bg-primary/15 px-4 py-1 font-mono text-lg font-bold text-primary">turn 1</span>
         </div>
-        <div className="mt-5 grid grid-cols-[auto_1fr] gap-x-5 gap-y-4 font-mono text-base">
+        <div className="mt-5 grid grid-cols-[auto_1fr] gap-x-5 gap-y-4 font-mono text-xl">
           <span className="text-muted">history</span>
           <span className="text-text">[]Turn&#123;RAISE → 🟨 🟨 ⬛ 🟨 🟩&#125;</span>
           <span className="text-muted">candidates</span>
@@ -28,8 +28,8 @@ const CandidateShortlistSlide: React.FC = () => (
       </Panel>
 
       <div className="min-w-0">
-        <p className="mb-3 font-mono text-lg font-semibold text-primary">game/state.go · ApplyGuess</p>
-        <CodeBlock className="[&_pre]:p-5 [&_pre]:text-base [&_pre]:leading-snug" language="Go">
+        <p className="mb-3 font-mono text-xl font-semibold text-primary">game/state.go · ApplyGuess</p>
+        <CodeBlock className="[&_pre]:p-5 [&_pre]:text-2xl [&_pre]:leading-snug" language="Go">
 {`updatedCandidates := make([]words.Word, 0, len(s.candidates))
 for _, candidate := range s.candidates {
     candidateFeedback := GetFeedback(candidate, guess)

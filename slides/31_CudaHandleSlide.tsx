@@ -11,7 +11,7 @@ const CudaHandleSlide: React.FC = () => (
     />
 
     <div className="mt-8 grid flex-1 grid-cols-[0.9fr_1.1fr] items-center gap-9">
-      <CodeBlock className="[&_pre]:p-5 [&_pre]:text-lg [&_pre]:leading-snug" language="wordle_cuda.h">
+      <CodeBlock className="[&_pre]:p-5 [&_pre]:text-2xl [&_pre]:leading-snug" language="wordle_cuda.h">
         {`typedef struct wordle_cuda_model
     wordle_cuda_model;
 

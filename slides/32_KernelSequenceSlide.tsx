@@ -23,15 +23,15 @@ const KernelSequenceSlide: React.FC = () => (
 
     <div className="mt-5 grid flex-1 grid-cols-[1.2fr_0.8fr] items-center gap-7">
       <Panel className="p-0">
-        <div className="grid grid-cols-[2.2fr_0.8fr_0.8fr] border-b border-border px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-muted">
+        <div className="grid grid-cols-[2.2fr_0.8fr_0.8fr] border-b border-border px-6 py-3 text-base font-semibold uppercase tracking-[0.2em] text-muted">
           <span>Kernel</span><span>Grid</span><span>Block</span>
         </div>
         <div className="divide-y divide-border">
           {KERNELS.map(([name, grid, block], index) => (
             <div key={name} className={`grid grid-cols-[2.2fr_0.8fr_0.8fr] items-center px-6 py-2 ${index === KERNELS.length - 1 ? 'bg-accent/10' : ''}`}>
-              <p className="font-mono text-base text-text">{name}</p>
-              <p className="font-mono text-base text-muted">{grid}</p>
-              <p className="font-mono text-base text-muted">{block}</p>
+              <p className="font-mono text-xl text-text">{name}</p>
+              <p className="font-mono text-xl text-muted">{grid}</p>
+              <p className="font-mono text-xl text-muted">{block}</p>
             </div>
           ))}
         </div>
@@ -46,7 +46,7 @@ const KernelSequenceSlide: React.FC = () => (
           No softmax. No argmax. No legality mask.
           <span className="mt-1 block text-base font-normal">CUDA emits <span className="font-mono">logits[4739]</span>; Go selects the action.</span>
         </Callout>
-        <CodeBlock className="[&_pre]:whitespace-pre-wrap [&_pre]:break-words [&_pre]:p-3 [&_pre]:text-base [&_pre]:leading-[1.2]" language="wordle_cuda.cu · lines 695–698">
+        <CodeBlock className="[&_pre]:whitespace-pre-wrap [&_pre]:break-words [&_pre]:p-3 [&_pre]:text-2xl [&_pre]:leading-[1.2]" language="wordle_cuda.cu · lines 695–698">
           {`policy_logits_with_bonus<<<kNumActions, kDenseThreads, 0, model->stream>>>(
       model->h, model->remaining_action_mask,
       model->weights + kBaseLogitsWeightOffset,

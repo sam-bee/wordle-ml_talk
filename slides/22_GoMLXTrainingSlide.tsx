@@ -11,8 +11,8 @@ const GoMLXTrainingSlide: React.FC = () => (
     />
     <div className="mt-6 flex flex-1 flex-col gap-5">
       <Panel padding="compact">
-        <p className="text-base font-semibold uppercase tracking-[0.2em] text-muted">Exact GoMLX source excerpt · wordleml/policy/model.go:114–121</p>
-        <CodeBlock className="mt-3 [&_pre]:p-4 [&_pre]:text-base [&_pre]:leading-[1.2]" language="GoMLX / Go">
+        <p className="text-lg font-semibold uppercase tracking-[0.2em] text-muted">Exact GoMLX source excerpt · wordleml/policy/model.go:114–121</p>
+        <CodeBlock className="mt-3 [&_pre]:p-4 [&_pre]:text-2xl [&_pre]:leading-[1.2]" language="GoMLX / Go">
 {`h := graph.Concatenate([]*graph.Node{candidateFeatures, statsFeatures, turnFeatures}, -1)
 r := activation.Relu(layers.DenseWithBias(scope.In("residual_in"), h, trunkSize))
 r = layers.DenseWithBias(scope.In("residual_out"), r, trunkSize)

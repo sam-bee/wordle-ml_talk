@@ -12,8 +12,8 @@ const CgoCodeSlide: React.FC = () => (
 
     <div className="mt-5 grid flex-1 grid-cols-[0.84fr_1.16fr] items-start gap-6">
       <div className="min-w-0">
-        <p className="mb-2 font-mono text-lg font-bold text-primary">backend_cgo.go · 5–10</p>
-        <CodeBlock className="[&_pre]:whitespace-pre-wrap [&_pre]:break-words [&_pre]:p-4 [&_pre]:text-base [&_pre]:leading-[1.25]" language="compile and link the C ABI">
+        <p className="mb-2 font-mono text-xl font-bold text-primary">backend_cgo.go · 5–10</p>
+        <CodeBlock className="[&_pre]:whitespace-pre-wrap [&_pre]:break-words [&_pre]:p-4 [&_pre]:text-2xl [&_pre]:leading-[1.25]" language="compile and link the C ABI">
           {`/*
 #cgo CFLAGS: -I${'${SRCDIR}'}/../cuda/inference
 #cgo LDFLAGS: -L${'${SRCDIR}'}/../../build/cuda -L/usr/local/cuda/lib64 -lwordle_cuda -lcudart -lstdc++ -ldl -lpthread
@@ -27,8 +27,8 @@ import "C"`}
       </div>
 
       <div className="min-w-0">
-        <p className="mb-2 font-mono text-lg font-bold text-accent">backend_cgo.go · 82–94</p>
-        <CodeBlock className="[&_pre]:whitespace-pre-wrap [&_pre]:break-words [&_pre]:p-4 [&_pre]:text-base [&_pre]:leading-[1.2]" language="one synchronous complete pass">
+        <p className="mb-2 font-mono text-xl font-bold text-accent">backend_cgo.go · 82–94</p>
+        <CodeBlock className="[&_pre]:whitespace-pre-wrap [&_pre]:break-words [&_pre]:p-4 [&_pre]:text-2xl [&_pre]:leading-[1.2]" language="one synchronous complete pass">
           {`logits := make([]float32, cudamodel.NumActions)
 rc := C.wordle_cuda_model_infer(
     model.model,
