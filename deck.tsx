@@ -2,8 +2,8 @@ import React from 'react';
 
 import type { SlideDefinition } from './types';
 import TitleSlide from './slides/01_TitleSlide';
-import ContentsSlide from './slides/02_ContentsSlide';
-import DestinationPreviewSlide from './slides/03_DestinationPreviewSlide';
+import DestinationPreviewSlide from './slides/02_DestinationPreviewSlide';
+import ContentsSlide from './slides/03_ContentsSlide';
 import ProjectJourneySlide from './slides/04_ProjectJourneySlide';
 import ActDividerDataSlide from './slides/05_ActDividerSlide';
 import WordleOverviewSlide from './slides/06_WordleOverviewSlide';
@@ -56,15 +56,6 @@ export const slides: SlideDefinition[] = [
     title: 'From Go to the GPU: Integrating with CUDA',
   },
   {
-    content: <ContentsSlide />,
-    notes: [
-      'The talk has three acts: Data, Training, and Inference.',
-      'In Data, Go becomes the Wordle expert and manufactures examples. In Training, GoMLX and backpropagation compress those decisions into a small neural network. In Inference, we remove the framework from serving and follow one request through cgo into CUDA.',
-      'The route is linear: Wordle, teacher, examples, policy, GPU inference, application. The act dividers are our “you are here” checkpoints.',
-    ],
-    title: 'Contents',
-  },
-  {
     content: <DestinationPreviewSlide />,
     notes: [
       'Start with the destination. This is a real capture of one Go process serving the direct CUDA/cgo backend on an RTX 5070 Ti. It solves ADEPT in three guesses.',
@@ -72,6 +63,15 @@ export const slides: SlideDefinition[] = [
       'This screen is a demonstration, not validation evidence, and it does not imply that training used hand-written CUDA.',
     ],
     title: 'A working CUDA/cgo Wordle application',
+  },
+  {
+    content: <ContentsSlide />,
+    notes: [
+      'The talk has three acts: Data, Training, and Inference.',
+      'In Data, Go becomes the Wordle expert and manufactures examples. In Training, GoMLX and backpropagation compress those decisions into a small neural network. In Inference, we remove the framework from serving and follow one request through cgo into CUDA.',
+      'The route is linear: Wordle, teacher, examples, policy, GPU inference, application. The act dividers are our “you are here” checkpoints.',
+    ],
+    title: 'Contents',
   },
   {
     content: <ProjectJourneySlide />,
