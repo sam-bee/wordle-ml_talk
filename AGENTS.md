@@ -64,8 +64,10 @@ If you are told to use pull requests, you **must** go away and research the Gith
 very new - you won't have heard of it - but it is the correct way to manage several PRs which are to be merged in a
 specific order.
 
-You are only to use the `origin` remote. Ignore `git@github.com:LostWarrior/Calliope-Canvas.git` - this doesn't apply to
-us.
+You are to keep the `origin` remote up-to-date. If you can see one called `gitlab` and connectivity to it is working,
+keep that in sync with `origin` at all times.
+
+
 
 
 
