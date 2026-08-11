@@ -20,9 +20,6 @@ const CorpusSplitSlide: React.FC = () => (
           <MetricCard className={COMPACT_METRIC} padding="compact" label="final gameplay" value="100" detail="sealed IDs" />
         </div>
         <p className="mt-4 text-lg leading-snug text-text"><strong>100 sealed IDs</strong> → one post-selection CUDA gameplay aggregate.</p>
-        <div className="mt-auto border-t border-danger/40 pt-4 text-lg leading-snug text-muted">
-          <strong className="text-danger">Caveat:</strong> 190 / 2,445 unique validation states repeat in training with matching labels; solution IDs remain disjoint.
-        </div>
       </Panel>
       <Panel className="flex flex-col" padding="compact">
         <p className="font-mono text-lg uppercase tracking-[0.18em] text-accent">frozen corpus · v0.1.0</p>
