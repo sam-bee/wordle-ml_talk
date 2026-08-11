@@ -28,25 +28,29 @@ import GoMLXModelCodeSlide from './slides/24_GoMLXModelCodeSlide';
 import BackpropagationSlide from './slides/25_BackpropagationSlide';
 import ImitationLearningSlide from './slides/26_ImitationLearningSlide';
 import GoMLXTrainingSlide from './slides/27_GoMLXTrainingSlide';
-import ProofStagesSlide from './slides/28_ProofStagesSlide';
-import TensorBoardSlide from './slides/29_TensorBoardSlide';
-import TrainingResultsSlide from './slides/30_TrainingResultsSlide';
-import ActDividerInferenceSlide from './slides/31_ActDividerSlide';
-import PivotExportSlide from './slides/32_PivotExportSlide';
-import GpuPrimerSlide from './slides/33_GpuPrimerSlide';
-import ControlPlaneCudaSlide from './slides/34_ControlPlaneCudaSlide';
-import CgoCodeSlide from './slides/35_CgoCodeSlide';
-import CudaHandleSlide from './slides/36_CudaHandleSlide';
-import KernelSequenceSlide from './slides/37_KernelSequenceSlide';
-import LaunchShapeSlide from './slides/38_LaunchShapeSlide';
-import BlockReductionSlide from './slides/39_BlockReductionSlide';
-import MemoryJourneySlide from './slides/40_MemoryJourneySlide';
-import NsightSystemsSlide from './slides/41_NsightSystemsSlide';
-import NsightComputeSlide from './slides/42_NsightComputeSlide';
-import ParityBenchmarkSlide from './slides/43_ParityBenchmarkSlide';
-import FinalHeldOutSlide from './slides/44_FinalHeldOutSlide';
-import FinalApplicationSlide from './slides/45_FinalApplicationSlide';
-import ClosingSlide from './slides/46_ClosingSlide';
+import TensorBoardIntroSlide from './slides/28_TensorBoardIntroSlide';
+import TensorBoardTrainTop1Slide from './slides/29_TensorBoardTrainTop1Slide';
+import TensorBoardBetaMeanSlide from './slides/30_TensorBoardBetaMeanSlide';
+import TensorBoardBetaHistogramSlide from './slides/31_TensorBoardBetaHistogramSlide';
+import ProofStagesSlide from './slides/32_ProofStagesSlide';
+import TensorBoardSlide from './slides/33_TensorBoardSlide';
+import TrainingResultsSlide from './slides/34_TrainingResultsSlide';
+import ActDividerInferenceSlide from './slides/35_ActDividerSlide';
+import PivotExportSlide from './slides/36_PivotExportSlide';
+import GpuPrimerSlide from './slides/37_GpuPrimerSlide';
+import ControlPlaneCudaSlide from './slides/38_ControlPlaneCudaSlide';
+import CgoCodeSlide from './slides/39_CgoCodeSlide';
+import CudaHandleSlide from './slides/40_CudaHandleSlide';
+import KernelSequenceSlide from './slides/41_KernelSequenceSlide';
+import LaunchShapeSlide from './slides/42_LaunchShapeSlide';
+import BlockReductionSlide from './slides/43_BlockReductionSlide';
+import MemoryJourneySlide from './slides/44_MemoryJourneySlide';
+import NsightSystemsSlide from './slides/45_NsightSystemsSlide';
+import NsightComputeSlide from './slides/46_NsightComputeSlide';
+import ParityBenchmarkSlide from './slides/47_ParityBenchmarkSlide';
+import FinalHeldOutSlide from './slides/48_FinalHeldOutSlide';
+import FinalApplicationSlide from './slides/49_FinalApplicationSlide';
+import ClosingSlide from './slides/50_ClosingSlide';
 
 export const slides: SlideDefinition[] = [
   {
@@ -327,6 +331,46 @@ export const slides: SlideDefinition[] = [
       'The hand-written CUDA path later in the talk is a second implementation of the fixed forward pass. It did not produce these trained weights.',
     ],
     title: 'Go describes the graph; XLA runs it on CUDA',
+  },
+  {
+    content: <TensorBoardIntroSlide />,
+    notes: [
+      'TensorBoard is a browser dashboard for measurements recorded during training. It does not train the model; it makes the training process visible.',
+      'A scalar is one number over time, such as loss or accuracy. A histogram records a whole distribution, such as the range of beta values across many Wordle positions.',
+      'Our small standard-library Go writer emitted TensorBoard-compatible event files directly. Training did not require TensorFlow.',
+      'The next three screenshots show the seed-replication run: the same production setup with a different random seed. Its event file used the corrected histogram encoding, so TensorBoard can read the complete run.',
+    ],
+    title: 'TensorBoard: the training dashboard',
+  },
+  {
+    content: <TensorBoardTrainTop1Slide />,
+    notes: [
+      'This is a real TensorBoard capture from the seed-replication run, with the card expanded and only that run selected.',
+      'Top-one accuracy asks whether the model\'s highest-scoring guess exactly matches the teacher\'s preferred guess for the current training batch.',
+      'It rises from 0.664 percent at update 10 to 76.65 percent at update 10,000: a rapid early jump, followed by slower continued learning.',
+      'This is a training-batch signal—not Wordle win rate and not held-out accuracy. The final validation top-one agreement was 55.44 percent.',
+    ],
+    title: 'The model learns to copy the teacher',
+  },
+  {
+    content: <TensorBoardBetaMeanSlide />,
+    notes: [
+      'Beta is the one state-dependent value added only to guesses which remain possible answers.',
+      'At each validation checkpoint, this scalar averages beta across all 2,500 validation positions.',
+      'Its mean moves from minus 0.048 before training to plus 33.35 at update 10,000, so the learned candidate nudge became substantial and positive overall.',
+      'Beta is a logit adjustment, not a probability or thirty-three percentage points. The average also hides large differences between positions, which the next graph reveals.',
+    ],
+    title: 'The candidate bonus becomes substantial',
+  },
+  {
+    content: <TensorBoardBetaHistogramSlide />,
+    notes: [
+      'This is the same beta measurement shown as a histogram rather than one average.',
+      'Each ridge is one saved validation checkpoint. Within that ridge, TensorBoard groups the 2,500 position-specific beta values into buckets. The many lines are time slices—not neurons and not individual games.',
+      'The distribution begins tightly centred around zero, then moves right and spreads out as the model learns different exploit-versus-probe decisions for different states.',
+      'At update 10,000, beta ranges from minus 31.84 to plus 172.96 with a mean of plus 33.35. Negative values remain useful in positions where the model prefers an information-gathering probe.',
+    ],
+    title: 'Beta depends on the Wordle position',
   },
   {
     content: <ProofStagesSlide />,
