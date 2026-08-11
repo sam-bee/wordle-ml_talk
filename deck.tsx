@@ -22,28 +22,30 @@ import ModelArchitectureInputsSlide from './slides/18_ModelArchitectureInputsSli
 import ModelArchitectureOutputsSlide from './slides/19_ModelArchitectureOutputsSlide';
 import PolicyArchitectureSlide from './slides/20_PolicyArchitectureSlide';
 import PolicyOutputSlide from './slides/21_PolicyOutputSlide';
-import BackpropagationSlide from './slides/22_BackpropagationSlide';
-import ImitationLearningSlide from './slides/23_ImitationLearningSlide';
-import GoMLXTrainingSlide from './slides/24_GoMLXTrainingSlide';
-import ProofStagesSlide from './slides/25_ProofStagesSlide';
-import TensorBoardSlide from './slides/26_TensorBoardSlide';
-import TrainingResultsSlide from './slides/27_TrainingResultsSlide';
-import ActDividerInferenceSlide from './slides/28_ActDividerSlide';
-import PivotExportSlide from './slides/29_PivotExportSlide';
-import GpuPrimerSlide from './slides/30_GpuPrimerSlide';
-import ControlPlaneCudaSlide from './slides/31_ControlPlaneCudaSlide';
-import CgoCodeSlide from './slides/32_CgoCodeSlide';
-import CudaHandleSlide from './slides/33_CudaHandleSlide';
-import KernelSequenceSlide from './slides/34_KernelSequenceSlide';
-import LaunchShapeSlide from './slides/35_LaunchShapeSlide';
-import BlockReductionSlide from './slides/36_BlockReductionSlide';
-import MemoryJourneySlide from './slides/37_MemoryJourneySlide';
-import NsightSystemsSlide from './slides/38_NsightSystemsSlide';
-import NsightComputeSlide from './slides/39_NsightComputeSlide';
-import ParityBenchmarkSlide from './slides/40_ParityBenchmarkSlide';
-import FinalHeldOutSlide from './slides/41_FinalHeldOutSlide';
-import FinalApplicationSlide from './slides/42_FinalApplicationSlide';
-import ClosingSlide from './slides/43_ClosingSlide';
+import GoMLXIntroSlide from './slides/22_GoMLXIntroSlide';
+import GoMLXModelCodeSlide from './slides/23_GoMLXModelCodeSlide';
+import BackpropagationSlide from './slides/24_BackpropagationSlide';
+import ImitationLearningSlide from './slides/25_ImitationLearningSlide';
+import GoMLXTrainingSlide from './slides/26_GoMLXTrainingSlide';
+import ProofStagesSlide from './slides/27_ProofStagesSlide';
+import TensorBoardSlide from './slides/28_TensorBoardSlide';
+import TrainingResultsSlide from './slides/29_TrainingResultsSlide';
+import ActDividerInferenceSlide from './slides/30_ActDividerSlide';
+import PivotExportSlide from './slides/31_PivotExportSlide';
+import GpuPrimerSlide from './slides/32_GpuPrimerSlide';
+import ControlPlaneCudaSlide from './slides/33_ControlPlaneCudaSlide';
+import CgoCodeSlide from './slides/34_CgoCodeSlide';
+import CudaHandleSlide from './slides/35_CudaHandleSlide';
+import KernelSequenceSlide from './slides/36_KernelSequenceSlide';
+import LaunchShapeSlide from './slides/37_LaunchShapeSlide';
+import BlockReductionSlide from './slides/38_BlockReductionSlide';
+import MemoryJourneySlide from './slides/39_MemoryJourneySlide';
+import NsightSystemsSlide from './slides/40_NsightSystemsSlide';
+import NsightComputeSlide from './slides/41_NsightComputeSlide';
+import ParityBenchmarkSlide from './slides/42_ParityBenchmarkSlide';
+import FinalHeldOutSlide from './slides/43_FinalHeldOutSlide';
+import FinalApplicationSlide from './slides/44_FinalApplicationSlide';
+import ClosingSlide from './slides/45_ClosingSlide';
 
 export const slides: SlideDefinition[] = [
   {
@@ -258,6 +260,29 @@ export const slides: SlideDefinition[] = [
       'Do not confuse this candidate mask with legality: the separate availability mask suppresses already-used actions later.',
     ],
     title: '4,739 scores and one learned nudge',
+  },
+  {
+    content: <GoMLXIntroSlide />,
+    notes: [
+      'GoMLX describes itself as an accelerated machine-learning and math framework for Go—roughly a PyTorch, JAX, or TensorFlow-style toolkit for Go programs.',
+      'Build models from differentiable operations and familiar layers, then use automatic differentiation to calculate gradients.',
+      'Train and evaluate with datasets, losses, metrics, optimisers including Adam, checkpoints, and debugging or plotting tools.',
+      'Choose a portable pure-Go backend, or use OpenXLA and PJRT to JIT-compile graphs for CPUs, GPUs, and TPUs. This project used the XLA CUDA backend.',
+      'It can train new models, fine-tune or combine existing models, and run inference as part of an ordinary Go application.',
+      'Source: github.com/gomlx/gomlx',
+    ],
+    title: 'GoMLX: machine learning in Go',
+  },
+  {
+    content: <GoMLXModelCodeSlide />,
+    notes: [
+      'This is simplified for the slide, but the API calls, layer widths, and scope names mirror the real Wordle policy.',
+      'These calls construct nodes in a symbolic computation graph; they do not manually loop over individual floating-point values.',
+      'DenseWithBias creates or reuses trainable weights under the named scope. ReLU adds the activation, and Embedding selects the learned vector for the turn.',
+      'Concatenate joins the 96 candidate features, 48 statistics features, and 16 turn features into the 160-value state used by the trunk.',
+      'Once the graph exists, GoMLX can differentiate it, and its training tools can use those gradients to update the weights.',
+    ],
+    title: 'Programming the policy with GoMLX',
   },
   {
     content: step => <BackpropagationSlide step={step} />,
