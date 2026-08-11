@@ -124,13 +124,14 @@ export const slides: SlideDefinition[] = [
     title: 'Not every useful guess is an answer',
   },
   {
-    content: <OriginalDataSourcesSlide />,
+    content: step => <OriginalDataSourcesSlide step={step} />,
     notes: [
-      'These are the two original data sources behind the word lists—not training examples.',
-      'The New York Times Wordle browser JavaScript snapshot supplied 2,309 possible solutions and the historic 12,947 accepted-guess list.',
-      'The SUBTLEXus resource from Ghent University supplied American-English subtitle frequencies. We used those frequencies to choose 2,430 additional probe words.',
+      '[Opening] These are the two original data sources behind the word lists—not training examples.',
+      '[Advance once] The New York Times Wordle browser JavaScript snapshot supplied 2,309 possible solutions and the historic 12,947 accepted-guess list.',
+      '[Advance again] The SUBTLEXus resource from Ghent University supplied American-English subtitle frequencies. We used those frequencies to choose 2,430 additional probe words.',
       'The exact later action vocabulary is now a project artifact: 4,739 stable IDs made from the solution list plus those selected probes.',
     ],
+    stepCount: 3,
     title: 'Original sources for the word lists',
   },
   {
