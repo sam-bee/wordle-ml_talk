@@ -1,0 +1,148 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 600" role="img" aria-labelledby="title description">
+  <title id="title">Model architecture inputs</title>
+  <desc id="description">The candidate mask, candidate statistics, and turn number pass through separate learned transformations, then concatenate into a 160-value state vector.</desc>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8" />
+    </marker>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#020617" flood-opacity="0.32" />
+    </filter>
+  </defs>
+
+  <style>
+    .box { fill: #1e293b; stroke: #475569; stroke-width: 2; filter: url(#shadow); }
+    .blue-box { stroke: #38bdf8; }
+    .purple-box { stroke: #a855f7; }
+    .rose-box { stroke: #fb7185; }
+    .green-box { stroke: #34d399; }
+    .label { fill: #f1f5f9; font: 700 22px Inter, ui-sans-serif, system-ui, sans-serif; text-anchor: middle; }
+    .small-label { fill: #f1f5f9; font: 650 17px Inter, ui-sans-serif, system-ui, sans-serif; text-anchor: middle; }
+    .dimension { fill: #94a3b8; font: 600 16px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; text-anchor: middle; }
+    .connection { fill: none; stroke: #94a3b8; stroke-width: 2; stroke-linecap: round; marker-end: url(#arrow); }
+    .soft { opacity: 0.8; stroke-width: 1.5; }
+    .neuron { fill: #0f172a; stroke-width: 3; }
+    .blue { stroke: #38bdf8; }
+    .purple { stroke: #a855f7; }
+    .rose { stroke: #fb7185; }
+    .green { stroke: #34d399; }
+    .neutral { stroke: #cbd5e1; }
+    .filled { fill: #38bdf8; }
+    .dot { fill: #64748b; }
+    .symbol { fill: #f1f5f9; font: 700 18px Inter, ui-sans-serif, system-ui, sans-serif; text-anchor: middle; dominant-baseline: central; }
+  </style>
+
+  <!-- Candidate branch -->
+  <rect class="box blue-box" x="20" y="20" width="250" height="160" rx="20" />
+  <text class="label" x="145" y="58">Candidate mask</text>
+  <text class="dimension" x="145" y="86">2,309 values</text>
+  <circle class="neuron blue filled" cx="75" cy="125" r="11" />
+  <circle class="neuron blue" cx="120" cy="125" r="11" />
+  <circle class="neuron blue filled" cx="165" cy="125" r="11" />
+  <circle class="dot" cx="200" cy="125" r="3" />
+  <circle class="dot" cx="212" cy="125" r="3" />
+  <circle class="neuron blue" cx="235" cy="125" r="11" />
+
+  <path class="connection" d="M 271 100 L 337 100" />
+  <rect class="box blue-box" x="350" y="20" width="500" height="160" rx="20" />
+  <text class="small-label" x="600" y="52">Candidate projection + ReLU</text>
+  <text class="dimension" x="600" y="78">normalize, then 2,309 → 96</text>
+  <path class="connection soft" d="M 425 108 L 756 102" />
+  <path class="connection soft" d="M 425 108 L 756 139" />
+  <path class="connection soft" d="M 425 139 L 756 102" />
+  <path class="connection soft" d="M 425 139 L 756 139" />
+  <circle class="neuron blue" cx="412" cy="108" r="10" />
+  <circle class="neuron blue" cx="412" cy="139" r="10" />
+  <circle class="neuron blue" cx="770" cy="102" r="10" />
+  <circle class="neuron blue" cx="770" cy="139" r="10" />
+
+  <!-- Statistics branch -->
+  <rect class="box purple-box" x="20" y="220" width="250" height="160" rx="20" />
+  <text class="label" x="145" y="258">Candidate statistics</text>
+  <text class="dimension" x="145" y="286">209 values</text>
+  <circle class="neuron purple" cx="75" cy="325" r="11" />
+  <circle class="neuron purple" cx="120" cy="325" r="11" />
+  <circle class="neuron purple" cx="165" cy="325" r="11" />
+  <circle class="dot" cx="200" cy="325" r="3" />
+  <circle class="dot" cx="212" cy="325" r="3" />
+  <circle class="neuron purple" cx="235" cy="325" r="11" />
+
+  <path class="connection" d="M 271 300 L 337 300" />
+  <rect class="box purple-box" x="350" y="220" width="500" height="160" rx="20" />
+  <text class="small-label" x="600" y="252">Statistics projection + ReLU</text>
+  <text class="dimension" x="600" y="278">209 → 48</text>
+  <path class="connection soft" d="M 425 308 L 756 302" />
+  <path class="connection soft" d="M 425 308 L 756 339" />
+  <path class="connection soft" d="M 425 339 L 756 302" />
+  <path class="connection soft" d="M 425 339 L 756 339" />
+  <circle class="neuron purple" cx="412" cy="308" r="10" />
+  <circle class="neuron purple" cx="412" cy="339" r="10" />
+  <circle class="neuron purple" cx="770" cy="302" r="10" />
+  <circle class="neuron purple" cx="770" cy="339" r="10" />
+
+  <!-- Turn branch -->
+  <rect class="box rose-box" x="20" y="420" width="250" height="160" rx="20" />
+  <text class="label" x="145" y="458">Turn</text>
+  <text class="dimension" x="145" y="486">integer 0–5</text>
+  <circle class="neuron rose" cx="145" cy="535" r="17" />
+  <text class="symbol" x="145" y="535">t</text>
+
+  <path class="connection" d="M 271 500 L 337 500" />
+  <rect class="box rose-box" x="350" y="420" width="500" height="160" rx="20" />
+  <text class="small-label" x="600" y="452">Turn embedding</text>
+  <text class="dimension" x="600" y="478">select 1 of 6 learned vectors · 16 values</text>
+  <path class="connection soft" d="M 435 530 L 756 500" />
+  <path class="connection soft" d="M 435 530 L 756 530" />
+  <path class="connection soft" d="M 435 530 L 756 560" />
+  <circle class="neuron rose" cx="420" cy="530" r="13" />
+  <text class="symbol" x="420" y="530">t</text>
+  <circle class="neuron rose" cx="770" cy="500" r="10" />
+  <circle class="neuron rose" cx="770" cy="530" r="10" />
+  <circle class="neuron rose" cx="770" cy="560" r="10" />
+
+  <!-- Concatenation -->
+  <path class="connection" d="M 782 102 C 935 102, 935 165, 1087 165" />
+  <path class="connection" d="M 782 139 C 935 139, 935 205, 1087 205" />
+  <path class="connection" d="M 782 302 C 935 302, 935 280, 1087 280" />
+  <path class="connection" d="M 782 339 C 935 339, 935 320, 1087 320" />
+  <path class="connection" d="M 782 500 C 935 500, 935 395, 1087 395" />
+  <path class="connection" d="M 782 530 C 935 530, 935 435, 1087 435" />
+
+  <rect class="box" x="1100" y="80" width="300" height="440" rx="24" />
+  <text class="label" x="1250" y="120">Concatenate</text>
+  <text class="dimension" x="1250" y="148">96 + 48 + 16</text>
+  <circle class="neuron blue" cx="1150" cy="165" r="11" />
+  <circle class="neuron blue" cx="1150" cy="205" r="11" />
+  <circle class="neuron purple" cx="1150" cy="280" r="11" />
+  <circle class="neuron purple" cx="1150" cy="320" r="11" />
+  <circle class="neuron rose" cx="1150" cy="395" r="11" />
+  <circle class="neuron rose" cx="1150" cy="435" r="11" />
+  <path class="connection soft" d="M 1163 165 L 1327 210" />
+  <path class="connection soft" d="M 1163 205 L 1327 250" />
+  <path class="connection soft" d="M 1163 280 L 1327 290" />
+  <path class="connection soft" d="M 1163 320 L 1327 330" />
+  <path class="connection soft" d="M 1163 395 L 1327 370" />
+  <path class="connection soft" d="M 1163 435 L 1327 410" />
+  <circle class="neuron neutral" cx="1340" cy="210" r="10" />
+  <circle class="neuron neutral" cx="1340" cy="250" r="10" />
+  <circle class="neuron neutral" cx="1340" cy="290" r="10" />
+  <circle class="neuron neutral" cx="1340" cy="330" r="10" />
+  <circle class="neuron neutral" cx="1340" cy="370" r="10" />
+  <circle class="neuron neutral" cx="1340" cy="410" r="10" />
+  <text class="dimension" x="1250" y="488">160 values</text>
+
+  <!-- State vector -->
+  <path class="connection" d="M 1401 300 L 1507 300" />
+  <rect class="box green-box" x="1520" y="170" width="250" height="260" rx="22" />
+  <text class="label" x="1645" y="210">State vector</text>
+  <text class="dimension" x="1645" y="238">160</text>
+  <circle class="neuron green" cx="1595" cy="285" r="11" />
+  <circle class="neuron green" cx="1645" cy="285" r="11" />
+  <circle class="neuron green" cx="1695" cy="285" r="11" />
+  <circle class="dot" cx="1645" cy="325" r="3" />
+  <circle class="dot" cx="1645" cy="337" r="3" />
+  <circle class="neuron green" cx="1595" cy="375" r="11" />
+  <circle class="neuron green" cx="1645" cy="375" r="11" />
+  <circle class="neuron green" cx="1695" cy="375" r="11" />
+</svg>

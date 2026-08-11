@@ -19,6 +19,8 @@ import CorpusSplitSlide from './slides/15_CorpusSplitSlide';
 import ActDividerTrainingSlide from './slides/16_ActDividerSlide';
 import CandidateStatsSlide from './slides/17_CandidateStatsSlide';
 import ModelInputsSlide from './slides/18_ModelInputsSlide';
+import ModelArchitectureInputsSlide from './slides/18a_ModelArchitectureInputsSlide';
+import ModelArchitectureOutputsSlide from './slides/18b_ModelArchitectureOutputsSlide';
 import PolicyArchitectureSlide from './slides/19_PolicyArchitectureSlide';
 import PolicyOutputSlide from './slides/20_PolicyOutputSlide';
 import BackpropagationSlide from './slides/21_BackpropagationSlide';
@@ -228,6 +230,26 @@ export const slides: SlideDefinition[] = [
       'The final mask is a feature for a learned candidate bonus. It is not the legal-action or duplicate-guess mask.',
     ],
     title: 'One compact state becomes four tensors',
+  },
+  {
+    content: <ModelArchitectureInputsSlide />,
+    notes: [
+      'The candidate mask has one value per possible solution. Divide it by the number of remaining candidates, then use a dense layer to learn 96 useful summaries of which words remain.',
+      'The 209 candidate statistics are facts calculated by Go: letter frequencies by position, repeated-letter frequencies, and candidate count. A dense layer mixes and compresses them into 48 learned features.',
+      'The turn integer selects one of six trainable 16-value vectors. Concatenating 96, 48, and 16 gives the model its 160-value state.',
+      'Here, projection simply means a learned weighted combination that changes one vector size into another.',
+    ],
+    title: 'Model architecture: inputs',
+  },
+  {
+    content: <ModelArchitectureOutputsSlide />,
+    notes: [
+      'After the residual trunk, the policy head turns 160 state values into 4,739 base logits: one raw score per possible guess.',
+      'A logit is not a percentage and has no fixed range. Only its size relative to the other logits matters: higher means the model prefers that guess.',
+      'The candidate-bonus branch produces beta and adds it only to guesses which could still be the answer. Beta can be positive or negative.',
+      'The displayed word scores are illustrative. In play, Go later suppresses already-used actions and selects the highest remaining logit.',
+    ],
+    title: 'Model architecture: outputs',
   },
   {
     content: <PolicyArchitectureSlide />,
