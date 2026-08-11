@@ -1,15 +1,24 @@
 import React from 'react';
 
 import tensorBoardWebsiteImage from '../images/28-tensorboard-website.png';
+import { SlideFrame, SlideHeader } from '../components/SlidePrimitives';
 
 const TensorBoardIntroSlide: React.FC = () => (
-  <div className="flex h-[70vh] min-h-[560px] w-full max-w-[120rem] items-center justify-center overflow-hidden bg-canvas">
-    <img
-      alt="The TensorBoard overview page on the TensorFlow website, describing metrics, model graphs, histograms, embeddings, media, and profiling."
-      className="h-full w-full object-contain"
-      src={tensorBoardWebsiteImage}
+  <SlideFrame>
+    <SlideHeader
+      kicker="Training visibility"
+      title="TensorBoard: the training dashboard"
+      subtitle="A browser dashboard for the measurements recorded during model training."
     />
-  </div>
+
+    <figure className="mt-6 flex min-h-0 flex-1 items-center justify-center">
+      <img
+        alt="The TensorBoard overview page on the TensorFlow website, describing metrics, model graphs, histograms, embeddings, media, and profiling."
+        className="block h-auto max-h-[25rem] w-auto max-w-[72rem] rounded-3xl border border-border object-contain shadow-2xl"
+        src={tensorBoardWebsiteImage}
+      />
+    </figure>
+  </SlideFrame>
 );
 
 export default TensorBoardIntroSlide;
