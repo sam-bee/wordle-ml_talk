@@ -26,17 +26,14 @@ const CHAPTERS = [
 const ContentsSlide: React.FC = () => (
   <SlideFrame>
     <SlideHeader
-      kicker="One linear route"
+      kicker="A story in 3 acts"
       title="Contents"
-      subtitle="We will build one system from a Wordle decision to a CUDA-backed Go application."
+      subtitle="We will build one system from data processing, training, and model inference, using Go at each step."
     />
     <div className="mt-9 grid flex-1 grid-cols-3 gap-5">
       {CHAPTERS.map(chapter => (
         <Panel key={chapter.number} className="flex min-w-0 flex-col border-primary/30 bg-primary/5 p-7">
-          <div className="flex items-start justify-between gap-4">
-            <p className="font-mono text-xl font-bold text-primary">{chapter.number}</p>
-            <p className="text-lg font-semibold text-muted">chapter</p>
-          </div>
+          <p className="font-mono text-xl font-bold text-primary">{chapter.number}</p>
           <h3 className="mt-7 text-4xl font-bold tracking-tight text-text">{chapter.title}</h3>
           <p className="mt-4 text-lg leading-relaxed text-muted">{chapter.detail}</p>
           <ol className="mt-auto space-y-3 pt-8">

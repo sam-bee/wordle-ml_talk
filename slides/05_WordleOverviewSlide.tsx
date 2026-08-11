@@ -25,7 +25,7 @@ const WordleOverviewSlide: React.FC = () => {
           The puzzle
         </p>
         <h2 className="mt-2 text-6xl font-bold tracking-tight text-text">
-          Wordle in 60 seconds
+          Wordle recap
         </h2>
       </header>
 

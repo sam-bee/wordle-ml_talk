@@ -45,7 +45,7 @@ const TitleSlide: React.FC = () => {
 
           <div className="mt-12 border-t border-border pt-7">
             <p className="text-2xl font-semibold text-text">Sam Burns</p>
-            <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-base text-muted">
+            <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-2xl text-muted">
               {PROFILE_LINKS.map((link, index) => (
                 <React.Fragment key={link.href}>
                   {index > 0 && <span aria-hidden="true" className="text-border">•</span>}
