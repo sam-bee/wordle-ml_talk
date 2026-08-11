@@ -25,41 +25,40 @@ import PolicyOutputSlide from './slides/21_PolicyOutputSlide';
 import GoMLXIntroSlide from './slides/22_GoMLXIntroSlide';
 import GoMLXModelCodeSlide from './slides/23_GoMLXModelCodeSlide';
 import BackpropagationSlide from './slides/24_BackpropagationSlide';
-import ImitationLearningSlide from './slides/25_ImitationLearningSlide';
-import GoMLXTrainingSlide from './slides/26_GoMLXTrainingSlide';
-import TensorBoardIntroSlide from './slides/27_TensorBoardIntroSlide';
-import TensorBoardTrainTop1Slide from './slides/28_TensorBoardTrainTop1Slide';
-import TensorBoardBetaMeanSlide from './slides/29_TensorBoardBetaMeanSlide';
-import TensorBoardBetaHistogramSlide from './slides/30_TensorBoardBetaHistogramSlide';
-import ProofStagesSlide from './slides/31_ProofStagesSlide';
-import TensorBoardSlide from './slides/32_TensorBoardSlide';
-import TrainingResultsSlide from './slides/33_TrainingResultsSlide';
-import ActDividerInferenceSlide from './slides/34_ActDividerSlide';
-import InferenceGoalSlide from './slides/35_InferenceGoalSlide';
-import InferenceRoutesSlide from './slides/36_InferenceRoutesSlide';
-import Rtx5070TiSlide from './slides/37_Rtx5070TiSlide';
-import CudaPrimerShortSlide from './slides/38_CudaPrimerShortSlide';
-import CgoIntegrationCodeSlide from './slides/39_CgoIntegrationCodeSlide';
-import InferenceRequestSlide from './slides/40_InferenceRequestSlide';
-import WordleLaunchSlide from './slides/41_WordleLaunchSlide';
-import NsightSystemsExampleSlide from './slides/42_NsightSystemsExampleSlide';
-import NsightComputeExampleSlide from './slides/43_NsightComputeExampleSlide';
-import CudaWebAppDemoSlide from './slides/44_CudaWebAppDemoSlide';
-import PivotExportSlide from './slides/45_PivotExportSlide';
-import GpuPrimerSlide from './slides/46_GpuPrimerSlide';
-import ControlPlaneCudaSlide from './slides/47_ControlPlaneCudaSlide';
-import CgoCodeSlide from './slides/48_CgoCodeSlide';
-import CudaHandleSlide from './slides/49_CudaHandleSlide';
-import KernelSequenceSlide from './slides/50_KernelSequenceSlide';
-import LaunchShapeSlide from './slides/51_LaunchShapeSlide';
-import BlockReductionSlide from './slides/52_BlockReductionSlide';
-import MemoryJourneySlide from './slides/53_MemoryJourneySlide';
-import NsightSystemsSlide from './slides/54_NsightSystemsSlide';
-import NsightComputeSlide from './slides/55_NsightComputeSlide';
-import ParityBenchmarkSlide from './slides/56_ParityBenchmarkSlide';
-import FinalHeldOutSlide from './slides/57_FinalHeldOutSlide';
-import FinalApplicationSlide from './slides/58_FinalApplicationSlide';
-import ClosingSlide from './slides/59_ClosingSlide';
+import GoMLXTrainingSlide from './slides/25_GoMLXTrainingSlide';
+import TensorBoardIntroSlide from './slides/26_TensorBoardIntroSlide';
+import TensorBoardTrainTop1Slide from './slides/27_TensorBoardTrainTop1Slide';
+import TensorBoardBetaMeanSlide from './slides/28_TensorBoardBetaMeanSlide';
+import TensorBoardBetaHistogramSlide from './slides/29_TensorBoardBetaHistogramSlide';
+import ProofStagesSlide from './slides/30_ProofStagesSlide';
+import TensorBoardSlide from './slides/31_TensorBoardSlide';
+import TrainingResultsSlide from './slides/32_TrainingResultsSlide';
+import ActDividerInferenceSlide from './slides/33_ActDividerSlide';
+import InferenceGoalSlide from './slides/34_InferenceGoalSlide';
+import InferenceRoutesSlide from './slides/35_InferenceRoutesSlide';
+import Rtx5070TiSlide from './slides/36_Rtx5070TiSlide';
+import CudaPrimerShortSlide from './slides/37_CudaPrimerShortSlide';
+import CgoIntegrationCodeSlide from './slides/38_CgoIntegrationCodeSlide';
+import InferenceRequestSlide from './slides/39_InferenceRequestSlide';
+import WordleLaunchSlide from './slides/40_WordleLaunchSlide';
+import NsightSystemsExampleSlide from './slides/41_NsightSystemsExampleSlide';
+import NsightComputeExampleSlide from './slides/42_NsightComputeExampleSlide';
+import CudaWebAppDemoSlide from './slides/43_CudaWebAppDemoSlide';
+import PivotExportSlide from './slides/44_PivotExportSlide';
+import GpuPrimerSlide from './slides/45_GpuPrimerSlide';
+import ControlPlaneCudaSlide from './slides/46_ControlPlaneCudaSlide';
+import CgoCodeSlide from './slides/47_CgoCodeSlide';
+import CudaHandleSlide from './slides/48_CudaHandleSlide';
+import KernelSequenceSlide from './slides/49_KernelSequenceSlide';
+import LaunchShapeSlide from './slides/50_LaunchShapeSlide';
+import BlockReductionSlide from './slides/51_BlockReductionSlide';
+import MemoryJourneySlide from './slides/52_MemoryJourneySlide';
+import NsightSystemsSlide from './slides/53_NsightSystemsSlide';
+import NsightComputeSlide from './slides/54_NsightComputeSlide';
+import ParityBenchmarkSlide from './slides/55_ParityBenchmarkSlide';
+import FinalHeldOutSlide from './slides/56_FinalHeldOutSlide';
+import FinalApplicationSlide from './slides/57_FinalApplicationSlide';
+import ClosingSlide from './slides/58_ClosingSlide';
 
 export const slides: SlideDefinition[] = [
   {
@@ -316,16 +315,6 @@ export const slides: SlideDefinition[] = [
     ],
     stepCount: 5,
     title: 'Backpropagation: blame, nudge, repeat',
-  },
-  {
-    content: <ImitationLearningSlide />,
-    notes: [
-      'This is supervised imitation, not reinforcement learning. The frozen teacher top-one action is the target; the stored top sixteen are evaluation signals.',
-      'Before computing loss, a separate availability mask turns only actions already used in that history into negative infinity. It prevents duplicate guesses without changing the candidate-bonus semantics.',
-      'The opening position is sampled deliberately, because it otherwise appears only once in a corpus dominated by later states.',
-      'The goal is not to reproduce the teacher\'s search procedure. It is to learn a cheap policy that chooses useful actions from the same state.',
-    ],
-    title: 'Teach one good action at a time',
   },
   {
     content: <GoMLXTrainingSlide />,
