@@ -29,12 +29,13 @@ const PolicyOutputSlide: React.FC = () => (
         <Callout className="mt-6" tone="accent">This mask is a learned preference, not a legality rule: a useful probe word keeps its ordinary score.</Callout>
       </Panel>
 
-      <div className="grid grid-rows-2 gap-6">
-        <MetricCard label="trainable weights" value="1,046,596" detail="FP32 parameters · 3.99 MiB" />
-        <Panel className="flex flex-col justify-between">
-          <p className="text-base font-semibold uppercase tracking-[0.2em] text-muted">Why the number matters</p>
-          <p className="text-xl leading-relaxed text-text">The output layer dominates: a fixed action vocabulary is an architectural decision, not just a dictionary detail.</p>
-        </Panel>
+      <div className="flex items-center">
+        <MetricCard
+          className="h-full w-full justify-center [&>p:nth-child(3)]:!text-2xl"
+          label="trainable weights"
+          value="1,046,596"
+          detail="FP32 parameters · 3.99 MiB"
+        />
       </div>
     </div>
   </SlideFrame>
