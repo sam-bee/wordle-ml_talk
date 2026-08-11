@@ -233,6 +233,9 @@ export const slides: SlideDefinition[] = [
     notes: [
       'The next job is to design a neural network that can play Wordle cheaply from the current game state.',
       'At the highest level, it receives information about the remaining candidate answers, useful letter statistics, and the current turn.',
+      'The letter statistics are 209 summaries of the remaining answers: 130 positional frequencies (five positions × 26 letters), 78 repetition frequencies (26 letters × at least one, two, or three copies), and one normalized log candidate-count value.',
+      'For example, one positional value can say what fraction of possible answers begin with A; a repetition value can say what fraction contain at least two E’s. These are fractions of the current candidate set, not counts of guesses already played.',
+      'The separate candidate-count value tells the model whether the shortlist is large or nearly solved; it is included because the candidate mask is normalized before its projection.',
       'It produces 4,739 scores—one for every guess in the model vocabulary—and the highest available score becomes the next move.',
       'The finished design contains exactly 1,046,596 trainable weights: small enough to inspect and explain, but large enough to learn the teacher\'s strategy.',
     ],
