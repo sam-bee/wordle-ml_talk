@@ -17,8 +17,7 @@ import WorkerPoolSlide from './slides/13_WorkerPoolSlide';
 import SyntheticExampleSlide from './slides/14_SyntheticExampleSlide';
 import CorpusSplitSlide from './slides/15_CorpusSplitSlide';
 import ActDividerTrainingSlide from './slides/16_ActDividerSlide';
-import CandidateStatsSlide from './slides/17_CandidateStatsSlide';
-import ModelInputsSlide from './slides/18_ModelInputsSlide';
+import ModelArchitectureIntroSlide from './slides/17_ModelArchitectureIntroSlide';
 import ModelArchitectureInputsSlide from './slides/18a_ModelArchitectureInputsSlide';
 import ModelArchitectureOutputsSlide from './slides/18b_ModelArchitectureOutputsSlide';
 import PolicyArchitectureSlide from './slides/19_PolicyArchitectureSlide';
@@ -211,25 +210,14 @@ export const slides: SlideDefinition[] = [
     title: 'Training',
   },
   {
-    content: <CandidateStatsSlide />,
+    content: <ModelArchitectureIntroSlide />,
     notes: [
-      'Now that the corpus is frozen, this slide introduces the candidate statistics the model will consume.',
-      'The candidate bitset is a useful identity signal, but a raw sum would mostly tell the model how many words remain.',
-      'The encoder therefore projects a normalized mean over the candidate words, then adds explicit letter-position and multiplicity statistics.',
-      'The final normalized log count restores the shortlist magnitude that normalization deliberately removed.',
+      'The next job is to design a neural network that can play Wordle cheaply from the current game state.',
+      'At the highest level, it receives information about the remaining candidate answers, useful letter statistics, and the current turn.',
+      'It produces 4,739 scores—one for every guess in the model vocabulary—and the highest available score becomes the next move.',
+      'The finished design contains exactly 1,046,596 trainable weights: small enough to inspect and explain, but large enough to learn the teacher\'s strategy.',
     ],
-    title: 'Candidate statistics make the shortlist learnable',
-  },
-  {
-    content: <ModelInputsSlide />,
-    notes: [
-      'One shared Go encoder consumes the 289-byte candidate bitset and a turn from zero through five.',
-      'It produces four tensors: a 2,309-value candidate mask, 209 summary statistics, the turn, and a 4,739-value mask marking which actions are still possible solutions.',
-      'The candidate projection sees a normalized mean over the shortlist. The 209 explicit statistics encode 130 letter-position counts, 78 multiplicity counts, and one normalized log-count that restores shortlist size.',
-      'The same package expands generated records and live board states. That prevents the quiet but common failure where training and serving encode the same idea differently.',
-      'The final mask is a feature for a learned candidate bonus. It is not the legal-action or duplicate-guess mask.',
-    ],
-    title: 'One compact state becomes four tensors',
+    title: 'A neural network that plays Wordle',
   },
   {
     content: <ModelArchitectureInputsSlide />,

@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 600" role="img" aria-labelledby="title description">
+  <title id="title">A neural network that plays Wordle</title>
+  <desc id="description">A high-level model diagram showing a Wordle state entering a neural network with 1,046,596 trainable weights and producing 4,739 guess scores.</desc>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8" />
+    </marker>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="140%">
+      <feDropShadow dx="0" dy="7" stdDeviation="9" flood-color="#020617" flood-opacity="0.34" />
+    </filter>
+  </defs>
+
+  <style>
+    .box { fill: #1e293b; stroke: #475569; stroke-width: 2.5; filter: url(#shadow); }
+    .blue-box { stroke: #38bdf8; }
+    .rose-box { stroke: #fb7185; }
+    .green-box { stroke: #34d399; }
+    .label { fill: #f1f5f9; font: 700 27px Inter, ui-sans-serif, system-ui, sans-serif; text-anchor: middle; }
+    .small-label { fill: #f1f5f9; font: 650 20px Inter, ui-sans-serif, system-ui, sans-serif; text-anchor: middle; }
+    .dimension { fill: #94a3b8; font: 600 18px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; text-anchor: middle; }
+    .weight { fill: #f1f5f9; font: 800 34px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; text-anchor: middle; }
+    .connection { fill: none; stroke: #94a3b8; stroke-width: 3; stroke-linecap: round; marker-end: url(#arrow); }
+    .soft { stroke-width: 1.7; opacity: 0.8; }
+    .neuron { fill: #0f172a; stroke-width: 3; }
+    .blue { stroke: #38bdf8; }
+    .rose { stroke: #fb7185; }
+    .green { stroke: #34d399; }
+    .neutral { stroke: #cbd5e1; }
+    .dot { fill: #64748b; }
+  </style>
+
+  <rect class="box blue-box" x="25" y="105" width="360" height="390" rx="26" />
+  <text class="label" x="205" y="155">Inputs</text>
+  <text class="dimension" x="205" y="188">current Wordle state</text>
+
+  <rect x="70" y="230" width="270" height="66" rx="15" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5" />
+  <circle class="neuron blue" cx="105" cy="263" r="10" />
+  <text class="small-label" x="220" y="271">candidate answers</text>
+
+  <rect x="70" y="316" width="270" height="66" rx="15" fill="#0f172a" stroke="#a855f7" stroke-width="1.5" />
+  <circle class="neuron" cx="105" cy="349" r="10" stroke="#a855f7" />
+  <text class="small-label" x="220" y="357">letter statistics</text>
+
+  <rect x="70" y="402" width="270" height="66" rx="15" fill="#0f172a" stroke="#fb7185" stroke-width="1.5" />
+  <circle class="neuron rose" cx="105" cy="435" r="10" />
+  <text class="small-label" x="220" y="443">turn</text>
+
+  <path class="connection" d="M 387 300 L 497 300" />
+
+  <rect class="box rose-box" x="510" y="45" width="720" height="510" rx="30" />
+  <text class="label" x="870" y="95">Neural network</text>
+
+  <g>
+    <path class="connection soft" d="M 628 175 L 850 160" />
+    <path class="connection soft" d="M 628 175 L 850 240" />
+    <path class="connection soft" d="M 628 255 L 850 160" />
+    <path class="connection soft" d="M 628 255 L 850 320" />
+    <path class="connection soft" d="M 628 335 L 850 240" />
+    <path class="connection soft" d="M 628 335 L 850 320" />
+
+    <path class="connection soft" d="M 878 160 L 1090 175" />
+    <path class="connection soft" d="M 878 160 L 1090 255" />
+    <path class="connection soft" d="M 878 240 L 1090 175" />
+    <path class="connection soft" d="M 878 240 L 1090 335" />
+    <path class="connection soft" d="M 878 320 L 1090 255" />
+    <path class="connection soft" d="M 878 320 L 1090 335" />
+
+    <circle class="neuron blue" cx="610" cy="175" r="15" />
+    <circle class="neuron blue" cx="610" cy="255" r="15" />
+    <circle class="neuron blue" cx="610" cy="335" r="15" />
+    <circle class="neuron rose" cx="865" cy="160" r="15" />
+    <circle class="neuron rose" cx="865" cy="240" r="15" />
+    <circle class="neuron rose" cx="865" cy="320" r="15" />
+    <circle class="neuron green" cx="1108" cy="175" r="15" />
+    <circle class="neuron green" cx="1108" cy="255" r="15" />
+    <circle class="neuron green" cx="1108" cy="335" r="15" />
+  </g>
+
+  <rect x="620" y="410" width="500" height="102" rx="20" fill="#0f172a" stroke="#fb7185" stroke-width="2" />
+  <text class="weight" x="870" y="455">1,046,596</text>
+  <text class="dimension" x="870" y="487">trainable weights</text>
+
+  <path class="connection" d="M 1232 300 L 1342 300" />
+
+  <rect class="box green-box" x="1355" y="105" width="420" height="390" rx="26" />
+  <text class="label" x="1565" y="155">Outputs</text>
+  <text class="dimension" x="1565" y="188">4,739 guess scores</text>
+
+  <rect x="1405" y="225" width="320" height="68" rx="15" fill="#064e3b" stroke="#34d399" stroke-width="2" />
+  <circle class="neuron green" cx="1442" cy="259" r="10" />
+  <text class="small-label" x="1565" y="267">highest score</text>
+
+  <rect x="1405" y="310" width="320" height="68" rx="15" fill="#0f172a" stroke="#475569" stroke-width="1.5" />
+  <circle class="neuron neutral" cx="1442" cy="344" r="10" />
+  <text class="small-label" x="1565" y="352">another guess</text>
+
+  <circle class="dot" cx="1565" cy="405" r="3" />
+  <circle class="dot" cx="1565" cy="418" r="3" />
+  <circle class="dot" cx="1565" cy="431" r="3" />
+  <text class="dimension" x="1565" y="468">one score per possible guess</text>
+</svg>
