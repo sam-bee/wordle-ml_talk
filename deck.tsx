@@ -36,21 +36,31 @@ import ProofStagesSlide from './slides/32_ProofStagesSlide';
 import TensorBoardSlide from './slides/33_TensorBoardSlide';
 import TrainingResultsSlide from './slides/34_TrainingResultsSlide';
 import ActDividerInferenceSlide from './slides/35_ActDividerSlide';
-import PivotExportSlide from './slides/36_PivotExportSlide';
-import GpuPrimerSlide from './slides/37_GpuPrimerSlide';
-import ControlPlaneCudaSlide from './slides/38_ControlPlaneCudaSlide';
-import CgoCodeSlide from './slides/39_CgoCodeSlide';
-import CudaHandleSlide from './slides/40_CudaHandleSlide';
-import KernelSequenceSlide from './slides/41_KernelSequenceSlide';
-import LaunchShapeSlide from './slides/42_LaunchShapeSlide';
-import BlockReductionSlide from './slides/43_BlockReductionSlide';
-import MemoryJourneySlide from './slides/44_MemoryJourneySlide';
-import NsightSystemsSlide from './slides/45_NsightSystemsSlide';
-import NsightComputeSlide from './slides/46_NsightComputeSlide';
-import ParityBenchmarkSlide from './slides/47_ParityBenchmarkSlide';
-import FinalHeldOutSlide from './slides/48_FinalHeldOutSlide';
-import FinalApplicationSlide from './slides/49_FinalApplicationSlide';
-import ClosingSlide from './slides/50_ClosingSlide';
+import InferenceGoalSlide from './slides/36_InferenceGoalSlide';
+import InferenceRoutesSlide from './slides/37_InferenceRoutesSlide';
+import Rtx5070TiSlide from './slides/38_Rtx5070TiSlide';
+import CudaPrimerShortSlide from './slides/39_CudaPrimerShortSlide';
+import CgoIntegrationCodeSlide from './slides/40_CgoIntegrationCodeSlide';
+import InferenceRequestSlide from './slides/41_InferenceRequestSlide';
+import WordleLaunchSlide from './slides/42_WordleLaunchSlide';
+import NsightSystemsExampleSlide from './slides/43_NsightSystemsExampleSlide';
+import NsightComputeExampleSlide from './slides/44_NsightComputeExampleSlide';
+import CudaWebAppDemoSlide from './slides/45_CudaWebAppDemoSlide';
+import PivotExportSlide from './slides/46_PivotExportSlide';
+import GpuPrimerSlide from './slides/47_GpuPrimerSlide';
+import ControlPlaneCudaSlide from './slides/48_ControlPlaneCudaSlide';
+import CgoCodeSlide from './slides/49_CgoCodeSlide';
+import CudaHandleSlide from './slides/50_CudaHandleSlide';
+import KernelSequenceSlide from './slides/51_KernelSequenceSlide';
+import LaunchShapeSlide from './slides/52_LaunchShapeSlide';
+import BlockReductionSlide from './slides/53_BlockReductionSlide';
+import MemoryJourneySlide from './slides/54_MemoryJourneySlide';
+import NsightSystemsSlide from './slides/55_NsightSystemsSlide';
+import NsightComputeSlide from './slides/56_NsightComputeSlide';
+import ParityBenchmarkSlide from './slides/57_ParityBenchmarkSlide';
+import FinalHeldOutSlide from './slides/58_FinalHeldOutSlide';
+import FinalApplicationSlide from './slides/59_FinalApplicationSlide';
+import ClosingSlide from './slides/60_ClosingSlide';
 
 export const slides: SlideDefinition[] = [
   {
@@ -411,10 +421,125 @@ export const slides: SlideDefinition[] = [
       'On the full route, the checkpoint is fixed; we are moving through export, cgo, and CUDA into the Go web application.',
       'We will keep the successful GoMLX training path, export the selected weights, and implement inference directly behind a narrow cgo boundary.',
       'We are not rewriting training in CUDA. We are peeling back the abstraction for one fixed forward pass.',
-      '[Target: about 18 minutes for this act, including profiler evidence and the demo.]',
+      '[Target: about 15 minutes for this alternative act, including this divider and a two-minute live demo.]',
     ],
     speech: { cues: ['inference', 'peel back the framework'] },
     title: 'Inference',
+  },
+  {
+    content: <InferenceGoalSlide />,
+    notes: [
+      'Start with the destination: a browser talks to an ordinary Go service, and that service invokes CUDA once for each model decision.',
+      'Go keeps the parts it is good at: HTTP, Wordle state, encoding, legal-action handling, deterministic choice, and the user-facing result.',
+      'CUDA has a deliberately narrow job: accept four numeric inputs, run the fixed forward pass, and return 4,739 raw logits.',
+      'GoMLX could already run this inference. The purpose of the hand-written route is to expose and understand the Go-to-GPU boundary.',
+      '[About 30 seconds.]',
+    ],
+    title: 'The goal: a Go service invokes CUDA',
+  },
+  {
+    content: <InferenceRoutesSlide />,
+    notes: [
+      'There are three sensible levels of abstraction.',
+      'GoMLX is the highest level: describe the graph in Go, then XLA compiles and runs it on CUDA. That already worked and could have remained our serving route.',
+      'A Go binding to the CUDA Driver API is the lower-level alternative. Go would explicitly create a context, load PTX or cubin modules, look up functions, manage buffers, and call cuLaunchKernel.',
+      'The route demonstrated here is Go through cgo into a small plain-C ABI, with CUDA C++ using the higher-level Runtime API behind it.',
+      'cgo is the Go interoperability mechanism, not another CUDA API. Driver-API bindings still cross into NVIDIA\'s libcuda through bindings or FFI.',
+      'Official comparison: https://docs.nvidia.com/cuda/cuda-runtime-api/driver-vs-runtime-api.html',
+      '[About 1 minute.]',
+    ],
+    title: 'Three ways Go could reach the GPU',
+  },
+  {
+    content: <Rtx5070TiSlide />,
+    notes: [
+      'The desktop development device is an NVIDIA GeForce RTX 5070 Ti: Blackwell, compute capability 12.0, 8,960 CUDA cores, and 16 GB of GDDR7 on a 256-bit interface.',
+      'NVIDIA quotes 896 GB per second of graphics-memory bandwidth. CUDA cores are arithmetic lanes, not independent CPU cores and not goroutines.',
+      'CUDA exposes 64 KiB of constant memory: a tiny, cached, read-only region useful when many threads read the same small data. Our roughly four-mebibyte model does not fit there and does not use it.',
+      'The trained FP32 weights are only 3.99 MiB, so they live comfortably in ordinary device global memory and remain resident between guesses.',
+      'Sources: https://www.nvidia.com/en-us/geforce/graphics-cards/50-series/rtx-5070-family/ · https://www.nvidia.com/en-us/geforce/news/rtx-50-series-graphics-cards-gpu-laptop-announcements/ · https://docs.nvidia.com/cuda/cuda-programming-guide/05-appendices/compute-capabilities.html',
+      '[About 1 minute 15 seconds.]',
+    ],
+    title: 'The NVIDIA GeForce RTX 5070 Ti',
+  },
+  {
+    content: <CudaPrimerShortSlide />,
+    notes: [
+      'CUDA is NVIDIA\'s programming model and API for heterogeneous programs: ordinary host code controls a separate GPU device.',
+      'Host and device have separate memory spaces. The host copies inputs to device memory, launches a kernel, and copies results back when it needs them.',
+      'A kernel is one GPU function. A thread is one logical lane running it; cooperating threads form a block; all blocks in one launch form the grid.',
+      'Do not map CUDA threads to goroutines. They are much smaller execution lanes, and the hardware schedules blocks across a finite GPU in waves.',
+      '[About 1 minute 15 seconds.]',
+    ],
+    title: 'CUDA: host code launches work on a device',
+  },
+  {
+    content: <CgoIntegrationCodeSlide />,
+    notes: [
+      'This is code I wrote for the slide, not a source screenshot, but it mirrors the actual backend_cgo.go call: the same four inputs, one output allocation, one native function, and the same pointer-lifetime rule.',
+      'nvcc compiles wordle_cuda.cu into the native library. cgo links that library and sees only a plain C header; the CUDA C++ implementation stays behind the C ABI.',
+      'One complete forward pass crosses the language boundary once per turn. A call per layer would repeat cgo crossings and host-device coordination throughout the graph.',
+      'The call is synchronous from Go\'s perspective. C finishes its device-to-host copy before returning and never retains a Go pointer. KeepAlive makes that lifetime deliberate.',
+      '[About 1 minute 45 seconds.]',
+    ],
+    title: 'cgo gives Go a C-shaped front door',
+  },
+  {
+    content: <InferenceRequestSlide />,
+    notes: [
+      'One dedicated goroutine locks to an OS thread, creates the CUDA model handle, serializes inference, and destroys the handle on the same thread.',
+      'Creation allocates a stream and persistent device buffers, then uploads all 4,186,384 bytes of weights once. No cudaMalloc, cudaFree, or weight upload occurs per guess.',
+      'For each guess, three arrays totalling 29,028 bytes go to the GPU. The integer turn is passed as a scalar. Seven kernels run in one stream, then 18,956 bytes of raw logits return.',
+      'Go applies its separate availability mask, selects the highest available score, computes Wordle feedback, and advances the authoritative game.',
+      '[About 1 minute 30 seconds.]',
+    ],
+    title: 'Create once; call once per guess',
+  },
+  {
+    content: <WordleLaunchSlide />,
+    notes: [
+      'The final kernel is the simplest launch to explain: 4,739 blocks in the grid and 128 threads in each block.',
+      'Each block owns one possible action. Its 128 threads divide the 160-value dot product, combine partial sums using four 32-thread warps and a tiny shared-memory reduction, then one lane adds the output bias and state-dependent candidate bonus.',
+      'The block writes one raw logit. The grid therefore writes one score for every word in the fixed action vocabulary.',
+      'Four thousand seven hundred and thirty-nine times 128 is 606,592 logical thread positions. That is a description of work, not a claim that all those lanes are resident simultaneously.',
+      'There is no CUDA softmax, legality mask, or action choice. Go receives the logits and makes the decision.',
+      '[About 1 minute 45 seconds.]',
+    ],
+    title: 'One block scores one possible word',
+  },
+  {
+    content: <NsightSystemsExampleSlide />,
+    notes: [
+      'This is a genuine Nsight Systems GPU-metrics screenshot recovered from my previous Go-and-CUDA talk. It shows clock and GPU-activity tracks; it is an example of one part of the tool, not a Wordle inference trace.',
+      'Nsight Systems is the wide-angle view. It puts host threads, CUDA API calls, copies, kernels, synchronization, and GPU activity on a shared timeline.',
+      'For Wordle, the question is whether one cgo call visibly contains the expected three input copies, seven named kernels, one output copy, and the final wait—and where gaps or unexpected serialization appear.',
+      'Use Systems first to decide which part of the request deserves closer inspection.',
+      '[About 1 minute 15 seconds.]',
+    ],
+    title: 'Nsight Systems: the wide-angle view',
+  },
+  {
+    content: <NsightComputeExampleSlide />,
+    notes: [
+      'This is a genuine Nsight Compute roofline screenshot from the previous talk. Again, it illustrates the product rather than pretending to be the Wordle capture.',
+      'Nsight Compute is the microscope for one selected kernel. It reports launch statistics, registers, occupancy, memory traffic, instruction behaviour, and source correlation.',
+      'The actual Wordle policy-kernel report records a 4,739-by-128 launch, 11.36 microseconds, 40 registers per thread, 69.89 percent achieved occupancy, and no local or shared spills.',
+      'Occupancy is a diagnostic constraint, not a percentage score. One kernel view also cannot prove end-to-end speed.',
+      '[About 1 minute 15 seconds.]',
+    ],
+    title: 'Nsight Compute: the per-kernel microscope',
+  },
+  {
+    content: <CudaWebAppDemoSlide />,
+    notes: [
+      'Return to the application. This is a real fallback capture from the direct CUDA/cgo route: one Go process, the selected repeat-seed checkpoint, an RTX 5070 Ti, and ADEPT solved in three guesses.',
+      'The browser knows nothing about CUDA. The HTTP handler knows nothing about warp reductions. Those details remain behind the scorer interface and one owned worker.',
+      'Now switch to the already-running laptop demo and play another game. If the live environment misbehaves, stay on this slide and narrate the real capture.',
+      'A user-chosen game demonstrates the integration route; it is not validation or final-test evidence.',
+      '[About 1 minute on this slide, then allow about 2 minutes for the live demo.]',
+      '[Slides 46 onward are the retained older Act III and are not part of this 15-minute alternative.]',
+    ],
+    title: 'A Go web application backed by CUDA',
   },
   {
     content: <PivotExportSlide />,
