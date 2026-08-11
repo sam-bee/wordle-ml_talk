@@ -29,13 +29,21 @@ const PolicyOutputSlide: React.FC = () => (
         <Callout className="mt-6" tone="accent">This mask is a learned preference, not a legality rule: a useful probe word keeps its ordinary score.</Callout>
       </Panel>
 
-      <div className="flex items-center">
+      <div className="grid grid-rows-[auto_1fr] gap-6">
         <MetricCard
-          className="h-full w-full justify-center [&>p:nth-child(3)]:!text-2xl"
+          className="[&>p:nth-child(3)]:!text-2xl"
           label="trainable weights"
           value="1,046,596"
           detail="FP32 parameters · 3.99 MiB"
         />
+        <Panel className="flex flex-col justify-between" padding="compact">
+          <div>
+            <p className="text-base font-semibold uppercase tracking-[0.2em] text-muted">Action masking</p>
+            <p className="mt-3 text-base leading-relaxed text-text">Used guesses become −∞ before ArgMax.</p>
+            <pre className="mt-3 overflow-x-auto rounded-xl border border-border bg-elevated/60 px-4 py-3 font-mono text-xs leading-relaxed text-text"><code>{`available := graph.GreaterThan(availableActions, 0)
+return graph.Where(available, logits, graph.Infinity(..., -1))`}</code></pre>
+          </div>
+        </Panel>
       </div>
     </div>
   </SlideFrame>
