@@ -335,7 +335,8 @@ export const slides: SlideDefinition[] = [
   {
     content: <TensorBoardIntroSlide />,
     notes: [
-      'TensorBoard is a browser dashboard for measurements recorded during training. It does not train the model; it makes the training process visible.',
+      'TensorBoard is Google\'s open-source visualisation toolkit from the TensorFlow ecosystem, although other frameworks can write its event-file format too.',
+      'It is a browser dashboard for measurements recorded during training. It does not train the model; it makes the training process visible.',
       'A scalar is one number over time, such as loss or accuracy. A histogram records a whole distribution, such as the range of beta values across many Wordle positions.',
       'Our small standard-library Go writer emitted TensorBoard-compatible event files directly. Training did not require TensorFlow.',
       'The next three screenshots show the seed-replication run: the same production setup with a different random seed. Its event file used the corrected histogram encoding, so TensorBoard can read the complete run.',

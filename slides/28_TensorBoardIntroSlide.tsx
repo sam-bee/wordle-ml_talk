@@ -1,53 +1,35 @@
 import React from 'react';
 
-import { Panel, SlideFrame, SlideHeader } from '../components/SlidePrimitives';
+import tensorBoardWebsiteImage from '../images/28-tensorboard-website.png';
+import { SlideFrame } from '../components/SlidePrimitives';
 
 const TensorBoardIntroSlide: React.FC = () => (
   <SlideFrame>
-    <SlideHeader
-      kicker="Monitoring training"
-      title="TensorBoard: the training dashboard"
-      subtitle="Our Go process records measurements. TensorBoard turns them into graphs we can inspect while the model learns."
-    />
+    <div className="grid min-h-0 flex-1 grid-cols-[1.55fr_0.65fr] gap-9">
+      <figure className="min-h-0 overflow-hidden rounded-3xl border border-border bg-white shadow-2xl">
+        <img
+          alt="The TensorBoard overview page on the TensorFlow website, describing metrics, model graphs, histograms, embeddings, media, and profiling."
+          className="h-full w-full object-cover"
+          src={tensorBoardWebsiteImage}
+        />
+      </figure>
 
-    <div className="mt-9 flex flex-1 flex-col justify-center">
-      <div className="grid grid-cols-[1fr_auto_1.15fr_auto_1fr] items-center gap-5">
-        <Panel className="flex min-h-44 flex-col justify-center border-primary/40 bg-primary/10 text-center">
-          <p className="font-mono text-base font-bold uppercase tracking-[0.18em] text-primary">Go + GoMLX</p>
-          <p className="mt-4 text-3xl font-bold text-text">Train the model</p>
-          <p className="mt-3 text-xl text-muted">loss · accuracy · beta</p>
-        </Panel>
+      <div className="flex min-w-0 flex-col justify-center">
+        <p className="text-base font-semibold uppercase tracking-[0.28em] text-primary">
+          Monitoring training
+        </p>
+        <h2 className="mt-5 text-6xl font-bold leading-tight tracking-tight text-text">
+          TensorBoard
+        </h2>
+        <p className="mt-5 text-2xl leading-relaxed text-muted">
+          Google’s visualisation toolkit for machine-learning experiments.
+        </p>
 
-        <span className="text-4xl text-primary" aria-hidden="true">→</span>
-
-        <Panel className="flex min-h-44 flex-col justify-center border-accent/40 bg-accent/10 text-center">
-          <p className="font-mono text-base font-bold uppercase tracking-[0.18em] text-accent">Event file</p>
-          <p className="mt-4 font-mono text-2xl font-bold text-text">events.out.tfevents…</p>
-          <p className="mt-3 text-xl text-muted">one timestamped stream</p>
-        </Panel>
-
-        <span className="text-4xl text-primary" aria-hidden="true">→</span>
-
-        <Panel className="flex min-h-44 flex-col justify-center border-[#ff8a00]/50 bg-[#ff8a00]/10 text-center">
-          <p className="font-mono text-base font-bold uppercase tracking-[0.18em] text-[#ff9d2e]">Browser UI</p>
-          <p className="mt-4 text-3xl font-bold text-text">TensorBoard</p>
-          <p className="mt-3 text-xl text-muted">plot · compare · inspect</p>
-        </Panel>
-      </div>
-
-      <div className="mt-8 grid grid-cols-3 gap-5">
-        <Panel padding="compact">
-          <p className="font-mono text-lg font-bold text-primary">Scalar</p>
-          <p className="mt-2 text-xl text-muted">One number changing over time.</p>
-        </Panel>
-        <Panel padding="compact">
-          <p className="font-mono text-lg font-bold text-accent">Histogram</p>
-          <p className="mt-2 text-xl text-muted">A whole distribution at each checkpoint.</p>
-        </Panel>
-        <Panel padding="compact">
-          <p className="font-mono text-lg font-bold text-[#ff9d2e]">Run</p>
-          <p className="mt-2 text-xl text-muted">One experiment, ready to compare.</p>
-        </Panel>
+        <div className="mt-10 space-y-5 border-l-4 border-[#ff8a00] pl-6">
+          <p className="text-2xl font-semibold text-text">Track metrics</p>
+          <p className="text-2xl font-semibold text-text">Inspect distributions</p>
+          <p className="text-2xl font-semibold text-text">Compare runs</p>
+        </div>
       </div>
     </div>
   </SlideFrame>
