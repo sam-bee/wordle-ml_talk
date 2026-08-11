@@ -6,8 +6,8 @@ const ScoreGuessPseudocodeSlide: React.FC = () => (
   <SlideFrame>
     <SlideHeader
       kicker="Go pseudocode · inner loop"
-      title="Score a guess by its largest feedback bucket"
-      subtitle="Imagine each shortlisted word as the hidden answer. Its feedback chooses one bucket."
+      title="Score a guess by the shortlist in the worst case"
+      subtitle="Consider the worst case feedback for a given guess, and the shortlist carry-over that results"
     />
 
     <div className="mt-6 grid min-h-0 flex-1 grid-cols-[1.35fr_0.65fr] items-center gap-7">
@@ -39,7 +39,7 @@ const ScoreGuessPseudocodeSlide: React.FC = () => (
           <p className="mt-2 text-2xl font-bold text-accent">worst = 1</p>
         </Panel>
         <Callout className="px-5 py-4 text-lg" tone="primary">
-          The largest bucket is the <strong>least helpful valid clue</strong>.
+          The largest worst-case shortlist is the <strong>least helpful valid clue</strong>.
         </Callout>
       </div>
     </div>

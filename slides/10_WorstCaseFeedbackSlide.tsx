@@ -23,9 +23,9 @@ const DiagonalArrow: React.FC<DiagonalArrowProps> = ({ className }) => (
 const WorstCaseFeedbackSlide: React.FC = () => (
   <SlideFrame>
     <SlideHeader
-      kicker="One shortlist, two actions"
+      kicker="Minimaxing the shortlist"
       title="Minimise the worst-case carry-over"
-      subtitle="After RAISE, five solutions remain. Compare how two guesses divide them."
+      subtitle="After RAISE, five solutions remain. Let's consider a couple of possible moves."
     />
 
     <div className="mt-5 grid min-h-0 flex-1 grid-cols-[0.72fr_1.28fr] items-center gap-7">

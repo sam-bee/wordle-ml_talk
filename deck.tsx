@@ -13,54 +13,52 @@ import StrategyGoWordleSlide from './slides/09_StrategyGoWordleSlide';
 import WorstCaseFeedbackSlide from './slides/10_WorstCaseFeedbackSlide';
 import ScoreGuessPseudocodeSlide from './slides/11_ScoreGuessPseudocodeSlide';
 import ChooseGuessPseudocodeSlide from './slides/12_ChooseGuessPseudocodeSlide';
-import WorkerPoolSlide from './slides/13_WorkerPoolSlide';
-import SyntheticExampleSlide from './slides/14_SyntheticExampleSlide';
-import CorpusSplitSlide from './slides/15_CorpusSplitSlide';
-import ActDividerTrainingSlide from './slides/16_ActDividerSlide';
-import TrainingFalseStartsSlide from './slides/17_TrainingFalseStartsSlide';
-import ModelArchitectureIntroSlide from './slides/18_ModelArchitectureIntroSlide';
-import ModelArchitectureInputsSlide from './slides/19_ModelArchitectureInputsSlide';
-import ModelArchitectureOutputsSlide from './slides/20_ModelArchitectureOutputsSlide';
-import PolicyArchitectureSlide from './slides/21_PolicyArchitectureSlide';
-import PolicyOutputSlide from './slides/22_PolicyOutputSlide';
-import GoMLXIntroSlide from './slides/23_GoMLXIntroSlide';
-import GoMLXModelCodeSlide from './slides/24_GoMLXModelCodeSlide';
-import BackpropagationSlide from './slides/25_BackpropagationSlide';
-import ImitationLearningSlide from './slides/26_ImitationLearningSlide';
-import GoMLXTrainingSlide from './slides/27_GoMLXTrainingSlide';
-import TensorBoardIntroSlide from './slides/28_TensorBoardIntroSlide';
-import TensorBoardTrainTop1Slide from './slides/29_TensorBoardTrainTop1Slide';
-import TensorBoardBetaMeanSlide from './slides/30_TensorBoardBetaMeanSlide';
-import TensorBoardBetaHistogramSlide from './slides/31_TensorBoardBetaHistogramSlide';
-import ProofStagesSlide from './slides/32_ProofStagesSlide';
-import TensorBoardSlide from './slides/33_TensorBoardSlide';
-import TrainingResultsSlide from './slides/34_TrainingResultsSlide';
-import ActDividerInferenceSlide from './slides/35_ActDividerSlide';
-import InferenceGoalSlide from './slides/36_InferenceGoalSlide';
-import InferenceRoutesSlide from './slides/37_InferenceRoutesSlide';
-import Rtx5070TiSlide from './slides/38_Rtx5070TiSlide';
-import CudaPrimerShortSlide from './slides/39_CudaPrimerShortSlide';
-import CgoIntegrationCodeSlide from './slides/40_CgoIntegrationCodeSlide';
-import InferenceRequestSlide from './slides/41_InferenceRequestSlide';
-import WordleLaunchSlide from './slides/42_WordleLaunchSlide';
-import NsightSystemsExampleSlide from './slides/43_NsightSystemsExampleSlide';
-import NsightComputeExampleSlide from './slides/44_NsightComputeExampleSlide';
-import CudaWebAppDemoSlide from './slides/45_CudaWebAppDemoSlide';
-import PivotExportSlide from './slides/46_PivotExportSlide';
-import GpuPrimerSlide from './slides/47_GpuPrimerSlide';
-import ControlPlaneCudaSlide from './slides/48_ControlPlaneCudaSlide';
-import CgoCodeSlide from './slides/49_CgoCodeSlide';
-import CudaHandleSlide from './slides/50_CudaHandleSlide';
-import KernelSequenceSlide from './slides/51_KernelSequenceSlide';
-import LaunchShapeSlide from './slides/52_LaunchShapeSlide';
-import BlockReductionSlide from './slides/53_BlockReductionSlide';
-import MemoryJourneySlide from './slides/54_MemoryJourneySlide';
-import NsightSystemsSlide from './slides/55_NsightSystemsSlide';
-import NsightComputeSlide from './slides/56_NsightComputeSlide';
-import ParityBenchmarkSlide from './slides/57_ParityBenchmarkSlide';
-import FinalHeldOutSlide from './slides/58_FinalHeldOutSlide';
-import FinalApplicationSlide from './slides/59_FinalApplicationSlide';
-import ClosingSlide from './slides/60_ClosingSlide';
+import CorpusSplitSlide from './slides/13_CorpusSplitSlide';
+import ActDividerTrainingSlide from './slides/14_ActDividerSlide';
+import TrainingFalseStartsSlide from './slides/15_TrainingFalseStartsSlide';
+import ModelArchitectureIntroSlide from './slides/16_ModelArchitectureIntroSlide';
+import ModelArchitectureInputsSlide from './slides/17_ModelArchitectureInputsSlide';
+import ModelArchitectureOutputsSlide from './slides/18_ModelArchitectureOutputsSlide';
+import PolicyArchitectureSlide from './slides/19_PolicyArchitectureSlide';
+import PolicyOutputSlide from './slides/20_PolicyOutputSlide';
+import GoMLXIntroSlide from './slides/21_GoMLXIntroSlide';
+import GoMLXModelCodeSlide from './slides/22_GoMLXModelCodeSlide';
+import BackpropagationSlide from './slides/23_BackpropagationSlide';
+import ImitationLearningSlide from './slides/24_ImitationLearningSlide';
+import GoMLXTrainingSlide from './slides/25_GoMLXTrainingSlide';
+import TensorBoardIntroSlide from './slides/26_TensorBoardIntroSlide';
+import TensorBoardTrainTop1Slide from './slides/27_TensorBoardTrainTop1Slide';
+import TensorBoardBetaMeanSlide from './slides/28_TensorBoardBetaMeanSlide';
+import TensorBoardBetaHistogramSlide from './slides/29_TensorBoardBetaHistogramSlide';
+import ProofStagesSlide from './slides/30_ProofStagesSlide';
+import TensorBoardSlide from './slides/31_TensorBoardSlide';
+import TrainingResultsSlide from './slides/32_TrainingResultsSlide';
+import ActDividerInferenceSlide from './slides/33_ActDividerSlide';
+import InferenceGoalSlide from './slides/34_InferenceGoalSlide';
+import InferenceRoutesSlide from './slides/35_InferenceRoutesSlide';
+import Rtx5070TiSlide from './slides/36_Rtx5070TiSlide';
+import CudaPrimerShortSlide from './slides/37_CudaPrimerShortSlide';
+import CgoIntegrationCodeSlide from './slides/38_CgoIntegrationCodeSlide';
+import InferenceRequestSlide from './slides/39_InferenceRequestSlide';
+import WordleLaunchSlide from './slides/40_WordleLaunchSlide';
+import NsightSystemsExampleSlide from './slides/41_NsightSystemsExampleSlide';
+import NsightComputeExampleSlide from './slides/42_NsightComputeExampleSlide';
+import CudaWebAppDemoSlide from './slides/43_CudaWebAppDemoSlide';
+import PivotExportSlide from './slides/44_PivotExportSlide';
+import GpuPrimerSlide from './slides/45_GpuPrimerSlide';
+import ControlPlaneCudaSlide from './slides/46_ControlPlaneCudaSlide';
+import CgoCodeSlide from './slides/47_CgoCodeSlide';
+import CudaHandleSlide from './slides/48_CudaHandleSlide';
+import KernelSequenceSlide from './slides/49_KernelSequenceSlide';
+import LaunchShapeSlide from './slides/50_LaunchShapeSlide';
+import BlockReductionSlide from './slides/51_BlockReductionSlide';
+import MemoryJourneySlide from './slides/52_MemoryJourneySlide';
+import NsightSystemsSlide from './slides/53_NsightSystemsSlide';
+import NsightComputeSlide from './slides/54_NsightComputeSlide';
+import ParityBenchmarkSlide from './slides/55_ParityBenchmarkSlide';
+import FinalHeldOutSlide from './slides/56_FinalHeldOutSlide';
+import FinalApplicationSlide from './slides/57_FinalApplicationSlide';
+import ClosingSlide from './slides/58_ClosingSlide';
 
 export const slides: SlideDefinition[] = [
   {
@@ -185,26 +183,6 @@ export const slides: SlideDefinition[] = [
       'At this point we have built a deliberately slow expert in Go: given a Wordle state, we know exactly what it will choose and why.',
     ],
     title: 'Choose the action with the smallest worst case',
-  },
-  {
-    content: step => <WorkerPoolSlide step={step} />,
-    notes: [
-      '[First reveal] A jobs channel supplies hidden solution IDs.',
-      '[Advance once] A fixed worker pool independently generates the states for different solutions. The large feedback matrix and teacher are immutable after construction.',
-      '[Advance again] The collector sorts by solution ID before writing. Each solution derives randomness from the global seed and its own ID, so changing the worker count does not change the corpus.',
-      'This is where Go concurrency helps: expensive deliberation is parallel, while the artifact remains deterministic.',
-    ],
-    stepCount: 3,
-    title: 'Parallel work, deterministic data',
-  },
-  {
-    content: <SyntheticExampleSlide />,
-    notes: [
-      'This is the contract for one example: an incomplete but internally consistent state, plus the teacher actions that are best from that state.',
-      'The generator keeps positions from ordinary teacher games and also creates valid histories at different depths, so later turns are not starved of examples.',
-      'The important idea is distillation: the slow teacher can think once, offline. Training reads the frozen answer instead of running search in the hot path.',
-    ],
-    title: 'A state becomes a labelled example',
   },
   {
     content: <CorpusSplitSlide />,

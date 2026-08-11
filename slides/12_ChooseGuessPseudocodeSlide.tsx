@@ -7,7 +7,7 @@ const ChooseGuessPseudocodeSlide: React.FC = () => (
     <SlideHeader
       kicker="One-step minimax · outer loop"
       title="Choose the action with the smallest worst case"
-      subtitle="Search unused actions—not only the shortlist—so probe words stay eligible."
+      subtitle="Search every word that could be played, not just the shortlist"
     />
 
     <div className="mt-4 grid min-h-0 flex-1 grid-cols-[1.35fr_0.65fr] items-center gap-7">
@@ -44,7 +44,7 @@ const ChooseGuessPseudocodeSlide: React.FC = () => (
           <p className="mt-1 text-xl font-semibold text-text">Minimise the maximum.</p>
         </Panel>
         <Callout className="px-5 py-4 text-lg" tone="accent">
-          Ties: prefer a possible answer, then the stable word ID.
+          Ties: prefer a possible answer, otherwise stochastic (concurrency)
         </Callout>
       </div>
     </div>

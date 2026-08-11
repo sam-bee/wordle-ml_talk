@@ -6,21 +6,21 @@ const TERMS = [
   {
     number: '01',
     term: 'Shortlist',
-    definition: 'the remaining possible solutions at a point in the game',
+    definition: 'The remaining possible solutions at a point in the game',
     tone: 'border-primary/40 bg-primary/10',
     accent: 'text-primary',
   },
   {
     number: '02',
     term: 'Feedback',
-    definition: 'the green, yellow, and grey tiles returned by a guess',
+    definition: 'The green, yellow, and grey tiles returned by a guess',
     tone: 'border-accent/40 bg-accent/10',
     accent: 'text-accent',
   },
   {
     number: '03',
     term: 'Worst-case feedback',
-    definition: 'the feedback pattern that leaves the largest carry-over shortlist',
+    definition: 'The feedback pattern that carries over the largest shortlist',
     tone: 'border-danger/40 bg-danger/10',
     accent: 'text-danger',
   },
@@ -29,9 +29,9 @@ const TERMS = [
 const StrategyGoWordleSlide: React.FC = () => (
   <SlideFrame>
     <SlideHeader
-      kicker="The teacher’s vocabulary"
+      kicker="The teacher’s strategy"
       title="Strategy for the Go Wordle Player"
-      subtitle="Three terms are enough to describe how the slow teacher chooses a useful next guess."
+      subtitle="The shape of the strategy"
     />
 
     <ul className="mt-9 grid flex-1 grid-cols-3 gap-6" aria-label="Wordle strategy terms">
@@ -50,7 +50,7 @@ const StrategyGoWordleSlide: React.FC = () => (
     </ul>
 
     <p className="mt-7 text-center text-xl text-muted">
-      The teacher tries every unused action, then protects against the feedback that leaves the most work behind.
+      The teacher tries every unused action, optimising with minimax on shortlist carry-over
     </p>
   </SlideFrame>
 );
