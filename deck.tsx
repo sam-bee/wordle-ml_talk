@@ -36,7 +36,7 @@ import TrainingResultsSlide from './slides/32_TrainingResultsSlide';
 import ActDividerInferenceSlide from './slides/33_ActDividerSlide';
 import InferenceGoalSlide from './slides/34_InferenceGoalSlide';
 import InferenceRoutesSlide from './slides/35_InferenceRoutesSlide';
-import Rtx5070TiSlide from './slides/36_Rtx5070TiSlide';
+import GpuMemorySlide from './slides/36_GpuMemorySlide';
 import CudaPrimerShortSlide from './slides/37_CudaPrimerShortSlide';
 import CgoIntegrationCodeSlide from './slides/38_CgoIntegrationCodeSlide';
 import InferenceRequestSlide from './slides/39_InferenceRequestSlide';
@@ -435,16 +435,19 @@ export const slides: SlideDefinition[] = [
     title: 'Three ways Go could reach the GPU',
   },
   {
-    content: <Rtx5070TiSlide />,
+    content: <GpuMemorySlide />,
     notes: [
-      'The desktop development device is an NVIDIA GeForce RTX 5070 Ti: Blackwell, compute capability 12.0, 8,960 CUDA cores, and 16 GB of GDDR7 on a 256-bit interface.',
-      'NVIDIA quotes 896 GB per second of graphics-memory bandwidth. CUDA cores are arithmetic lanes, not independent CPU cores and not goroutines.',
-      'CUDA exposes 64 KiB of constant memory: a tiny, cached, read-only region useful when many threads read the same small data. Our roughly four-mebibyte model does not fit there and does not use it.',
-      'The trained FP32 weights are only 3.99 MiB, so they live comfortably in ordinary device global memory and remain resident between guesses.',
-      'Sources: https://www.nvidia.com/en-us/geforce/graphics-cards/50-series/rtx-5070-family/ · https://www.nvidia.com/en-us/geforce/news/rtx-50-series-graphics-cards-gpu-laptop-announcements/ · https://docs.nvidia.com/cuda/cuda-programming-guide/05-appendices/compute-capabilities.html',
+      'CUDA exposes several memory spaces because scope, lifetime, capacity, and speed are different. These limits come from NVIDIA’s compute-capability 12.0 table; CUDA Toolkit 12.0 is a different thing.',
+      'Registers are compiler-managed, on-chip working values private to one thread: 64K 32-bit registers per SM, with at most 255 per thread. Our policy kernel keeps each thread’s running sum in registers.',
+      'Shared memory is a fast, programmer-managed scratchpad shared by one block: 100 KiB per SM and at most 99 KiB per block. Our final policy kernel uses only 16 bytes for four warp subtotals.',
+      'Constant memory is 64 KiB of device-resident, kernel-read-only data, with an 8 KiB cache working set per SM. Our 3.99 MiB weights do not fit, so they live in global memory.',
+      'Local memory is private to a thread but physically lives in device memory; it is commonly used for large locals or register spills and has a 512 KiB-per-thread limit. “Local” means scope, not fast on-chip storage.',
+      'Global memory is the GPU-attached DRAM used for persistent allocations visible to every SM. Compute capability does not specify its capacity or bandwidth: this particular GeForce RTX 5070 Ti has 16 GB of GDDR7 and 896 GB/s.',
+      'L1 and shared memory divide a 128 KiB unified on-chip data-cache resource per SM on compute capability 12.0. L2 is shared by all SMs, but its size is GPU-model-specific.',
+      'Sources: https://docs.nvidia.com/cuda/cuda-programming-guide/02-basics/writing-cuda-kernels.html · https://docs.nvidia.com/cuda/cuda-programming-guide/05-appendices/compute-capabilities.html · https://www.nvidia.com/en-us/geforce/news/rtx-50-series-graphics-cards-gpu-laptop-announcements/',
       '[About 1 minute 15 seconds.]',
     ],
-    title: 'The NVIDIA GeForce RTX 5070 Ti',
+    title: 'GPU memory has different scopes',
   },
   {
     content: <CudaPrimerShortSlide />,
