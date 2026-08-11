@@ -48,7 +48,7 @@ const LOOP_STEPS = [
   },
   {
     label: '5. Update',
-    detail: 'Adam makes a small correction to those weights.',
+    detail: 'Adam (Adaptive Moment Estimation) makes a small correction to those weights.',
     value: 'slightly better next time',
     tone: 'primary',
   },
@@ -84,7 +84,7 @@ const BackpropagationSlide: React.FC<BackpropagationSlideProps> = ({ step }) => 
 
       <Reveal visible={step >= 4} preserveLayout>
         <Callout className="mt-7 text-center" tone="accent">
-          New weights, next labelled state, repeat—thousands of tiny corrections become a policy that plays Wordle.
+          Weights are adjusted for each training record. After 52,726 Wordle games, we have a policy that can emulate the teacher.
         </Callout>
       </Reveal>
     </div>

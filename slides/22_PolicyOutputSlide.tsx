@@ -6,7 +6,7 @@ const PolicyOutputSlide: React.FC = () => (
   <SlideFrame>
     <SlideHeader
       kicker="The policy output"
-      title="4,739 scores—and one learned nudge"
+      title="4,739 scores - and one learned nudge"
       subtitle="The model scores every possible action, then boosts actions that are still candidate solutions."
     />
 
