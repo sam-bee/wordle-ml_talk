@@ -1,6 +1,6 @@
 import React from 'react';
 
-import policyArchitectureDiagram from '../images/20-policy-architecture.svg';
+import policyArchitectureDiagram from '../images/21-policy-architecture.svg';
 import { SlideFrame, SlideHeader } from '../components/SlidePrimitives';
 
 const PolicyArchitectureSlide: React.FC = () => (

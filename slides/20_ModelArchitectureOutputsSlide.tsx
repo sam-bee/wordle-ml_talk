@@ -1,6 +1,6 @@
 import React from 'react';
 
-import modelArchitectureOutputsDiagram from '../images/19-model-architecture-outputs.svg';
+import modelArchitectureOutputsDiagram from '../images/20-model-architecture-outputs.svg';
 import { SlideFrame, SlideHeader } from '../components/SlidePrimitives';
 
 const ModelArchitectureOutputsSlide: React.FC = () => (

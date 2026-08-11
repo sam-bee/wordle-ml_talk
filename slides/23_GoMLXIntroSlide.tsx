@@ -1,6 +1,6 @@
 import React from 'react';
 
-import gomlxGithubCard from '../images/22-gomlx-github-card.png';
+import gomlxGithubCard from '../images/23-gomlx-github-card.png';
 import { Panel, SlideFrame, SlideHeader } from '../components/SlidePrimitives';
 
 const GoMLXIntroSlide: React.FC = () => (

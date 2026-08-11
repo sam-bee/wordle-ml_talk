@@ -17,35 +17,36 @@ import WorkerPoolSlide from './slides/13_WorkerPoolSlide';
 import SyntheticExampleSlide from './slides/14_SyntheticExampleSlide';
 import CorpusSplitSlide from './slides/15_CorpusSplitSlide';
 import ActDividerTrainingSlide from './slides/16_ActDividerSlide';
-import ModelArchitectureIntroSlide from './slides/17_ModelArchitectureIntroSlide';
-import ModelArchitectureInputsSlide from './slides/18_ModelArchitectureInputsSlide';
-import ModelArchitectureOutputsSlide from './slides/19_ModelArchitectureOutputsSlide';
-import PolicyArchitectureSlide from './slides/20_PolicyArchitectureSlide';
-import PolicyOutputSlide from './slides/21_PolicyOutputSlide';
-import GoMLXIntroSlide from './slides/22_GoMLXIntroSlide';
-import GoMLXModelCodeSlide from './slides/23_GoMLXModelCodeSlide';
-import BackpropagationSlide from './slides/24_BackpropagationSlide';
-import ImitationLearningSlide from './slides/25_ImitationLearningSlide';
-import GoMLXTrainingSlide from './slides/26_GoMLXTrainingSlide';
-import ProofStagesSlide from './slides/27_ProofStagesSlide';
-import TensorBoardSlide from './slides/28_TensorBoardSlide';
-import TrainingResultsSlide from './slides/29_TrainingResultsSlide';
-import ActDividerInferenceSlide from './slides/30_ActDividerSlide';
-import PivotExportSlide from './slides/31_PivotExportSlide';
-import GpuPrimerSlide from './slides/32_GpuPrimerSlide';
-import ControlPlaneCudaSlide from './slides/33_ControlPlaneCudaSlide';
-import CgoCodeSlide from './slides/34_CgoCodeSlide';
-import CudaHandleSlide from './slides/35_CudaHandleSlide';
-import KernelSequenceSlide from './slides/36_KernelSequenceSlide';
-import LaunchShapeSlide from './slides/37_LaunchShapeSlide';
-import BlockReductionSlide from './slides/38_BlockReductionSlide';
-import MemoryJourneySlide from './slides/39_MemoryJourneySlide';
-import NsightSystemsSlide from './slides/40_NsightSystemsSlide';
-import NsightComputeSlide from './slides/41_NsightComputeSlide';
-import ParityBenchmarkSlide from './slides/42_ParityBenchmarkSlide';
-import FinalHeldOutSlide from './slides/43_FinalHeldOutSlide';
-import FinalApplicationSlide from './slides/44_FinalApplicationSlide';
-import ClosingSlide from './slides/45_ClosingSlide';
+import TrainingFalseStartsSlide from './slides/17_TrainingFalseStartsSlide';
+import ModelArchitectureIntroSlide from './slides/18_ModelArchitectureIntroSlide';
+import ModelArchitectureInputsSlide from './slides/19_ModelArchitectureInputsSlide';
+import ModelArchitectureOutputsSlide from './slides/20_ModelArchitectureOutputsSlide';
+import PolicyArchitectureSlide from './slides/21_PolicyArchitectureSlide';
+import PolicyOutputSlide from './slides/22_PolicyOutputSlide';
+import GoMLXIntroSlide from './slides/23_GoMLXIntroSlide';
+import GoMLXModelCodeSlide from './slides/24_GoMLXModelCodeSlide';
+import BackpropagationSlide from './slides/25_BackpropagationSlide';
+import ImitationLearningSlide from './slides/26_ImitationLearningSlide';
+import GoMLXTrainingSlide from './slides/27_GoMLXTrainingSlide';
+import ProofStagesSlide from './slides/28_ProofStagesSlide';
+import TensorBoardSlide from './slides/29_TensorBoardSlide';
+import TrainingResultsSlide from './slides/30_TrainingResultsSlide';
+import ActDividerInferenceSlide from './slides/31_ActDividerSlide';
+import PivotExportSlide from './slides/32_PivotExportSlide';
+import GpuPrimerSlide from './slides/33_GpuPrimerSlide';
+import ControlPlaneCudaSlide from './slides/34_ControlPlaneCudaSlide';
+import CgoCodeSlide from './slides/35_CgoCodeSlide';
+import CudaHandleSlide from './slides/36_CudaHandleSlide';
+import KernelSequenceSlide from './slides/37_KernelSequenceSlide';
+import LaunchShapeSlide from './slides/38_LaunchShapeSlide';
+import BlockReductionSlide from './slides/39_BlockReductionSlide';
+import MemoryJourneySlide from './slides/40_MemoryJourneySlide';
+import NsightSystemsSlide from './slides/41_NsightSystemsSlide';
+import NsightComputeSlide from './slides/42_NsightComputeSlide';
+import ParityBenchmarkSlide from './slides/43_ParityBenchmarkSlide';
+import FinalHeldOutSlide from './slides/44_FinalHeldOutSlide';
+import FinalApplicationSlide from './slides/45_FinalApplicationSlide';
+import ClosingSlide from './slides/46_ClosingSlide';
 
 export const slides: SlideDefinition[] = [
   {
@@ -210,6 +211,16 @@ export const slides: SlideDefinition[] = [
     ],
     speech: { cues: ['training', 'compact policy'] },
     title: 'Training',
+  },
+  {
+    content: <TrainingFalseStartsSlide />,
+    notes: [
+      'Before showing the architecture that worked, a confession: I tried several model designs that did not learn to play Wordle usefully.',
+      'There was a point when I thought this conference talk might have to become an honest account of everything I had tried and failed to make work.',
+      'That is normal experimental work rather than a polished straight line: change the design, train it, inspect the evidence, and try again.',
+      'Eventually I arrived at the compact architecture on the next slide. The failed attempts make that design look less inevitable than it does in hindsight.',
+    ],
+    title: 'Most of my models did not work',
   },
   {
     content: <ModelArchitectureIntroSlide />,

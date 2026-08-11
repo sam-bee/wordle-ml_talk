@@ -1,6 +1,6 @@
 import React from 'react';
 
-import modelArchitectureIntroDiagram from '../images/17-model-architecture-intro.svg';
+import modelArchitectureIntroDiagram from '../images/18-model-architecture-intro.svg';
 import { SlideFrame, SlideHeader } from '../components/SlidePrimitives';
 
 const ModelArchitectureIntroSlide: React.FC = () => (
