@@ -380,9 +380,9 @@ export const slides: SlideDefinition[] = [
   {
     content: <TensorBoardSlide />,
     notes: [
-      'TensorBoard reads ordinary event files written by a small Go writer. This chart is rebuilt from the recorded validation scalars for the separate seed-20260808 production run; it is not a fabricated TensorBoard screenshot.',
-      'Validation loss falls sharply, reaches its recorded minimum of 3.1341 at update 2,200, then rises while training continues to 10,000 updates.',
-      'That divergence is strong evidence consistent with overfitting and, more importantly, tells us why “latest” is not “best”. The checkpoint selector retains update 2,200.',
+      'This is a real TensorBoard screenshot from the seed-replication run: the same production setup, repeated with seed 20260809.',
+      'Validation loss falls sharply, reaches its recorded minimum of 3.1842 at update 2,600, then rises while training continues to 10,000 updates.',
+      'That divergence is strong evidence consistent with overfitting and, more importantly, tells us why “latest” is not “best”. The checkpoint selector retains update 2,600.',
       'Top-one agreement can keep moving while probability calibration worsens, which is why one metric never tells the whole story.',
     ],
     title: 'TensorBoard tells us when to stop choosing',
