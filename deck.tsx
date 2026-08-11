@@ -13,52 +13,53 @@ import StrategyGoWordleSlide from './slides/09_StrategyGoWordleSlide';
 import WorstCaseFeedbackSlide from './slides/10_WorstCaseFeedbackSlide';
 import ScoreGuessPseudocodeSlide from './slides/11_ScoreGuessPseudocodeSlide';
 import ChooseGuessPseudocodeSlide from './slides/12_ChooseGuessPseudocodeSlide';
-import CorpusSplitSlide from './slides/13_CorpusSplitSlide';
-import ActDividerTrainingSlide from './slides/14_ActDividerSlide';
-import TrainingFalseStartsSlide from './slides/15_TrainingFalseStartsSlide';
-import ModelArchitectureIntroSlide from './slides/16_ModelArchitectureIntroSlide';
-import ModelArchitectureInputsSlide from './slides/17_ModelArchitectureInputsSlide';
-import ModelArchitectureOutputsSlide from './slides/18_ModelArchitectureOutputsSlide';
-import PolicyArchitectureSlide from './slides/19_PolicyArchitectureSlide';
-import PolicyOutputSlide from './slides/20_PolicyOutputSlide';
-import GoMLXIntroSlide from './slides/21_GoMLXIntroSlide';
-import GoMLXModelCodeSlide from './slides/22_GoMLXModelCodeSlide';
-import BackpropagationSlide from './slides/23_BackpropagationSlide';
-import ImitationLearningSlide from './slides/24_ImitationLearningSlide';
-import GoMLXTrainingSlide from './slides/25_GoMLXTrainingSlide';
-import TensorBoardIntroSlide from './slides/26_TensorBoardIntroSlide';
-import TensorBoardTrainTop1Slide from './slides/27_TensorBoardTrainTop1Slide';
-import TensorBoardBetaMeanSlide from './slides/28_TensorBoardBetaMeanSlide';
-import TensorBoardBetaHistogramSlide from './slides/29_TensorBoardBetaHistogramSlide';
-import ProofStagesSlide from './slides/30_ProofStagesSlide';
-import TensorBoardSlide from './slides/31_TensorBoardSlide';
-import TrainingResultsSlide from './slides/32_TrainingResultsSlide';
-import ActDividerInferenceSlide from './slides/33_ActDividerSlide';
-import InferenceGoalSlide from './slides/34_InferenceGoalSlide';
-import InferenceRoutesSlide from './slides/35_InferenceRoutesSlide';
-import Rtx5070TiSlide from './slides/36_Rtx5070TiSlide';
-import CudaPrimerShortSlide from './slides/37_CudaPrimerShortSlide';
-import CgoIntegrationCodeSlide from './slides/38_CgoIntegrationCodeSlide';
-import InferenceRequestSlide from './slides/39_InferenceRequestSlide';
-import WordleLaunchSlide from './slides/40_WordleLaunchSlide';
-import NsightSystemsExampleSlide from './slides/41_NsightSystemsExampleSlide';
-import NsightComputeExampleSlide from './slides/42_NsightComputeExampleSlide';
-import CudaWebAppDemoSlide from './slides/43_CudaWebAppDemoSlide';
-import PivotExportSlide from './slides/44_PivotExportSlide';
-import GpuPrimerSlide from './slides/45_GpuPrimerSlide';
-import ControlPlaneCudaSlide from './slides/46_ControlPlaneCudaSlide';
-import CgoCodeSlide from './slides/47_CgoCodeSlide';
-import CudaHandleSlide from './slides/48_CudaHandleSlide';
-import KernelSequenceSlide from './slides/49_KernelSequenceSlide';
-import LaunchShapeSlide from './slides/50_LaunchShapeSlide';
-import BlockReductionSlide from './slides/51_BlockReductionSlide';
-import MemoryJourneySlide from './slides/52_MemoryJourneySlide';
-import NsightSystemsSlide from './slides/53_NsightSystemsSlide';
-import NsightComputeSlide from './slides/54_NsightComputeSlide';
-import ParityBenchmarkSlide from './slides/55_ParityBenchmarkSlide';
-import FinalHeldOutSlide from './slides/56_FinalHeldOutSlide';
-import FinalApplicationSlide from './slides/57_FinalApplicationSlide';
-import ClosingSlide from './slides/58_ClosingSlide';
+import GoroutineWorkerPoolSlide from './slides/13_GoroutineWorkerPoolSlide';
+import CorpusSplitSlide from './slides/14_CorpusSplitSlide';
+import ActDividerTrainingSlide from './slides/15_ActDividerSlide';
+import TrainingFalseStartsSlide from './slides/16_TrainingFalseStartsSlide';
+import ModelArchitectureIntroSlide from './slides/17_ModelArchitectureIntroSlide';
+import ModelArchitectureInputsSlide from './slides/18_ModelArchitectureInputsSlide';
+import ModelArchitectureOutputsSlide from './slides/19_ModelArchitectureOutputsSlide';
+import PolicyArchitectureSlide from './slides/20_PolicyArchitectureSlide';
+import PolicyOutputSlide from './slides/21_PolicyOutputSlide';
+import GoMLXIntroSlide from './slides/22_GoMLXIntroSlide';
+import GoMLXModelCodeSlide from './slides/23_GoMLXModelCodeSlide';
+import BackpropagationSlide from './slides/24_BackpropagationSlide';
+import ImitationLearningSlide from './slides/25_ImitationLearningSlide';
+import GoMLXTrainingSlide from './slides/26_GoMLXTrainingSlide';
+import TensorBoardIntroSlide from './slides/27_TensorBoardIntroSlide';
+import TensorBoardTrainTop1Slide from './slides/28_TensorBoardTrainTop1Slide';
+import TensorBoardBetaMeanSlide from './slides/29_TensorBoardBetaMeanSlide';
+import TensorBoardBetaHistogramSlide from './slides/30_TensorBoardBetaHistogramSlide';
+import ProofStagesSlide from './slides/31_ProofStagesSlide';
+import TensorBoardSlide from './slides/32_TensorBoardSlide';
+import TrainingResultsSlide from './slides/33_TrainingResultsSlide';
+import ActDividerInferenceSlide from './slides/34_ActDividerSlide';
+import InferenceGoalSlide from './slides/35_InferenceGoalSlide';
+import InferenceRoutesSlide from './slides/36_InferenceRoutesSlide';
+import Rtx5070TiSlide from './slides/37_Rtx5070TiSlide';
+import CudaPrimerShortSlide from './slides/38_CudaPrimerShortSlide';
+import CgoIntegrationCodeSlide from './slides/39_CgoIntegrationCodeSlide';
+import InferenceRequestSlide from './slides/40_InferenceRequestSlide';
+import WordleLaunchSlide from './slides/41_WordleLaunchSlide';
+import NsightSystemsExampleSlide from './slides/42_NsightSystemsExampleSlide';
+import NsightComputeExampleSlide from './slides/43_NsightComputeExampleSlide';
+import CudaWebAppDemoSlide from './slides/44_CudaWebAppDemoSlide';
+import PivotExportSlide from './slides/45_PivotExportSlide';
+import GpuPrimerSlide from './slides/46_GpuPrimerSlide';
+import ControlPlaneCudaSlide from './slides/47_ControlPlaneCudaSlide';
+import CgoCodeSlide from './slides/48_CgoCodeSlide';
+import CudaHandleSlide from './slides/49_CudaHandleSlide';
+import KernelSequenceSlide from './slides/50_KernelSequenceSlide';
+import LaunchShapeSlide from './slides/51_LaunchShapeSlide';
+import BlockReductionSlide from './slides/52_BlockReductionSlide';
+import MemoryJourneySlide from './slides/53_MemoryJourneySlide';
+import NsightSystemsSlide from './slides/54_NsightSystemsSlide';
+import NsightComputeSlide from './slides/55_NsightComputeSlide';
+import ParityBenchmarkSlide from './slides/56_ParityBenchmarkSlide';
+import FinalHeldOutSlide from './slides/57_FinalHeldOutSlide';
+import FinalApplicationSlide from './slides/58_FinalApplicationSlide';
+import ClosingSlide from './slides/59_ClosingSlide';
 
 export const slides: SlideDefinition[] = [
   {
@@ -183,6 +184,18 @@ export const slides: SlideDefinition[] = [
       'At this point we have built a deliberately slow expert in Go: given a Wordle state, we know exactly what it will choose and why.',
     ],
     title: 'Choose the action with the smallest worst case',
+  },
+  {
+    content: <GoroutineWorkerPoolSlide />,
+    notes: [
+      'The expensive calculation on the previous slide is independent for every legal guess, so this is an easy place to use Go concurrency.',
+      'A producer goroutine fans candidate guesses out through one shared jobs channel. A bounded pool—NumCPU minus one in the linked implementation—competes to receive them.',
+      'Each worker is a goroutine. It evaluates guesses sequentially and keeps only its own best result, so the workers do not need to coordinate while scoring.',
+      'The fan-in step compares one local winner from each worker and chooses the overall best guess.',
+      'This is a worker pool, not one goroutine per guess: concurrency is bounded and the amount of coordination stays small.',
+      'Source: https://github.com/sam-bee/go-wordle/blob/main/player/player.go#L68-L121',
+    ],
+    title: 'Fan out guesses; fan in one winner',
   },
   {
     content: <CorpusSplitSlide />,
