@@ -44,21 +44,7 @@ import WordleLaunchSlide from './slides/40_WordleLaunchSlide';
 import NsightSystemsExampleSlide from './slides/41_NsightSystemsExampleSlide';
 import NsightComputeExampleSlide from './slides/42_NsightComputeExampleSlide';
 import CudaWebAppDemoSlide from './slides/43_CudaWebAppDemoSlide';
-import PivotExportSlide from './slides/44_PivotExportSlide';
-import GpuPrimerSlide from './slides/45_GpuPrimerSlide';
-import ControlPlaneCudaSlide from './slides/46_ControlPlaneCudaSlide';
-import CgoCodeSlide from './slides/47_CgoCodeSlide';
-import CudaHandleSlide from './slides/48_CudaHandleSlide';
-import KernelSequenceSlide from './slides/49_KernelSequenceSlide';
-import LaunchShapeSlide from './slides/50_LaunchShapeSlide';
-import BlockReductionSlide from './slides/51_BlockReductionSlide';
-import MemoryJourneySlide from './slides/52_MemoryJourneySlide';
-import NsightSystemsSlide from './slides/53_NsightSystemsSlide';
-import NsightComputeSlide from './slides/54_NsightComputeSlide';
-import ParityBenchmarkSlide from './slides/55_ParityBenchmarkSlide';
-import FinalHeldOutSlide from './slides/56_FinalHeldOutSlide';
-import FinalApplicationSlide from './slides/57_FinalApplicationSlide';
-import ClosingSlide from './slides/58_ClosingSlide';
+import ClosingSlide from './slides/44_ClosingSlide';
 
 export const slides: SlideDefinition[] = [
   {
@@ -524,160 +510,17 @@ export const slides: SlideDefinition[] = [
       'Now switch to the already-running laptop demo and play another game. If the live environment misbehaves, stay on this slide and narrate the real capture.',
       'A user-chosen game demonstrates the integration route; it is not validation or final-test evidence.',
       '[About 1 minute on this slide, then allow about 2 minutes for the live demo.]',
-      '[Slides 46 onward are the retained older Act III and are not part of this 15-minute alternative.]',
     ],
     title: 'A Go web application backed by CUDA',
   },
   {
-    content: <PivotExportSlide />,
-    notes: [
-      'A trained network is a sequence of known operations plus a file of numbers.',
-      'The offline exporter is allowed to understand GoMLX checkpoints. The serving application imports no GoMLX, PJRT, or XLA.',
-      'For the selected seed-replication run, the best checkpoint is update 2,600. The exporter writes a manifest, exactly 4,186,384 bytes of FP32 weights in documented CUDA-friendly order, and golden positions and games.',
-      'Vocabulary hashes, shapes, finite values, payload size, and SHA-256 are validated before a native model is created.',
-    ],
-    title: 'A trained model becomes weights plus operations',
-  },
-  {
-    content: <GpuPrimerSlide />,
-    notes: [
-      'A just-in-time vocabulary check before looking at the implementation.',
-      'The CPU is the host; the GPU is the device. Memory is separate, so data crosses explicitly. A kernel is one GPU function launched over a grid of blocks. A block contains warps, and one warp schedules 32 CUDA threads together.',
-      'Those threads are logical lanes, not goroutines. The GPU schedules blocks onto a finite set of streaming multiprocessors in waves.',
-      'We will attach every term to the actual Wordle output kernel rather than detouring into a general GPU architecture lecture.',
-    ],
-    title: 'Enough GPU vocabulary for one inference',
-  },
-  {
-    content: <ControlPlaneCudaSlide />,
-    notes: [
-      'One ordinary Go process owns HTTP, the authoritative Wordle engine, vocabulary identity, state encoding, duplicate suppression, deterministic tie-breaking, progression, errors, and shutdown.',
-      'A dedicated goroutine locks to one OS thread, owns one native model handle, and serializes requests so HTTP handlers cannot race on CUDA scratch buffers.',
-      'CUDA receives the four model inputs and returns 4,739 raw FP32 logits. It does not receive Wordle rules, an availability mask, or an argmax instruction.',
-      'Go applies availability and selects the move after the native call returns. That is the control-plane and numerical-data-plane boundary.',
-    ],
-    title: 'One process, two jobs',
-  },
-  {
-    content: <CgoCodeSlide />,
-    notes: [
-      'These are real excerpts from backend_cgo.go, not rewritten pseudo-code.',
-      'The preamble tells cgo where the plain C header and CUDA-built static library live. The second pane allocates the Go output slice and makes one C call for the complete model.',
-      'C never retains a pointer into Go memory. The call is synchronous from Go\'s perspective and returns only after the logits copy and stream synchronization. Runtime KeepAlive makes the slice lifetimes explicit.',
-      'Crossing once per layer would create repeated language and coordination boundaries. Crossing once per inference keeps ownership and profiling coherent.',
-    ],
-    title: 'The whole forward pass crosses cgo once',
-  },
-  {
-    content: <CudaHandleSlide />,
-    notes: [
-      'cgo speaks a stable C ABI even though the implementation behind it is compiled as CUDA C++.',
-      'Go sees an opaque wordle_cuda_model pointer. Creation allocates one stream, persistent input and activation buffers, and a contiguous device weight allocation. It uploads weights once.',
-      'Inference reuses all of that state. There is no cudaMalloc or cudaFree in the hot path. Destruction releases the resources on the same locked worker thread.',
-      'Long-lived memory is C/CUDA-owned; short-lived input and output slices remain Go-owned for the duration of the call.',
-    ],
-    title: 'The handle owns the GPU state',
-  },
-  {
-    content: <KernelSequenceSlide />,
-    notes: [
-      'The same model graph now becomes seven explicitly named kernels in one CUDA stream.',
-      'Candidate and statistics projections, turn embedding, the two residual operations, the candidate bonus, and the final action logits directly mirror the architecture we already understand.',
-      'There is no softmax because Go needs only the ordering of raw logits. There is no CUDA argmax and no legality rule.',
-      'Readable kernel names are not cosmetic: they make the profiler timeline explain itself.',
-    ],
-    title: 'The neural network becomes seven kernels',
-  },
-  {
-    content: <LaunchShapeSlide />,
-    notes: [
-      'The final policy kernel launches one block for each of the 4,739 possible actions.',
-      'Each 128-thread block cooperatively computes one raw logit, including the reduction over the 160-wide hidden state.',
-      'The logical grid contains 606,592 thread positions, but the GPU schedules those blocks in waves across its streaming multiprocessors.',
-      'This is a launch-shape explanation, not a claim that all of those threads run simultaneously.',
-    ],
-    title: 'Launch shape: one block per action',
-  },
-  {
-    content: <BlockReductionSlide />,
-    notes: [
-      'Inside one block, 128 threads take strided portions of the 160-value dot product and accumulate partial sums in registers.',
-      'Each warp combines its 32 partials using shuffle instructions. Four warp leaders place four subtotals in shared memory. The first warp reduces those four values.',
-      'One lane adds the output bias and the learned candidate bonus, then writes one raw logit.',
-      'This gives every term a job: a thread computes part, a warp reduces 32 parts, a block produces one action, and the grid covers all actions. Shared memory belongs only to its block.',
-    ],
-    title: 'A block cooperates on one dot product',
-  },
-  {
-    content: <MemoryJourneySlide />,
-    notes: [
-      'Go owns the logical inputs, but the turn travels as a scalar argument, so each inference performs three host-to-device input copies.',
-      'Weights, input buffers, activations, residual scratch, beta, and logits live in device global memory. Hardware caches repeated global reads where useful.',
-      'A thread keeps its running accumulator in registers; four warp subtotals use block-shared memory. Local memory would generally indicate a spill into device memory, not a tiny fast stack.',
-      'One device-to-host copy returns the 4,739 logits, then the synchronous call hands control back to Go for availability and action selection.',
-    ],
-    title: 'Copy state in; keep weights resident; copy scores out',
-  },
-  {
-    content: <NsightSystemsSlide />,
-    notes: [
-      'This is deliberately a placeholder for a future real Nsight Systems GUI crop. It must not be mistaken for profiler evidence that we do not yet have in the deck.',
-      'Nsight Systems is the wide-angle lens. The final capture should follow one warm wordle_infer range on the wordle-gpu thread from the cgo call through three host-to-device copies, all seven kernels, the logits copy, and synchronization.',
-      'The question is “what happened across one complete request, and in what order?” Hide unrelated rows and annotate only the host boundary, copies, kernels, and wait.',
-    ],
-    title: 'Nsight Systems: the whole request',
-  },
-  {
-    content: <NsightComputeSlide />,
-    notes: [
-      'This is also deliberately a placeholder for a future genuine Nsight Compute GUI crop.',
-      'Nsight Compute is the microscope for one kernel. The final capture should select policy_logits_with_bonus and show launch statistics, occupancy, memory workload, and the source-correlated multiply-accumulate and reduction.',
-      'The collected report records 4,739 by 128, 11.36 microseconds, 40 registers per thread, 69.89 percent achieved occupancy, and no local or shared spills.',
-      'Those are observations about one replayed kernel, not a universal optimum or a speedup claim. Occupancy is a diagnostic constraint, not a score where 100 percent automatically means fast.',
-    ],
-    title: 'Nsight Compute: inside one kernel',
-  },
-  {
-    content: <ParityBenchmarkSlide />,
-    notes: [
-      'Correctness comes before performance. Thirty-two golden positions agree on top one, the top-five set, and the action selected after Go applies availability.',
-      'Across 151,648 compared logits, the maximum absolute GoMLX-to-CUDA error is about 7.63e-06. All 100 validation trajectories match exactly; the selected repeat-seed checkpoint solves 98 with a 3.66 mean through both paths.',
-      'The batch-one CUDA call measured 421,870 nanoseconds cold. Across 200 warm calls, mean was 94,945 nanoseconds, p50 94,010, and p95 111,400.',
-      'There is no directly comparable GoMLX benchmark under the same conditions, so there is no speedup claim. The result is an explicit, verifiable implementation boundary.',
-    ],
-    title: 'The CUDA path agrees with the reference',
-  },
-  {
-    content: <FinalHeldOutSlide />,
-    notes: [
-      'Only after the model and implementation were selected did the claim-guarded evaluator score the 100 final solution IDs once through CUDA/cgo.',
-      'It solved 97, failed three, averaged 3.75 guesses with failures counted as six, and made zero invalid selections.',
-      'The sanitized artifact contains aggregate facts only: no answer words, trajectories, or failure list. No tuning followed.',
-      'The separate 2,500-record final-test corpus remained unopened. This is one bounded held-out aggregate, not a sweeping generalization claim.',
-    ],
-    title: 'One intentional held-out aggregate',
-  },
-  {
-    content: <FinalApplicationSlide />,
-    notes: [
-      'Return to the same application from the opening.',
-      'It is still one ordinary Go web service. The browser and HTTP handler do not know how a warp reduction works. The Go game engine constructs state, one worker makes one synchronous inference call per turn, CUDA returns scores, and Go chooses and applies the move.',
-      'If time and stage setup permit, switch to the already-running port-8083 demo and type ADEPT. Otherwise this real capture is the rehearsed fallback.',
-      'A user-chosen game demonstrates the route; it is not validation or final-test evidence.',
-    ],
-    title: 'Back to the application',
-  },
-  {
     content: <ClosingSlide />,
     notes: [
-      'Three lessons: Go is excellent for building and operating the surrounding system. GoMLX was the quickest path to prove the model and backpropagation. cgo and CUDA made the fixed numerical boundary visible enough to own, test, and profile.',
-      'The next experiments could be batching, reduced precision, kernel fusion, or reinforcement learning instead of pure teacher imitation—but none is part of the result shown today.',
-      'Credit Kirti for Calliope Canvas, and Codex and Grok for assistance. Thank the audience.',
-      'The point was never to replace Go with CUDA. It was to give each side the work it is good at, behind a boundary small enough to understand.',
-      '[Questions.]',
+      'Thank the audience and finish here.',
+      'Leave this slide on screen: it repeats the name and contact links from the opening slide.',
+      '[End.]',
     ],
-    speech: { cues: ['three lessons', 'thank you', 'questions'] },
-    title: 'What the boundary bought us',
+    title: 'Thanks for coming',
   },
 ];
 
