@@ -28,7 +28,7 @@ const InferenceRoutesSlide: React.FC = () => (
     <SlideHeader
       kicker="Choosing the boundary"
       title="Three ways Go could reach the GPU"
-      subtitle="They run the same trained model. The difference is who owns the execution details."
+      subtitle="They run the same trained model. There are various ways of integrating Go with CUDA"
     />
 
     <div className="mt-9 grid flex-1 grid-cols-3 gap-6">

@@ -6,7 +6,7 @@ const InferenceRequestSlide: React.FC = () => (
   <SlideFrame variant="surface">
     <SlideHeader
       kicker="Resource ownership"
-      title="Create once. Call once per guess."
+      title="Load weights over PCIe bus once"
       subtitle="One locked Go worker owns one native model handle, so requests cannot race on the CUDA stream or scratch buffers."
     />
 

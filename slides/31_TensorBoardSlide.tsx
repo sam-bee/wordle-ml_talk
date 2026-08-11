@@ -31,7 +31,7 @@ const TensorBoardSlide: React.FC = () => (
           <p className="mt-3 text-lg leading-relaxed text-text">Training kept running to update 10,000, while validation loss rose to <span className="font-mono">4.6436</span>.</p>
         </Panel>
         <Callout className="mt-auto text-lg" tone="warning">
-          A validation minimum followed by a rise while training continues is strong evidence consistent with overfitting—not a reason to call the final update “best.”
+          A validation minimum followed by a rise while training continues is clear overfitting. Take the best one, not the last one.
         </Callout>
       </div>
     </div>

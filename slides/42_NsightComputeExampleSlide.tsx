@@ -18,18 +18,18 @@ const NsightComputeExampleSlide: React.FC = () => (
           className="h-full min-h-0 w-full flex-1 object-contain"
           src={nsightComputeImage}
         />
-        <figcaption className="border-t border-border bg-surface px-5 py-3 text-base text-muted">Original capture from <em>Go Faster</em> · previous talk</figcaption>
+        <figcaption className="border-t border-border bg-surface px-5 py-3 text-base text-muted">Sample capture from some CUDA code</figcaption>
       </figure>
 
       <section className="flex min-h-0 flex-col justify-center gap-4">
         <Panel className="border-accent/40 bg-accent/10" padding="compact">
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent">Question</p>
-          <p className="mt-3 text-2xl font-bold leading-snug text-text">What limits this kernel—and what should we change?</p>
+          <p className="mt-3 text-2xl font-bold leading-snug text-text">What limits this kernel, and what could be changed?</p>
         </Panel>
         <Panel padding="compact">
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-muted">Our policy-kernel report</p>
           <p className="mt-3 font-mono text-xl leading-relaxed text-text">4,739 × 128 · 11.36 μs<br />40 registers / thread · no spills</p>
-          <p className="mt-4 text-lg leading-relaxed text-muted">69.89% achieved occupancy is a diagnostic—not a speed score.</p>
+          <p className="mt-4 text-lg leading-relaxed text-muted">69.89% achieved occupancy is a diagnostic metric, but not a speed score.</p>
         </Panel>
       </section>
     </div>

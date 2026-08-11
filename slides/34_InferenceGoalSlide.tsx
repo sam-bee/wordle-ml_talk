@@ -45,7 +45,7 @@ const InferenceGoalSlide: React.FC = () => (
     </div>
 
     <Callout className="mt-6 py-4 text-center text-xl">
-      GoMLX could already perform inference. We are exposing this boundary deliberately so we can see how Go and CUDA fit together.
+      GoMLX could perform inference. Custom CUDA code gives more flexibility and scope for optimisation
     </Callout>
   </SlideFrame>
 );
