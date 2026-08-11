@@ -20,11 +20,11 @@ const TrainingFalseStartsSlide: React.FC = () => (
           The research phase
         </p>
         <h2 className="mt-5 text-6xl font-bold leading-[1.05] tracking-tight text-text">
-          Most of my models
-          <span className="mt-2 block text-accent">didn’t work.</span>
+          Most model architectures
+          <span className="mt-2 block text-accent">don’t work.</span>
         </h2>
         <p className="mt-9 border-l-4 border-primary pl-6 text-2xl leading-relaxed text-muted">
-          For a while, that was almost the talk.
+          For a while, that was almost the whole talk.
         </p>
       </div>
     </div>

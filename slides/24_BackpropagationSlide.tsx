@@ -43,7 +43,7 @@ const LOOP_STEPS = [
   {
     label: '4. Gradients',
     detail: 'Trace the error back to the weights that contributed.',
-    value: 'which knobs?',
+    value: 'which weights?',
     tone: 'accent',
   },
   {
@@ -57,7 +57,7 @@ const LOOP_STEPS = [
 const BackpropagationSlide: React.FC<BackpropagationSlideProps> = ({ step }) => (
   <SlideFrame>
     <SlideHeader
-      kicker="Backpropagation, without the calculus"
+      kicker="Backpropagation, simplified"
       title="Learning is a feedback loop"
       subtitle="For each labelled Wordle state, make a prediction, measure its mistake, and use that mistake to improve the next prediction."
     />

@@ -8,7 +8,7 @@ const GoMLXIntroSlide: React.FC = () => (
     <SlideHeader
       kicker="The training framework"
       title="GoMLX: machine learning in Go"
-      subtitle="The Go library we used to describe, train, and inspect the policy."
+      subtitle="The Go library we used to describe and train the policy."
     />
 
     <div className="mt-7 flex flex-1 items-center justify-center">
