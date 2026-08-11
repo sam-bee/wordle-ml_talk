@@ -219,20 +219,14 @@ const DeckView: React.FC = () => {
 
   const {
     isVoiceEnabled,
-    isVoiceListening,
-    isVoiceSupported,
     requestMicrophonePermission,
     setVoiceControlsEnabled,
-    voiceError,
   } = useSpeechRecognition({
     onFinalResult: result => speechFollowResultHandlerRef.current(result),
   });
   const {
     canUndoAutoAdvance,
     isSpeechFollowEnabled,
-    lastAutoAdvance,
-    lastCommand,
-    lastHeard,
     onFinalRecognitionResult,
     setIsSpeechFollowEnabled,
     undoAutoAdvance,
@@ -342,20 +336,13 @@ const DeckView: React.FC = () => {
         goToNext={goToNext}
         goToPrev={goToPrev}
         isControlsHidden={isFooterHidden}
-        isVoiceEnabled={isVoiceEnabled}
-        isVoiceListening={isVoiceListening}
-        isVoiceSupported={isVoiceSupported}
         isSpeechFollowEnabled={isSpeechFollowEnabled}
         canUndoAutoAdvance={canUndoAutoAdvance}
-        lastAutoAdvance={lastAutoAdvance}
-        lastCommand={lastCommand}
-        lastHeard={lastHeard}
         openSpeakerNotesView={openSpeakerNotesView}
         slideCount={slides.length}
         toggleFullscreen={toggleFullscreen}
         toggleSpeechFollow={() => setIsSpeechFollowEnabled(enabled => !enabled)}
         undoAutoAdvance={undoAutoAdvance}
-        voiceError={voiceError}
       />
       <HelpOverlay isOpen={isHelpOpen} onClose={closeHelp} sections={helpSections} />
     </div>

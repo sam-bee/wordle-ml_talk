@@ -39,7 +39,7 @@ npm run build
 
 ### Voice Controls
 
-Voice now asks for microphone permission when the deck loads and arms speech recognition immediately after permission is granted. Use commands like:
+Voice controls are off by default and do not request microphone access when the deck loads. Press `V` to grant permission and enable them; press `V` again to disable them. Available commands include:
 
 - `Next Slide`
 - `Next Slide Please`

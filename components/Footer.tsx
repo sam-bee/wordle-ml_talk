@@ -9,16 +9,6 @@ interface FooterProps {
   currentSlide: number;
   isControlsHidden: boolean;
   isSpeechFollowEnabled: boolean;
-  isVoiceEnabled: boolean;
-  isVoiceListening: boolean;
-  isVoiceSupported: boolean;
-  lastCommand: string | null;
-  lastAutoAdvance: {
-    cue: string;
-    fromSlide: number;
-    toSlide: number;
-  } | null;
-  lastHeard: string | null;
   openSpeakerNotesView: () => void;
   slideCount: number;
   goToPrev: () => void;
@@ -26,7 +16,6 @@ interface FooterProps {
   toggleFullscreen: () => void;
   toggleSpeechFollow: () => void;
   undoAutoAdvance: () => void;
-  voiceError: string | null;
 }
 
 const Footer: React.FC<FooterProps> = ({
@@ -38,18 +27,11 @@ const Footer: React.FC<FooterProps> = ({
   goToPrev,
   isControlsHidden,
   isSpeechFollowEnabled,
-  isVoiceEnabled,
-  isVoiceListening,
-  isVoiceSupported,
-  lastCommand,
-  lastAutoAdvance,
-  lastHeard,
   openSpeakerNotesView,
   slideCount,
   toggleFullscreen,
   toggleSpeechFollow,
   undoAutoAdvance,
-  voiceError,
 }) => {
   return (
     <footer className="relative z-20 w-full max-w-7xl py-4 flex flex-col gap-3">
@@ -110,32 +92,6 @@ const Footer: React.FC<FooterProps> = ({
           </span>
         </div>
       </div>
-
-      {!isControlsHidden && (
-        <div className="flex flex-col gap-1">
-          <div className="text-sm text-muted">
-            Voice asks for microphone permission on load. Commands always work; Follow speech only auto-advances to the next slide when a configured cue matches.
-          </div>
-          <div className="text-sm text-muted">
-            {voiceError ? (
-              <span className="text-danger">{voiceError}</span>
-            ) : isVoiceSupported ? (
-              <span>
-                Voice {isVoiceListening ? 'listening' : isVoiceEnabled ? 'armed' : 'off'}
-                {lastCommand ? ` • Last command: ${lastCommand}` : ''}
-              </span>
-            ) : (
-              <span>Voice commands are not available in this browser.</span>
-            )}
-          </div>
-          <div className="text-sm text-muted">
-            {lastHeard ? `Last transcript: ${lastHeard}` : 'Last transcript: none'}
-            {lastAutoAdvance
-              ? ` • Last auto-transition: ${lastAutoAdvance.fromSlide + 1} → ${lastAutoAdvance.toSlide + 1} • Cue: ${lastAutoAdvance.cue}`
-              : ' • Last auto-transition: none'}
-          </div>
-        </div>
-      )}
     </footer>
   );
 }

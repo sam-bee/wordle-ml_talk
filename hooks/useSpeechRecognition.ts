@@ -44,7 +44,6 @@ export const useSpeechRecognition = ({ onFinalResult }: UseSpeechRecognitionOpti
   const recognitionRef = useRef<SpeechRecognition | null>(null);
   const onFinalResultRef = useRef(onFinalResult);
   const shouldKeepListeningRef = useRef(false);
-  const initialStartAttemptedRef = useRef(false);
   const sessionIdRef = useRef(0);
   const isVoiceSupported = getSpeechRecognition() !== null;
   const [isVoiceEnabled, setIsVoiceEnabled] = useState(false);
@@ -164,25 +163,6 @@ export const useSpeechRecognition = ({ onFinalResult }: UseSpeechRecognitionOpti
     };
 
     recognitionRef.current = recognition;
-    if (!initialStartAttemptedRef.current) {
-      const timeout = window.setTimeout(() => {
-        if (recognitionRef.current === recognition && !initialStartAttemptedRef.current) {
-          initialStartAttemptedRef.current = true;
-          void requestMicrophonePermission();
-        }
-      }, 0);
-
-      return () => {
-        window.clearTimeout(timeout);
-        shouldKeepListeningRef.current = false;
-        recognition.onstart = null;
-        recognition.onresult = null;
-        recognition.onerror = null;
-        recognition.onend = null;
-        recognition.abort();
-        recognitionRef.current = null;
-      };
-    }
 
     return () => {
       shouldKeepListeningRef.current = false;
@@ -193,7 +173,7 @@ export const useSpeechRecognition = ({ onFinalResult }: UseSpeechRecognitionOpti
       recognition.abort();
       recognitionRef.current = null;
     };
-  }, [requestMicrophonePermission]);
+  }, []);
 
   return {
     isVoiceEnabled,

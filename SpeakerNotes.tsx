@@ -1,6 +1,7 @@
 import type { SlideDefinition } from './types';
 import { slides, clampSlideIndex } from './deck';
 import React, { useEffect, useRef, useState } from 'react';
+import SpeakerTimingPanel from './components/SpeakerTimingPanel';
 import ThemeSelector from './components/ThemeSelector';
 import ThemedButton from './components/ThemedButton';
 import { useTheme } from './components/ThemeProvider';
@@ -219,7 +220,7 @@ export const SpeakerNotesView: React.FC = () => {
                     </div>
                 </header>
 
-                <main className="grid gap-6 lg:grid-cols-[1fr_18rem]">
+                <main className="grid gap-6 md:grid-cols-[minmax(0,1fr)_18rem]">
                     <section className="rounded-lg border border-border bg-surface px-7 py-6">
                         <h2 className="text-xl font-semibold text-text">Notes</h2>
                         <ul className="mt-5 space-y-4 text-xl leading-relaxed text-text">
@@ -229,7 +230,8 @@ export const SpeakerNotesView: React.FC = () => {
                         </ul>
                     </section>
 
-                    <aside className="flex flex-col gap-4">
+                    <aside className="flex flex-col gap-4 md:sticky md:top-6 md:self-start">
+                        <SpeakerTimingPanel />
 
                         <div className="rounded-lg border border-border bg-surface px-5 py-5">
                             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-muted">
