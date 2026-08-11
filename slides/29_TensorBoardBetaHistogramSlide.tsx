@@ -27,7 +27,7 @@ const TensorBoardBetaHistogramSlide: React.FC = () => (
         </Panel>
         <Panel className="border-accent/40 bg-accent/10" padding="compact">
           <p className="font-mono text-lg font-bold text-accent">Later</p>
-          <p className="mt-2 text-2xl font-semibold text-text">Mostly positive—and much broader</p>
+          <p className="mt-2 text-2xl font-semibold text-text">Mostly positive, and much broader</p>
         </Panel>
         <p className="border-l-4 border-primary pl-5 text-xl leading-relaxed text-muted">
           Different states learn different exploit-versus-probe nudges.

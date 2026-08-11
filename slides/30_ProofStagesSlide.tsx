@@ -4,13 +4,13 @@ import { Panel, SlideFrame, SlideHeader } from '../components/SlidePrimitives';
 
 const STAGES = [
   { name: 'one-batch overfit', updates: '400', batch: '128', rate: '0.001', result: 'training top-1 0.989', note: 'Can optimisation deliberately memorise one batch?' },
-  { name: 'mini stop / resume', updates: '1,000', batch: '128', rate: '0.0003', result: 'stopped at 500, then resumed', note: 'Can the run preserve all of its state and keep going?' },
+  { name: 'mini stop / resume', updates: '1,000', batch: '128', rate: '0.0003', result: 'stopped at 500, then resumed', note: 'Can the run preserve all its state and keep going?' },
   { name: 'full proof', updates: '2,000', batch: '256', rate: '0.0003', result: '97 / 100 · 3.65 guesses', note: 'Does the fixed validation population show a real playing policy?' },
 ];
 
 const ProofStagesSlide: React.FC = () => (
   <SlideFrame>
-    <SlideHeader kicker="Training stages" title="A proof ladder: small failures first" subtitle="Each fixed stage rules out one more mundane way the training pipeline could be lying to us." />
+    <SlideHeader kicker="Training stages" title="A proof ladder: small failures first" subtitle="Ruling out common problems with model architecture cheaply." />
     <div className="mt-6 grid flex-1 grid-cols-3 gap-6">
       {STAGES.map((stage, index) => (
         <Panel key={stage.name} className="flex flex-col" padding="compact">
