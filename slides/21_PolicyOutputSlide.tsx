@@ -40,8 +40,9 @@ const PolicyOutputSlide: React.FC = () => (
           <div>
             <p className="text-base font-semibold uppercase tracking-[0.2em] text-muted">Action masking</p>
             <p className="mt-3 text-base leading-relaxed text-text">Used guesses become −∞ before ArgMax.</p>
-            <pre className="mt-3 overflow-x-auto rounded-xl border border-border bg-elevated/60 px-4 py-3 font-mono text-xs leading-relaxed text-text"><code>{`available := graph.GreaterThan(availableActions, 0)
-return graph.Where(available, logits, graph.Infinity(..., -1))`}</code></pre>
+            <pre className="mt-3 overflow-x-auto rounded-xl border border-border bg-elevated/60 px-4 py-3 font-mono text-xl leading-[1.2] text-text"><code>{`available := graph.GreaterThan(
+    availableActions, graph.ScalarZero(...))
+return graph.Where(available, logits, -Inf)`}</code></pre>
           </div>
         </Panel>
       </div>
