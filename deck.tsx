@@ -36,8 +36,8 @@ import TrainingResultsSlide from './slides/32_TrainingResultsSlide';
 import ActDividerInferenceSlide from './slides/33_ActDividerSlide';
 import InferenceGoalSlide from './slides/34_InferenceGoalSlide';
 import InferenceRoutesSlide from './slides/35_InferenceRoutesSlide';
-import GpuMemorySlide from './slides/36_GpuMemorySlide';
-import CudaPrimerShortSlide from './slides/37_CudaPrimerShortSlide';
+import CudaPrimerShortSlide from './slides/36_CudaPrimerShortSlide';
+import GpuMemorySlide from './slides/37_GpuMemorySlide';
 import CgoIntegrationCodeSlide from './slides/38_CgoIntegrationCodeSlide';
 import InferenceRequestSlide from './slides/39_InferenceRequestSlide';
 import WordleLaunchSlide from './slides/40_WordleLaunchSlide';
@@ -438,6 +438,18 @@ export const slides: SlideDefinition[] = [
     title: 'Three ways Go could reach the GPU',
   },
   {
+    content: <CudaPrimerShortSlide />,
+    notes: [
+      'CPU host controls a separate GPU device',
+      'Separate memory — copy inputs in, outputs back',
+      'Kernel = GPU function',
+      'Thread = tiny lane · block = cooperating threads',
+      'Grid = every block in one launch',
+      '[Guardrail] CUDA thread ≠ goroutine',
+    ],
+    title: 'CUDA: host code launches work on a device',
+  },
+  {
     content: <GpuMemorySlide />,
     notes: [
       'Different scope, location, lifetime, speed',
@@ -450,18 +462,6 @@ export const slides: SlideDefinition[] = [
       'RTX 5070 Ti: 16 GB · 896 GB/s · model only 3.99 MiB',
     ],
     title: 'GPU memory has different scopes',
-  },
-  {
-    content: <CudaPrimerShortSlide />,
-    notes: [
-      'CPU host controls a separate GPU device',
-      'Separate memory — copy inputs in, outputs back',
-      'Kernel = GPU function',
-      'Thread = tiny lane · block = cooperating threads',
-      'Grid = every block in one launch',
-      '[Guardrail] CUDA thread ≠ goroutine',
-    ],
-    title: 'CUDA: host code launches work on a device',
   },
   {
     content: <CgoIntegrationCodeSlide />,
