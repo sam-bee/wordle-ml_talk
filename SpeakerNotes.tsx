@@ -176,7 +176,7 @@ export const SpeakerNotesView: React.FC = () => {
 
     return (
         <div className="min-h-screen bg-canvas px-6 py-8 font-sans text-text">
-            <div className="mx-auto flex max-w-5xl flex-col gap-6">
+            <div className="mx-auto flex w-full max-w-[96rem] flex-col gap-6">
                 <header className="flex flex-col gap-4 border-b border-border pb-5">
                     <div className="flex flex-wrap items-center justify-between gap-3 w-full">
                         <div className="flex items-center gap-3">
@@ -223,7 +223,7 @@ export const SpeakerNotesView: React.FC = () => {
                 <main className="grid gap-6 md:grid-cols-[minmax(0,1fr)_18rem]">
                     <section className="rounded-lg border border-border bg-surface px-7 py-6">
                         <h2 className="text-xl font-semibold text-text">Notes</h2>
-                        <ul className="mt-5 space-y-4 text-xl leading-relaxed text-text">
+                        <ul className="mt-5 space-y-4 text-[1.875rem] leading-relaxed text-text">
                             {getSlideNotes(currentSlideDefinition).map((note, index) => (
                                 <li key={index}>{renderSpeakerNote(note)}</li>
                             ))}
