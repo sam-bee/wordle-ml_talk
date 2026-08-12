@@ -44,7 +44,8 @@ import WordleLaunchSlide from './slides/40_WordleLaunchSlide';
 import NsightSystemsExampleSlide from './slides/41_NsightSystemsExampleSlide';
 import NsightComputeExampleSlide from './slides/42_NsightComputeExampleSlide';
 import CudaWebAppDemoSlide from './slides/43_CudaWebAppDemoSlide';
-import ClosingSlide from './slides/44_ClosingSlide';
+import ItWorksSlide from './slides/44_ItWorksSlide';
+import ClosingSlide from './slides/45_ClosingSlide';
 
 export const slides: SlideDefinition[] = [
   {
@@ -535,6 +536,14 @@ export const slides: SlideDefinition[] = [
       'Integration evidence — not validation evidence',
     ],
     title: 'A Go web application backed by CUDA',
+  },
+  {
+    content: <ItWorksSlide />,
+    notes: [
+      'Data → training → inference — working end to end',
+      'Go application · GoMLX training · CUDA inference',
+    ],
+    title: 'It works!',
   },
   {
     content: <ClosingSlide />,
