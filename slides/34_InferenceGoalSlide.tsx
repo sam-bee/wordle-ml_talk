@@ -40,7 +40,7 @@ const InferenceGoalSlide: React.FC = () => (
       </Panel>
       <Panel className="border-accent/40 bg-accent/10" padding="compact">
         <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent">CUDA becomes the numerical engine</p>
-        <p className="mt-3 text-xl leading-relaxed text-text">Four tensors in · seven kernels · 4,739 raw scores out</p>
+        <p className="mt-3 text-xl leading-relaxed text-text">Four inputs in · seven kernels · 4,739 raw scores out</p>
       </Panel>
     </div>
 

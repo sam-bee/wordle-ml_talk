@@ -26,7 +26,7 @@ const PolicyOutputSlide: React.FC = () => (
           <div className="rounded-2xl border border-border px-5 py-4"><strong className="text-primary">4,739</strong><br /><span className="text-muted">base action logits</span></div>
           <div className="rounded-2xl border border-border px-5 py-4"><strong className="text-accent">β</strong><br /><span className="text-muted">one learned state-dependent bonus</span></div>
         </div>
-        <Callout className="mt-6" tone="accent">This mask is a learned preference, not a legality rule: a useful probe word keeps its ordinary score.</Callout>
+        <Callout className="mt-6" tone="accent">This value is a learned preference, not a legality rule: a useful probe word keeps its ordinary score.</Callout>
       </Panel>
 
       <div className="grid grid-rows-[auto_1fr] gap-6">

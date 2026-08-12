@@ -84,7 +84,7 @@ const BackpropagationSlide: React.FC<BackpropagationSlideProps> = ({ step }) => 
 
       <Reveal visible={step >= 4} preserveLayout>
         <Callout className="mt-7 text-center" tone="accent">
-          Weights are adjusted for each training record. After 52,726 Wordle games, we have a policy that can emulate the teacher.
+          Weights are adjusted per batch. After 52,726 Wordle training records, we have a policy that can emulate the teacher.
         </Callout>
       </Reveal>
     </div>
