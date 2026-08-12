@@ -362,6 +362,7 @@ export const slides: SlideDefinition[] = [
       'Early: narrow, near zero',
       'Later: mostly positive, much broader',
       'Lines = checkpoints/buckets — not games or neurons',
+      '“Each of these pink ridges is a histogram of the beta value across 2,500 validation positions at one point during training. Left to right is the value of beta: negative means the model is pushing possible answers down relative to probe words, and positive means it is boosting them. Early in training those values are clustered close to zero; later the distribution becomes much broader and mostly positive. So the model hasn’t just learned one fixed preference for answers over probes — it has learned to make that trade-off differently depending on the Wordle position.”',
     ],
     title: 'Beta depends on the Wordle position',
   },
