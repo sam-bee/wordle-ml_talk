@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 
 import {
   getNextPresentationPosition,
+  getPresentationNavigationDirection,
   getPreviousPresentationPosition,
   getSlideStepCount,
   getSlideTransitionClass,
@@ -25,10 +26,22 @@ test('locks presentation shortcuts while help is open', () => {
   assert.equal(isPresentationShortcutAllowed('Escape', true), true);
 });
 
+test('maps arrow keys and presenter clicker keys to navigation', () => {
+  assert.equal(getPresentationNavigationDirection('ArrowRight'), 'next');
+  assert.equal(getPresentationNavigationDirection('ArrowDown'), 'next');
+  assert.equal(getPresentationNavigationDirection('PageDown'), 'next');
+  assert.equal(getPresentationNavigationDirection('ArrowLeft'), 'previous');
+  assert.equal(getPresentationNavigationDirection('ArrowUp'), 'previous');
+  assert.equal(getPresentationNavigationDirection('PageUp'), 'previous');
+  assert.equal(getPresentationNavigationDirection('Enter'), undefined);
+});
+
 test('exposes keyboard and voice shortcut sections for the help modal', () => {
   const sections = getHelpShortcutSections();
   assert.equal(sections.length, 2);
   assert.equal(sections[0].title, 'Keyboard shortcuts');
+  assert.match(sections[0].items[0].shortcut, /PageDown/);
+  assert.match(sections[0].items[1].shortcut, /PageUp/);
   assert.equal(sections[1].title, 'Voice commands');
 });
 

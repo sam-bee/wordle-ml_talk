@@ -33,8 +33,8 @@ export const matchVoiceCommand = normalizedTranscripts =>
     .find(Boolean);
 
 const HELP_SHORTCUT_ITEMS = [
-  { shortcut: 'ArrowRight / ArrowDown', description: 'Next step or slide' },
-  { shortcut: 'ArrowLeft / ArrowUp', description: 'Previous step or slide' },
+  { shortcut: 'ArrowRight / ArrowDown / PageDown', description: 'Next step or slide' },
+  { shortcut: 'ArrowLeft / ArrowUp / PageUp', description: 'Previous step or slide' },
   { shortcut: 'Space', description: 'Pause or resume animations' },
   { shortcut: 'F', description: 'Toggle fullscreen' },
   { shortcut: 'V', description: 'Toggle voice recognition' },
@@ -68,6 +68,22 @@ export const getHelpShortcutSections = () => [
  */
 export const isPresentationShortcutAllowed = (key, isHelpOpen) =>
   !isHelpOpen || key === '?' || key === 'Escape';
+
+/**
+ * @param {string} key
+ * @returns {'next' | 'previous' | undefined}
+ */
+export const getPresentationNavigationDirection = key => {
+  if (key === 'ArrowRight' || key === 'ArrowDown' || key === 'PageDown') {
+    return 'next';
+  }
+
+  if (key === 'ArrowLeft' || key === 'ArrowUp' || key === 'PageUp') {
+    return 'previous';
+  }
+
+  return undefined;
+};
 
 /**
  * @param {1 | -1} direction

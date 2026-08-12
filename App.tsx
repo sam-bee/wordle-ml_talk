@@ -9,6 +9,7 @@ import HelpOverlay from './components/HelpOverlay';
 import {
   getHelpShortcutSections,
   getNextPresentationPosition,
+  getPresentationNavigationDirection,
   getPreviousPresentationPosition,
   getSlideStepCount,
   getSlideTransitionClass,
@@ -264,10 +265,12 @@ const DeckView: React.FC = () => {
         return;
       }
 
-      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      const navigationDirection = getPresentationNavigationDirection(e.key);
+
+      if (navigationDirection === 'next') {
         e.preventDefault();
         goToNext();
-      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      } else if (navigationDirection === 'previous') {
         e.preventDefault();
         goToPrev();
       } else if (e.key === 'f' || e.key === 'F') {
